@@ -5,6 +5,17 @@ import PageView from './components/PageView'
 import StaticPage from './components/StaticPage'
 import LoadingState from './components/LoadingState'
 import NotFound from './components/NotFound'
+import {
+  CartPage,
+  CataloguePage,
+  CheckoutPage,
+  LoginPage,
+  OrderDetailPage,
+  OrdersPage,
+  ProductDetailPage,
+  RegisterPage,
+  ShopDetailPage,
+} from './components/ShopPages'
 import { getPage } from './lib/api'
 import { pageCatalog, pageBySlug } from './data/pages'
 import { staticPages } from './data/staticPages'
@@ -85,17 +96,15 @@ function Shell() {
             <Link className={!isHome ? 'is-active' : ''} to="/pages/accueil">
               Pages
             </Link>
-            <a href="#catalogue">Artisans</a>
-            <a href="#atelier">Ateliers</a>
+            <Link to="/catalogue">Catalogue</Link>
+            <Link to="/orders">Commandes</Link>
           </nav>
 
           <div className="topbar__actions">
-            <button type="button" className="icon-button" aria-label="Panier">
+            <Link to="/cart" className="icon-button" aria-label="Panier">
               cart
-            </button>
-            <button type="button" className="icon-button" aria-label="Notifications">
-              bell
-            </button>
+            </Link>
+            <Link to="/login" className="chip">Connexion</Link>
             <img
               className="avatar"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz6elkLbL52JF6stjvCQPFHlbSel1qmr0dArACO2NpZNlUsOHRy4Iz49McMNGiHTuEbT_Y5qVDKqLz3KSV5P-vuVPBJ_fdoNGzZMX_BED-fQUgAmm18hD4hSwiz3QDvc7Lyl6uO-hDDr5d1HlfENq8im3eZ3qnU_Ds6TPQLQ5NIRZMzzhWnWJPPma_CW9rQ51i_xf8c9hGDMPgvvxuV6sya26YeH1iVH8unFGrg7tlgzUd8lNykOtdUUHTuI2UJ6S-ZFH_aq8Umew"
@@ -108,6 +117,15 @@ function Shell() {
       <main className="main">
         <Routes>
           <Route path="/" element={<><HomePage /><AllPages /></>} />
+          <Route path="/catalogue" element={<CataloguePage />} />
+          <Route path="/products/:slug" element={<ProductDetailPage />} />
+          <Route path="/shops/:slug" element={<ShopDetailPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/orders/:id" element={<OrderDetailPage />} />
           <Route path="/pages/:slug" element={<PageRoute />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

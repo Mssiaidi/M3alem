@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getCategories, getProducts } from '../lib/api'
 
-const categories = [
+const fallbackCategories = [
   {
     title: 'Ceramique & Poterie',
     subtitle: "L'art ancestral de Fes et Safi",
@@ -28,7 +30,7 @@ const categories = [
   },
 ]
 
-const products = [
+const fallbackProducts = [
   {
     title: 'Tajine Decoratif "Bleu Royal"',
     tag: 'Ceramique de Safi',
@@ -72,6 +74,56 @@ const products = [
 ]
 
 export default function HomePage() {
+  const [categories, setCategories] = useState(fallbackCategories)
+  const [products, setProducts] = useState([])
+  const [productsLoading, setProductsLoading] = useState(true)
+
+  useEffect(() => {
+    let active = true
+
+    getCategories()
+      .then((data) => {
+        if (!active || !data.length) return
+
+        setCategories(
+          data.slice(0, 4).map((category, index) => ({
+            title: category.name,
+            subtitle: category.description,
+            image: fallbackCategories[index % fallbackCategories.length].image,
+            size: fallbackCategories[index % fallbackCategories.length].size,
+          })),
+        )
+      })
+      .catch(() => undefined)
+
+    getProducts()
+      .then((data) => {
+        if (!active || !data.length) return
+
+        setProducts(
+          data.slice(0, 4).map((product, index) => ({
+            title: product.name,
+            tag: product.category?.name ?? product.shop?.name ?? 'Artisanat marocain',
+            price: `${Number(product.price).toLocaleString('fr-MA')} DH`,
+            rating: '4.8',
+            image: product.images?.[0]?.path ?? fallbackProducts[index % fallbackProducts.length].image,
+            badge: index === 0 ? 'Nouveau' : '',
+            badgeStyle: 'product__badge--primary',
+          })),
+        )
+      })
+      .catch(() => {
+        if (active) setProducts(fallbackProducts)
+      })
+      .finally(() => {
+        if (active) setProductsLoading(false)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [])
+
   return (
     <>
       <section className="hero">
@@ -90,7 +142,7 @@ export default function HomePage() {
               <a className="button" href="#catalogue">
                 Explorer les produits
               </a>
-              <Link className="button--ghost" to="/pages/connexion">
+              <Link className="button--ghost" to="/register">
                 Devenir Exposant
               </Link>
             </div>
@@ -142,7 +194,18 @@ export default function HomePage() {
           </div>
 
           <div className="products">
-            {products.map((product) => (
+            {productsLoading ? (
+              Array.from({ length: 4 }).map((_, index) => (
+                <article className="product product--loading" key={`product-loading-${index}`}>
+                  <div className="product__media skeleton" />
+                  <div className="product__body">
+                    <span className="skeleton-line skeleton-line--short" />
+                    <span className="skeleton-line" />
+                    <span className="skeleton-line skeleton-line--medium" />
+                  </div>
+                </article>
+              ))
+            ) : products.map((product) => (
               <article className="product" key={product.title}>
                 <div className="product__media">
                   <img src={product.image} alt={product.title} />
@@ -172,7 +235,7 @@ export default function HomePage() {
           </div>
 
           <div className="products__cta">
-            <Link className="button" to="/pages/catalogue">
+            <Link className="button" to="/catalogue">
               Voir tout le catalogue
             </Link>
           </div>

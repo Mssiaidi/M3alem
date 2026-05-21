@@ -656,6 +656,48 @@
   gap: 0.3rem;
 }
 
+.product--loading {
+  min-height: 23rem;
+}
+
+.skeleton,
+.skeleton-line {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  background: #e5eeff;
+}
+
+.skeleton::after,
+.skeleton-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  animation: skeleton-shimmer 1.25s infinite;
+}
+
+.skeleton-line {
+  height: 0.85rem;
+  border-radius: 999px;
+  margin-top: 0.75rem;
+}
+
+.skeleton-line--short {
+  width: 38%;
+}
+
+.skeleton-line--medium {
+  width: 64%;
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .products__cta {
   margin-top: 1.5rem;
   display: flex;
@@ -795,6 +837,191 @@
   transform: translateY(-1px);
 }
 
+.commerce-layout,
+.checkout-grid,
+.detail-grid {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.commerce-main,
+.filters,
+.summary-card,
+.form-card,
+.detail-info,
+.detail-gallery,
+.shop-hero {
+  border: 1px solid #c4c5d5;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 30px rgba(11, 28, 48, 0.07);
+  padding: 1.25rem;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid #c4c5d5;
+  border-radius: 0.75rem;
+  background: #fff;
+  color: #0b1c30;
+  padding: 0.85rem 1rem;
+  margin-top: 0.75rem;
+}
+
+.detail-grid {
+  grid-template-columns: minmax(0, 1fr) 420px;
+}
+
+.detail-gallery img {
+  width: 100%;
+  max-height: 560px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.detail-info {
+  display: grid;
+  gap: 1rem;
+}
+
+.detail-info h1,
+.form-card h1,
+.cart-list h1,
+.shop-hero h1 {
+  margin: 0;
+  color: #0b1c30;
+}
+
+.detail-price {
+  color: #1e40af;
+  font-size: 2.2rem;
+}
+
+.stock-note {
+  color: #865300;
+  font-weight: 800;
+}
+
+.auth-panel {
+  display: grid;
+  place-items: center;
+  min-height: 62vh;
+}
+
+.form-card {
+  width: min(480px, 100%);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.form-card .button {
+  margin-top: 0.75rem;
+}
+
+.error-text,
+.link-danger {
+  color: #ba1a1a;
+  font-weight: 800;
+}
+
+.checkout-grid {
+  grid-template-columns: minmax(0, 1fr) 360px;
+}
+
+.cart-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) auto auto;
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid #c4c5d5;
+  border-radius: 1rem;
+  background: #fff;
+  padding: 1rem;
+}
+
+.cart-item img {
+  width: 120px;
+  height: 110px;
+  border-radius: 0.8rem;
+  object-fit: cover;
+}
+
+.cart-item h3,
+.cart-item p {
+  margin: 0;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #c4c5d5;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.qty button {
+  border: 0;
+  background: #eff4ff;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+}
+
+.qty span {
+  padding: 0.4rem 0.75rem;
+  font-weight: 800;
+}
+
+.summary-card {
+  position: sticky;
+  top: 5.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.summary-line,
+.order-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.orders-table {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.order-row {
+  text-decoration: none;
+  padding: 1rem;
+  border: 1px solid #d3e4fe;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.shop-hero {
+  background: linear-gradient(135deg, #1e40af, #213145);
+  color: #fff;
+}
+
+.shop-hero h1,
+.shop-hero p {
+  color: #fff;
+}
+
 @media (max-width: 1100px) {
   .hero__inner,
   .spotlight,
@@ -803,8 +1030,15 @@
   }
 
   .bento,
-  .products {
+  .products,
+  .catalog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .commerce-layout,
+  .checkout-grid,
+  .detail-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -834,9 +1068,19 @@
 
   .bento,
   .products,
+  .catalog-grid,
   .spotlight__stats,
   .footer__links {
     grid-template-columns: 1fr;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-item img {
+    width: 100%;
+    height: 210px;
   }
 
   .tile--large,

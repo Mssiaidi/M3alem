@@ -150,6 +150,11 @@ export function useLocation() {
   return router.location
 }
 
+export function useNavigate() {
+  const router = useContext(RouterContext)
+  return router.navigate
+}
+
 export function useParams() {
   return useContext(RouteParamsContext)
 }
