@@ -5,6 +5,9 @@ import PageView from './components/PageView'
 import StaticPage from './components/StaticPage'
 import LoadingState from './components/LoadingState'
 import NotFound from './components/NotFound'
+import SellerDashboard from './components/SellerDashboard'
+import { SellerOrders, SellerOrderDetail } from './components/SellerOrders'
+import AdminDashboard from './components/AdminDashboard'
 import {
   CartPage,
   CataloguePage,
@@ -101,6 +104,8 @@ function Shell() {
           </nav>
 
           <div className="topbar__actions">
+            <Link to="/admin/dashboard" className="chip">Admin</Link>
+            <Link to="/seller/dashboard" className="chip">Vendeur</Link>
             <Link to="/cart" className="icon-button" aria-label="Panier">
               cart
             </Link>
@@ -126,6 +131,13 @@ function Shell() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/orders/:id" element={<OrderDetailPage />} />
+
+          <Route path="/seller/dashboard" element={<SellerDashboard />} />
+          <Route path="/seller/orders" element={<SellerOrders />} />
+          <Route path="/seller/orders/:id" element={<SellerOrderDetail />} />
+
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
           <Route path="/pages/:slug" element={<PageRoute />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

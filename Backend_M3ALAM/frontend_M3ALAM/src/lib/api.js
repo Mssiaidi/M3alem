@@ -8,6 +8,163 @@ export async function getPages() {
   return response.json()
 }
 
+export async function cancelOrder(id) {
+  const response = await fetch(`/api/orders/${id}/cancel`, {
+    method: 'POST',
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible d’annuler la commande')
+  }
+
+  return response.json()
+}
+
+export async function submitReview(data) {
+  const response = await fetch('/api/reviews', {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.message || 'Impossible de soumettre l’avis')
+  }
+
+  return response.json()
+}
+
+export async function getSellerOrders() {
+  const response = await fetch('/api/seller/orders', {
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible de charger les commandes vendeur')
+  }
+
+  const payload = await response.json()
+  return payload.data ?? payload
+}
+
+export async function getSellerOrder(id) {
+  const response = await fetch(`/api/seller/orders/${id}`, {
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Commande vendeur introuvable')
+  }
+
+  return response.json()
+}
+
+export async function updateOrderStatus(id, status) {
+  const response = await fetch(`/api/seller/orders/${id}/status`, {
+    method: 'PATCH',
+    headers: authHeaders(),
+    body: JSON.stringify({ status }),
+  })
+
+  if (!response.ok) {
+    const error = await response.json()
+    throw new Error(error.message || 'Impossible de mettre à jour le statut')
+  }
+
+  return response.json()
+}
+
+export async function getSellerDashboard() {
+  const response = await fetch('/api/seller/dashboard', {
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible de charger le tableau de bord vendeur')
+  }
+
+  return response.json()
+}
+
+export async function getAdminDashboard() {
+  const response = await fetch('/api/admin/dashboard', {
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible de charger le tableau de bord admin')
+  }
+
+  return response.json()
+}
+
+export async function getPendingShops() {
+  const response = await fetch('/api/admin/shops/pending', {
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible de charger les boutiques en attente')
+  }
+
+  const payload = await response.json()
+  return payload.data ?? payload
+}
+
+export async function approveShop(id) {
+  const response = await fetch(`/api/admin/shops/${id}/approve`, {
+    method: 'PATCH',
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible d’approuver la boutique')
+  }
+
+  return response.json()
+}
+
+export async function suspendShop(id) {
+  const response = await fetch(`/api/admin/shops/${id}/suspend`, {
+    method: 'PATCH',
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible de suspendre la boutique')
+  }
+
+  return response.json()
+}
+
+export async function getAdminReviews() {
+  const response = await fetch('/api/admin/reviews', {
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible de charger les avis')
+  }
+
+  const payload = await response.json()
+  return payload.data ?? payload
+}
+
+export async function deleteReview(id) {
+  const response = await fetch(`/api/admin/reviews/${id}`, {
+    method: 'DELETE',
+    headers: authHeaders(),
+  })
+
+  if (!response.ok) {
+    throw new Error('Impossible de supprimer l’avis')
+  }
+
+  return response.json()
+}
+
 export async function getPage(slug) {
   const response = await fetch(`/api/pages/${slug}`)
 
