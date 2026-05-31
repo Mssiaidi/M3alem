@@ -23,6 +23,7 @@ Route::get('/shops/{slug}', [CatalogController::class, 'shop']);
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/user', [AuthController::class, 'user']);
+    Route::put('/user', [AuthController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/cart', [CartController::class, 'show']);
@@ -32,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::post('/checkout', [OrderController::class, 'checkout']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
+    Route::post('/orders/{order}/cancel', [OrderController::class, 'cancel']);
+
+    Route::post('/reviews', [\App\Http\Controllers\Api\ReviewController::class, 'store']);
 
     Route::prefix('seller')->group(function (): void {
         Route::get('/shop', [SellerShopController::class, 'show']);
@@ -40,11 +44,21 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::post('/products', [SellerProductController::class, 'store']);
         Route::put('/products/{product}', [SellerProductController::class, 'update']);
         Route::delete('/products/{product}', [SellerProductController::class, 'destroy']);
+
+        Route::get('/orders', [\App\Http\Controllers\Api\Seller\OrderController::class, 'index']);
+        Route::get('/orders/{order}', [\App\Http\Controllers\Api\Seller\OrderController::class, 'show']);
+        Route::patch('/orders/{order}/status', [\App\Http\Controllers\Api\Seller\OrderController::class, 'updateStatus']);
+        Route::get('/dashboard', \App\Http\Controllers\Api\Seller\DashboardController::class);
     });
 
     Route::prefix('admin')->group(function (): void {
+        Route::apiResource('categories', \App\Http\Controllers\Api\Admin\CategoryController::class);
         Route::get('/shops/pending', [ShopModerationController::class, 'pending']);
         Route::patch('/shops/{shop}/approve', [ShopModerationController::class, 'approve']);
         Route::patch('/shops/{shop}/suspend', [ShopModerationController::class, 'suspend']);
+
+        Route::get('/reviews', [\App\Http\Controllers\Api\ReviewController::class, 'index']);
+        Route::delete('/reviews/{review}', [\App\Http\Controllers\Api\ReviewController::class, 'destroy']);
+        Route::get('/dashboard', \App\Http\Controllers\Api\Admin\DashboardController::class);
     });
 });

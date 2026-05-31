@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutRequest;
 use App\Models\Order;
+use App\Notifications\OrderPlacedNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,24 @@ class OrderController extends Controller
         abort_unless($request->user()->isClient() && $order->user_id === $request->user()->id, 403);
 
         return response()->json($order->load(['items.product.images', 'items.shop']));
+    }
+
+    public function cancel(Request $request, Order $order): JsonResponse
+    {
+        abort_unless($request->user()->isClient() && $order->user_id === $request->user()->id, 403);
+
+        if ($order->status !== 'pending') {
+            return response()->json(['message' => 'Seules les commandes en attente peuvent être annulées.'], 422);
+        }
+
+        $order->update(['status' => 'cancelled']);
+
+        // Restore stock
+        foreach ($order->items as $item) {
+            $item->product->increment('stock', $item->quantity);
+        }
+
+        return response()->json($order);
     }
 
     public function checkout(CheckoutRequest $request): JsonResponse
@@ -65,6 +84,15 @@ class OrderController extends Controller
 
             return $order;
         });
+
+        // Notify sellers
+        $shopIds = $order->items()->pluck('shop_id')->unique();
+        foreach ($shopIds as $shopId) {
+            $shop = \App\Models\Shop::find($shopId);
+            if ($shop && $shop->user) {
+                $shop->user->notify(new OrderPlacedNotification($order));
+            }
+        }
 
         return response()->json($order->load('items'), 201);
     }

@@ -321,18 +321,51 @@ export function OrdersPage() {
 export function OrderDetailPage() {
   const { id } = useParams()
   const [order, setOrder] = useState(null)
+  const [review, setReview] = useState({ rating: 5, comment: '' })
+  const [message, setMessage] = useState('')
+
+  const refresh = () => getOrder(id).then(setOrder).catch(() => setOrder(null))
 
   useEffect(() => {
-    getOrder(id).then(setOrder).catch(() => setOrder(null))
+    refresh()
   }, [id])
 
   if (!order) return <section className="panel"><h2>Commande introuvable</h2></section>
 
+  const handleCancel = async () => {
+    try {
+      await cancelOrder(order.id)
+      refresh()
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
+  const handleReview = async (e) => {
+    e.preventDefault()
+    try {
+      await submitReview({ order_id: order.id, ...review })
+      setMessage('Merci pour votre avis !')
+      refresh()
+    } catch (e) {
+      alert(e.message)
+    }
+  }
+
   return (
     <section className="panel">
-      <p className="eyebrow">{order.status}</p>
-      <h1>{order.reference}</h1>
+      <div className="section__head">
+        <div>
+          <p className="eyebrow">{order.status}</p>
+          <h1>{order.reference}</h1>
+        </div>
+        {order.status === 'pending' && (
+          <button className="button-danger" onClick={handleCancel}>Annuler la commande</button>
+        )}
+      </div>
+
       <p>{order.shipping_address}, {order.shipping_city}</p>
+
       <div className="cart-list">
         {order.items.map((item) => (
           <article className="cart-item" key={item.id}>
@@ -345,7 +378,33 @@ export function OrderDetailPage() {
           </article>
         ))}
       </div>
+
       <div className="summary-line"><span>Total</span><strong>{money(order.total_amount)}</strong></div>
+
+      {order.status === 'delivered' && !order.review && (
+        <div className="review-section">
+          <hr />
+          <h3>Laisser un avis</h3>
+          {message ? <p className="success-text">{message}</p> : (
+            <form onSubmit={handleReview} className="form-card" style={{ maxWidth: '400px', margin: '1rem 0' }}>
+              <select className="field" value={review.rating} onChange={e => setReview({ ...review, rating: e.target.value })}>
+                {[5, 4, 3, 2, 1].map(n => <option key={n} value={n}>{n} Etoiles</option>)}
+              </select>
+              <textarea className="field" placeholder="Votre commentaire" value={review.comment} onChange={e => setReview({ ...review, comment: e.target.value })} />
+              <button className="button" type="submit">Envoyer l'avis</button>
+            </form>
+          )}
+        </div>
+      )}
+
+      {order.review && (
+        <div className="review-section">
+          <hr />
+          <h3>Votre avis</h3>
+          <p>Note : {order.review.rating}/5</p>
+          <p>{order.review.comment}</p>
+        </div>
+      )}
     </section>
   )
 }
