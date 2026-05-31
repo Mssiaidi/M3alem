@@ -23,6 +23,7 @@ Route::get('/shops/{slug}', [CatalogController::class, 'shop']);
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::get('/user', [AuthController::class, 'user']);
+    Route::put('/user', [AuthController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::get('/cart', [CartController::class, 'show']);
@@ -51,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
     });
 
     Route::prefix('admin')->group(function (): void {
+        Route::apiResource('categories', \App\Http\Controllers\Api\Admin\CategoryController::class);
         Route::get('/shops/pending', [ShopModerationController::class, 'pending']);
         Route::patch('/shops/{shop}/approve', [ShopModerationController::class, 'approve']);
         Route::patch('/shops/{shop}/suspend', [ShopModerationController::class, 'suspend']);

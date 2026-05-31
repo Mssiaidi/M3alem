@@ -8,6 +8,11 @@ import NotFound from './components/NotFound'
 import SellerDashboard from './components/SellerDashboard'
 import { SellerOrders, SellerOrderDetail } from './components/SellerOrders'
 import AdminDashboard from './components/AdminDashboard'
+import SellerProducts from './components/SellerProducts'
+import ProductForm from './components/ProductForm'
+import AdminCategories from './components/AdminCategories'
+import UserProfile from './components/UserProfile'
+import SellerShop from './components/SellerShop'
 import {
   CartPage,
   CataloguePage,
@@ -109,12 +114,15 @@ function Shell() {
             <Link to="/cart" className="icon-button" aria-label="Panier">
               cart
             </Link>
+            <Link to="/profile" className="icon-button">settings</Link>
             <Link to="/login" className="chip">Connexion</Link>
-            <img
-              className="avatar"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz6elkLbL52JF6stjvCQPFHlbSel1qmr0dArACO2NpZNlUsOHRy4Iz49McMNGiHTuEbT_Y5qVDKqLz3KSV5P-vuVPBJ_fdoNGzZMX_BED-fQUgAmm18hD4hSwiz3QDvc7Lyl6uO-hDDr5d1HlfENq8im3eZ3qnU_Ds6TPQLQ5NIRZMzzhWnWJPPma_CW9rQ51i_xf8c9hGDMPgvvxuV6sya26YeH1iVH8unFGrg7tlgzUd8lNykOtdUUHTuI2UJ6S-ZFH_aq8Umew"
-              alt="Artisan Profile"
-            />
+            <Link to="/profile">
+              <img
+                className="avatar"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz6elkLbL52JF6stjvCQPFHlbSel1qmr0dArACO2NpZNlUsOHRy4Iz49McMNGiHTuEbT_Y5qVDKqLz3KSV5P-vuVPBJ_fdoNGzZMX_BED-fQUgAmm18hD4hSwiz3QDvc7Lyl6uO-hDDr5d1HlfENq8im3eZ3qnU_Ds6TPQLQ5NIRZMzzhWnWJPPma_CW9rQ51i_xf8c9hGDMPgvvxuV6sya26YeH1iVH8unFGrg7tlgzUd8lNykOtdUUHTuI2UJ6S-ZFH_aq8Umew"
+                alt="Artisan Profile"
+              />
+            </Link>
           </div>
         </div>
       </header>
@@ -131,12 +139,18 @@ function Shell() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/orders/:id" element={<OrderDetailPage />} />
+          <Route path="/profile" element={<UserProfile />} />
 
           <Route path="/seller/dashboard" element={<SellerDashboard />} />
+          <Route path="/seller/shop" element={<SellerShop />} />
+          <Route path="/seller/products" element={<SellerProducts />} />
+          <Route path="/seller/products/new" element={<ProductForm />} />
+          <Route path="/seller/products/:id/edit" element={<ProductForm />} />
           <Route path="/seller/orders" element={<SellerOrders />} />
           <Route path="/seller/orders/:id" element={<SellerOrderDetail />} />
 
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/categories" element={<AdminCategories />} />
 
           <Route path="/pages/:slug" element={<PageRoute />} />
           <Route path="*" element={<NotFound />} />
