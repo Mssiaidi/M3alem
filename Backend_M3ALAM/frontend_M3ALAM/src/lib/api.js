@@ -223,7 +223,7 @@ export async function deleteReview(id) {
     headers: authHeaders(),
   })
   if (!response.ok) throw new Error('Impossible de supprimer l’avis')
-  return response.json()
+  return true
 }
 
 export async function getPage(slug) {

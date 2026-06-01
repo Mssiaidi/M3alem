@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import HomePage from './components/HomePage'
 import PageView from './components/PageView'
+import PageList from './components/PageList'
 import StaticPage from './components/StaticPage'
 import LoadingState from './components/LoadingState'
 import NotFound from './components/NotFound'
@@ -11,6 +12,8 @@ import AdminDashboard from './components/AdminDashboard'
 import SellerProducts from './components/SellerProducts'
 import ProductForm from './components/ProductForm'
 import AdminCategories from './components/AdminCategories'
+import AdminShopModeration from './components/AdminShopModeration'
+import AdminReviewModeration from './components/AdminReviewModeration'
 import UserProfile from './components/UserProfile'
 import SellerShop from './components/SellerShop'
 import {
@@ -24,8 +27,7 @@ import {
   RegisterPage,
   ShopDetailPage,
 } from './components/ShopPages'
-import { getPage } from './lib/api'
-import { pageCatalog, pageBySlug } from './data/pages'
+import { getPage, getPages } from './lib/api'
 import { staticPages } from './data/staticPages'
 import './App.css'
 
@@ -60,7 +62,7 @@ function PageRoute() {
 
   if (loading) return <LoadingState />
 
-  if (pageBySlug[slug]) {
+  if (staticPages[slug]) {
     return <StaticPage page={page} />
   }
 
@@ -68,20 +70,14 @@ function PageRoute() {
 }
 
 function AllPages() {
+  const [pages, setPages] = useState([])
+
+  useEffect(() => {
+    getPages().then(setPages).catch(() => setPages([]))
+  }, [])
+
   return (
-    <section className="panel">
-      <p className="eyebrow">Pages converties</p>
-      <h2>Navigation complete</h2>
-      <div className="grid">
-        {pageCatalog.map((page) => (
-          <Link className="card" key={page.slug} to={`/pages/${page.slug}`}>
-            <span className="card__tag">/{page.slug}</span>
-            <strong>{page.title}</strong>
-            <span className="card__hint">{page.summary}</span>
-          </Link>
-        ))}
-      </div>
-    </section>
+    <PageList pages={pages} />
   )
 }
 
@@ -110,6 +106,8 @@ function Shell() {
 
           <div className="topbar__actions">
             <Link to="/admin/dashboard" className="chip">Admin</Link>
+            <Link to="/admin/shops" className="chip">Boutiques</Link>
+            <Link to="/admin/reviews" className="chip">Avis</Link>
             <Link to="/seller/dashboard" className="chip">Vendeur</Link>
             <Link to="/cart" className="icon-button" aria-label="Panier">
               cart
@@ -151,8 +149,11 @@ function Shell() {
 
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/categories" element={<AdminCategories />} />
+          <Route path="/admin/shops" element={<AdminShopModeration />} />
+          <Route path="/admin/reviews" element={<AdminReviewModeration />} />
 
           <Route path="/pages/:slug" element={<PageRoute />} />
+          <Route path="/pages" element={<AllPages />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

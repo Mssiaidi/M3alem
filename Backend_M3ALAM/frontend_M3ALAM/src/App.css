@@ -1022,6 +1022,106 @@
   color: #fff;
 }
 
+.admin-page {
+  padding: 0.5rem 0 1rem;
+}
+
+.admin-page__shell {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.admin-sidebar,
+.admin-content {
+  border: 1px solid #c4c5d5;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 30px rgba(11, 28, 48, 0.07);
+  padding: 1.25rem;
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+  display: grid;
+  gap: 1rem;
+}
+
+.admin-sidebar__stats,
+.admin-stack {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.admin-kpi,
+.admin-card {
+  border-radius: 1rem;
+  border: 1px solid #d3e4fe;
+  background: #fff;
+  padding: 1rem;
+}
+
+.admin-kpi span,
+.admin-card__meta,
+.pill {
+  font-size: 0.84rem;
+  color: #444653;
+}
+
+.admin-kpi strong {
+  display: block;
+  margin-top: 0.3rem;
+  color: #0b1c30;
+  font-size: 1.4rem;
+}
+
+.admin-card {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.admin-card__head,
+.admin-card__meta,
+.admin-card__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.admin-card__head h3,
+.admin-card__head p,
+.admin-card__text {
+  margin: 0;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-weight: 800;
+}
+
+.pill--warning {
+  background: #ffddb9;
+  color: #694000;
+}
+
+.pill--accent {
+  background: #dce9ff;
+  color: #1e40af;
+}
+
+.button--ghost--dark {
+  color: #1e40af;
+  border-color: #d3e4fe;
+  background: #fff;
+}
+
 @media (max-width: 1100px) {
   .hero__inner,
   .spotlight,
@@ -1037,7 +1137,8 @@
 
   .commerce-layout,
   .checkout-grid,
-  .detail-grid {
+  .detail-grid,
+  .admin-page__shell {
     grid-template-columns: 1fr;
   }
 }
