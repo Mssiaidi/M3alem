@@ -419,4 +419,27 @@
       { type: 'toolbar', left: ['Code Promo', 'Appliquer'], right: ['Payer la commande'] },
     ],
   },
+  profile: {
+    title: 'Mon Profil',
+    kicker: 'Compte utilisateur',
+    lead: 'Gerez vos informations personnelles et vos parametres de securite.',
+    heroAside: [
+      { label: 'Nom', value: 'M3alem Artisan' },
+      { label: 'Email', value: 'contact@m3alem.ma' },
+      { label: 'Role', value: 'Vendeur / Client' },
+    ],
+    cards: [
+      { title: 'Securite', text: 'Changer votre mot de passe et activer la 2FA.' },
+      { title: 'Adresses', text: 'Gerez vos adresses de livraison enregistrees.' },
+      { title: 'Notifications', text: 'Parametrez vos alertes par email et SMS.' },
+    ],
+    sections: [
+      {
+        type: 'form',
+        title: 'Informations Personnelles',
+        fields: ['Nom complet', 'Email', 'Telephone'],
+        actions: ['Mettre a jour le profil'],
+      },
+    ],
+  },
 }

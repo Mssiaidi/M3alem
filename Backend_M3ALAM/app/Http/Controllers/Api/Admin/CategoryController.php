@@ -32,7 +32,7 @@ class CategoryController extends Controller
         return response()->json($category, 201);
     }
 
-    public function update(Request $request, Category category): JsonResponse
+    public function update(Request $request, Category $category): JsonResponse
     {
         $validated = $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255', 'unique:categories,name,' . $category->id],
@@ -49,7 +49,7 @@ class CategoryController extends Controller
         return response()->json($category);
     }
 
-    public function destroy(Category category): JsonResponse
+    public function destroy(Category $category): JsonResponse
     {
         if ($category->products()->exists()) {
             return response()->json(['message' => 'Impossible de supprimer une catégorie contenant des produits.'], 422);
