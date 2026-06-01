@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#cbdbf5",
+                    "on-secondary-container": "#694000",
+                    "primary-fixed": "#dde1ff",
+                    "surface-variant": "#d3e4fe",
+                    "surface": "#f8f9ff",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary-container": "#1e40af",
+                    "on-tertiary-container": "#ffa583",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#173bab",
+                    "primary": "#00288e",
+                    "surface-container-highest": "#d3e4fe",
+                    "outline-variant": "#c4c5d5",
+                    "on-tertiary-fixed-variant": "#802a00",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbce",
+                    "tertiary-container": "#872d00",
+                    "on-background": "#0b1c30",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed": "#2b1700",
+                    "on-primary-container": "#a8b8ff",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary": "#611e00",
+                    "secondary-fixed-dim": "#ffb961",
+                    "secondary": "#865300",
+                    "outline": "#757684",
+                    "inverse-primary": "#b8c4ff",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#fea520",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-fixed-variant": "#663e00",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "background": "#f8f9ff",
+                    "on-primary-fixed": "#001453",
+                    "on-surface-variant": "#444653",
+                    "surface-container": "#e5eeff",
+                    "on-surface": "#0b1c30",
+                    "surface-tint": "#3755c3",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#380d00",
+                    "secondary-fixed": "#ffddb9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "container-max": "1280px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar Shell -->
+<header class="bg-surface-container-lowest border-b border-outline-variant shadow-sm sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto h-16">
+<div class="text-headline-md font-headline-md font-bold text-primary-container">M3alem Marketplace</div>
+<div class="hidden md:flex items-center gap-lg">
+<nav class="flex gap-md">
+<a class="text-primary-container font-bold border-b-2 border-primary-container font-label-md text-label-md py-xs" href="#">Accueil</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-md text-label-md py-xs px-sm rounded-lg" href="#">Artisans</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors font-label-md text-label-md py-xs px-sm rounded-lg" href="#">Ateliers</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-on-surface-variant p-sm hover:bg-surface-container-low rounded-full transition-all active:scale-95" data-icon="shopping_cart">shopping_cart</button>
+<button class="material-symbols-outlined text-on-surface-variant p-sm hover:bg-surface-container-low rounded-full transition-all active:scale-95" data-icon="notifications">notifications</button>
+<img alt="Artisan Profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional close-up portrait of a skilled male artisan in a modern creative studio. He wears a clean linen shirt and has a warm, confident expression. The background is softly blurred, showing hints of handcrafted wood and pottery tools under bright, natural daylight. The lighting is high-key and professional, matching a clean corporate light-mode UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz6elkLbL52JF6stjvCQPFHlbSel1qmr0dArACO2NpZNlUsOHRy4Iz49McMNGiHTuEbT_Y5qVDKqLz3KSV5P-vuVPBJ_fdoNGzZMX_BED-fQUgAmm18hD4hSwiz3QDvc7Lyl6uO-hDDr5d1HlfENq8im3eZ3qnU_Ds6TPQLQ5NIRZMzzhWnWJPPma_CW9rQ51i_xf8c9hGDMPgvvxuV6sya26YeH1iVH8unFGrg7tlgzUd8lNykOtdUUHTuI2UJ6S-ZFH_aq8Umew"/>
+</div>
+</div>
+</div>
+</header>
+<main class="w-full">
+<!-- Hero Section: Welcome Message -->
+<section class="relative bg-primary-container text-white overflow-hidden">
+<div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row items-center gap-xl relative z-10">
+<div class="flex-1 space-y-md">
+<div class="inline-flex items-center px-sm py-xs bg-secondary-container text-on-secondary-container rounded-full gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm">Artisanat Certifié</span>
+</div>
+<h1 class="font-display-lg text-display-lg leading-tight">L'excellence de l'artisanat marocain à votre portée.</h1>
+<p class="font-body-lg text-body-lg text-primary-fixed-dim max-w-xl">Découvrez une sélection rigoureuse d'objets uniques façonnés par les meilleurs M3alems. Qualité, tradition et modernité réunies.</p>
+<div class="flex flex-wrap gap-md pt-md">
+<button class="bg-white text-primary-container px-xl py-md rounded-xl font-label-md text-label-md font-bold hover:shadow-lg transition-all active:scale-95">Explorer les produits</button>
+<button class="border-2 border-primary-fixed text-white px-xl py-md rounded-xl font-label-md text-label-md font-bold hover:bg-primary/20 transition-all active:scale-95">Devenir Exposant</button>
+</div>
+</div>
+<div class="flex-1 hidden md:block">
+<div class="relative group">
+<div class="absolute -inset-4 bg-secondary-container/20 rounded-3xl blur-2xl transition-all group-hover:blur-3xl"></div>
+<img class="relative rounded-3xl shadow-2xl border-4 border-white/10" data-alt="A high-fidelity close-up of a Moroccan artisan's hands meticulously carving intricate patterns into a piece of fine cedar wood. The setting is a brightly lit, modern workshop with tools organized neatly in the background. The lighting highlights the texture of the wood and the precision of the movement. The overall atmosphere is professional, sophisticated, and clean, using a palette of warm wood tones and professional blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtjN42VSuaH3nhNjfepS5UxVbcr9-MC6XCtcJwkkDlr2lR2YqROsOLQvc2tMHZ3qghDn9SUdXSjBwnjNDmocmORiCdvXbdkMzkDcbfQ1zcr_Y3gKMrRTXFe5VwRhspMaYQ47ZNNpoa6LQinoFgBr96IejrEcVJhQOh_m-SXydkXZI0-yGx_Z5sXxzp4oRQGLoq6IWoZLNlJatDnaOcqnRvS9J-9P4Z9QHOCmK-nqvgXhv_-T1BL8EN6L6R0n-O4voK6_x4f0yhik4"/>
+</div>
+</div>
+</div>
+<!-- Geometric Accents -->
+<div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary to-transparent opacity-50"></div>
+</section>
+<!-- Categories: Bento Grid Layout -->
+<section class="max-w-container-max mx-auto px-lg py-xl">
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Catégories d'Exception</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Parcourez nos univers artisanaux</p>
+</div>
+<button class="text-primary-container font-label-md text-label-md font-bold flex items-center gap-xs hover:underline">
+                    Voir tout <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-md auto-rows-[240px]">
+<!-- Large Tile -->
+<div class="md:col-span-2 md:row-span-2 relative rounded-xl overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Exquisite handcrafted ceramic pottery with intricate traditional blue and white patterns, displayed in a bright, minimalist gallery. The lighting is soft and even, emphasizing the glossy finish of the plates and bowls. The scene is clean and professional, representing a premium marketplace aesthetic with a focus on high-quality artisanal craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2nmK79ZEMDJ9jfGNpZ1j98ing5AnYeVio5_ngs8kj_aeQUUiENLPrfGSY2NRLfVjjtLaE5g9l6gGGSuzvBaFcFg9J7309jvdJ7HcaXnZPTrBske7pZQBYIrESDNcVQWubSV0s8ygSQ1Zcn4y1Lrl-5vvZe0FYVmbg5piVWfue5k9u-kdWDHEniO0d-VXwtn9AJHCGEZljpIt1L-QIy-FaB7ZvnRJmQQTGbJh2UJs8dw5lTEnLu5D-954E04mCDQuc6tCK7BbpDIc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-lg">
+<h3 class="text-white font-headline-md text-headline-md">Céramique &amp; Poterie</h3>
+<p class="text-white/80 font-body-md text-body-md">L'art ancestral de Fès et Safi</p>
+</div>
+</div>
+<!-- Small Tile -->
+<div class="relative rounded-xl overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A collection of luxury leather goods including handmade bags and wallets in rich tan and deep brown colors. The items are staged on a clean slate surface with dramatic, soft side lighting that captures the premium grain of the leather. The background is a clean, modern studio setting, conveying a sense of high-end fashion and durability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn9WCIgkokEZDedRN3J5zmr1vCL2IJUknc_vAjD3r6Zgi_qmnuLOfyuM1QvEve4fXiBxQaFKZhLFgnz43aVZhkKLhmXV8RnPnxkJQInKkkdN2V0H_zWXzQ0MYCORqNHRbR1kB-n9f7v0XEARwdzMQbPTgspshVC1xwBEtTtZfZDN9pr1ZLsrVFMjpKvoUbMPbBKKM51BosHeO4nU8RN33gYv_gaScY71EuIhWd2U7Ixui9WpQyqTHlfjEuFdxw8M8Cyp3efsgtYcs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-md">
+<h3 class="text-white font-label-md text-label-md font-bold">Maroquinerie</h3>
+</div>
+</div>
+<!-- Small Tile -->
+<div class="relative rounded-xl overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Close-up of a vibrant, hand-woven Berber rug with geometric patterns in natural wool colors. The texture is plush and rich, shown under warm, bright lighting that reveals the individual knots. The setting is a contemporary high-end living room with a minimalist aesthetic, highlighting how traditional crafts fit into modern homes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRZMTOBzKtqnXs-zOHwuVtxO50_2IELrMKKwvKGh1rRt-hWI0uniprMP30CCB4s-Fi7KbwY6pLJEceJpSJXnvOwejwOop3WhgORiS4zQhVfJVCN4idQFPqywa66VV1wzAaSq8K2W4tipjzuWHrHT6eln7Z3_n6WE4sUlC-VSTudD4f2BLa5gfYTCCKcbhY7e03VON-YjlrgH2rxozvmkOPXtQSg6vb29jbE5yk0eNSm5YlczZCI1cMXDzsMuSKAXcEaNmtoBo0vzA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-md">
+<h3 class="text-white font-label-md text-label-md font-bold">Tapis &amp; Tissage</h3>
+</div>
+</div>
+<!-- Medium Tile -->
+<div class="md:col-span-2 relative rounded-xl overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Polished brass lanterns and copper kitchenware featuring intricate hand-hammered details. The metallic surfaces reflect soft, warm light in a clean, modern kitchen environment. The overall mood is sophisticated and warm, showcasing the metallic artistry of traditional metalworkers in a contemporary setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdqWQs77OlT2G93D7_9gCXGx9STLicn3bVB1Toq2T5R6Z7JksQT-PLsz9AoDH8moLeSWmWmSE5GZ76oYNXnPqAsu2oO4Wgy0pRM1a1q_whu-4b8ORNCzNQ2luWBPjO7BB7rB4c2dxIyxZqYf95VRbfBGVPiSuR2TKlxtXMKUBIfGKFJDXsr2JZrOHZ20rIh1WF5eus_J3TnauCXdNiQDgW9lk7VEPH2MGR8_9JdqxLNdlzUm8Sc1JuYppS2cgzmXfspH3pYvPEpYk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-lg">
+<h3 class="text-white font-headline-md text-headline-md">Dinanderie &amp; Cuivre</h3>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Products -->
+<section class="bg-surface-container-low py-xl">
+<div class="max-w-container-max mx-auto px-lg">
+<div class="flex justify-between items-center mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Produits en Vedette</h2>
+<div class="flex gap-sm">
+<button class="w-10 h-10 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container transition-all active:scale-95"><span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span></button>
+<button class="w-10 h-10 rounded-full border border-outline flex items-center justify-center hover:bg-surface-container transition-all active:scale-95"><span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+<!-- Product Card 1 -->
+<div class="bg-white rounded-xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A beautiful, handcrafted ceramic tajine with vibrant, hand-painted floral motifs in blue and amber. It sits on a minimalist white stone countertop in a bright, modern kitchen. The lighting is crisp and natural, highlighting the glaze and fine details of the craftsmanship. The atmosphere is high-end and artisanal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMBRlWFuSBFiUBMfoH5xHjN7WAvrjJH0Hx94XNRsshxRO3v2qc-tUwYdKaFqoO66ZansFe2qYNbmmJ5terJ9IhpnHKPgmzv4HGXhvFYtuasnnbKcrrWB8KNnslyM0Cb5H3DVoLCO6E9Dlpl-i-8sEVoVdjEEBQ8G475LebxrhTo31jHO-RK8nxRhk_zv3-LJyckqevq-4TtzdWQm01M1wtbacmjjhd3-IJVJEDLcJJnNpXUwEaE159rOtrLkfNr94ThLsDNNshfB8"/>
+<div class="absolute top-sm left-sm px-sm py-[2px] bg-secondary-container text-on-secondary-container rounded-full font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+                                Best Seller
+                            </div>
+<button class="absolute bottom-sm right-sm w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary-container shadow-md hover:bg-white active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-label-sm text-primary-container mb-xs">Céramique de Safi</p>
+<h4 class="font-body-md text-body-md font-bold text-on-surface truncate">Tajine Décoratif "Bleu Royal"</h4>
+<div class="flex justify-between items-center mt-md">
+<span class="font-headline-md text-headline-md text-on-surface">450 DH</span>
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md ml-xs">4.9</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-white rounded-xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A pair of luxury handmade leather slippers, or babouches, in a soft saffron yellow. They are placed neatly on a polished wooden floor within a minimalist interior space. The lighting is soft and warm, emphasizing the quality of the stitching and the suppleness of the leather. The image conveys a sense of comfort and artisanal luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwOIpMBr58DF4DYlJxxj6eOjOtPCxx9dJrkYaSZm2KDzq_2sE72oTncvVE5EYeIKbxz34mnd9oUtxBB3-cG_aFmYziXRxhmQChlxvaRfCs17imDsDgoS-C4LLc2W3Un7Jg4VUD3Fohiofhvm_sDqUfDDaEG2k8ZeWksxz9_N8aBovqi7Y2PJwW2pDAyAprkA6FoIBJvtH6llUJvDnLlAKvf3vG7TOZEb6COne-YdpVcQdUSjKhSdiv9v7ercbTLiarg8yqyp0dops"/>
+<div class="absolute top-sm left-sm px-sm py-[2px] bg-primary-container text-white rounded-full font-label-sm text-label-sm">
+                                Nouveau
+                            </div>
+<button class="absolute bottom-sm right-sm w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary-container shadow-md hover:bg-white active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-label-sm text-primary-container mb-xs">Maroquinerie de Luxe</p>
+<h4 class="font-body-md text-body-md font-bold text-on-surface truncate">Babouches Artisanales Saffian</h4>
+<div class="flex justify-between items-center mt-md">
+<span class="font-headline-md text-headline-md text-on-surface">280 DH</span>
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md ml-xs">4.8</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-white rounded-xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stunning hand-carved cedar wood jewelry box with intricate geometric marquetry and bone inlays. It sits on a dark velvet surface under a focused warm spotlight, creating elegant shadows. The high-contrast lighting emphasizes the precision of the woodwork and the luxury feel of the item, suitable for a professional boutique marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6LvDr1iwGNNvNM4JYziU4NOMf0rdJF-CUULvSjyI0pzqvxr5pUlpKRbj4GlkES2HlJM2oqH-iVljLyAPnNU2HfMFQILvC7FKRreL3T_5S0sydWf-9dofC1kigeBfgx987Ko-pjYJVfG_L5ujV3eQPQjglNyIDWHtDmDCDqYn1_To4PFZvxSv5BeW7LOeivlSQwOPwvG_1pbj9Fq2D9hwio27knm_dMmEaditjgL9yi_lJwv2uZ-sUvKLjSbP7Pspqz3OtMAS2vP8"/>
+<div class="absolute top-sm left-sm px-sm py-[2px] bg-secondary-container text-on-secondary-container rounded-full font-label-sm text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+                                Premium
+                            </div>
+<button class="absolute bottom-sm right-sm w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary-container shadow-md hover:bg-white active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-label-sm text-primary-container mb-xs">Ebénisterie</p>
+<h4 class="font-body-md text-body-md font-bold text-on-surface truncate">Coffret en Cèdre Sculpté</h4>
+<div class="flex justify-between items-center mt-md">
+<span class="font-headline-md text-headline-md text-on-surface">650 DH</span>
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md ml-xs">5.0</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="bg-white rounded-xl overflow-hidden border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A large hand-hammered copper wall mirror with traditional sunburst patterns. The copper has a warm, glowing patina and reflects the soft light of a modern minimalist hallway. The lighting is airy and bright, showcasing the texture of the metalwork against a neutral wall. The overall look is one of high-end artisanal interior design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw7I81rraHrC8vOxdzt8cCcg-vR-Y14dZWROLCp3GDOoEe6z1zfti-XHL4v3ls61b6h7fANm8JsX8VhxkaWiRa9Z710pvoLUD-tSa-EJm83wBIrqPRi8lAJp_PRqGjCdwBgA6z2lggUdS4pZ4vU015fXt89K4ClqFOM1aX7KfIfpqOClHrOAHYHBnD9GpH5_qNXMsneNiu7tia5zT4nZLGNeMesRtkYc6bsw30vNqF07Qy__3Xcyt-nXXqEAjGETKzRwUx4x08Q_k"/>
+<button class="absolute bottom-sm right-sm w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary-container shadow-md hover:bg-white active:scale-90 transition-all">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+</div>
+<div class="p-md">
+<p class="font-label-sm text-label-sm text-primary-container mb-xs">Dinanderie</p>
+<h4 class="font-body-md text-body-md font-bold text-on-surface truncate">Miroir en Cuivre Martelée</h4>
+<div class="flex justify-between items-center mt-md">
+<span class="font-headline-md text-headline-md text-on-surface">1,200 DH</span>
+<div class="flex items-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md ml-xs">4.7</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-xl text-center">
+<button class="bg-primary-container text-white px-xl py-md rounded-xl font-label-md text-label-md font-bold hover:bg-primary transition-all active:scale-95 inline-flex items-center gap-md">
+                        Voir tout le catalogue
+                        <span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Artisans Spotlight -->
+<section class="max-w-container-max mx-auto px-lg py-xl">
+<div class="bg-inverse-surface text-white rounded-3xl p-xl flex flex-col md:flex-row items-center gap-xl">
+<div class="flex-1">
+<h2 class="font-headline-lg text-headline-lg mb-md">Rencontrez nos M3alems</h2>
+<p class="font-body-lg text-body-lg text-surface-variant mb-xl">Derrière chaque produit se cache une histoire, un savoir-faire transmis de génération en génération. Découvrez les visages de l'artisanat marocain.</p>
+<div class="grid grid-cols-2 gap-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center font-bold text-xl">50+</div>
+<span class="font-label-md text-label-md">Artisans certifiés</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center font-bold text-xl text-on-secondary-container">12</div>
+<span class="font-label-md text-label-md">Villes représentées</span>
+</div>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-md w-full">
+<img class="rounded-2xl border border-white/10" data-alt="A portrait of an elderly artisan with deep-set lines of experience on his face, working in his sun-drenched shop. He is focused on hand-stitching a piece of leather. The lighting is golden and warm, casting long shadows and highlighting the dusty, authentic atmosphere of a traditional workshop in Marrakech." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVzcFlcp6yiST1JR6bXQWVcrQJsX7Msnt5B_naiDG8x5EiJWDSmZ2L4i7rUOcc5LBpwtGfNDtexQSgJQd60fW4ZEfXD0SciiUTTES_wrTbE-_S1dYDxn8nGM8iQR-Mgopq-JWt1uFz5OaQVdRBiSQSr__P7qMIjcoM96wnKQWAbI1HHeB-0LIayznxvpMHXv-0v0T6XX4cWmAjnzR8Gnmy4qp4aBJiDiNOzwHmuYYgkJ8-cPbsvNzWrp4wToQVB3spkvNJjSPp6RQ"/>
+<img class="rounded-2xl mt-xl border border-white/10" data-alt="A younger female artisan delicately painting fine ceramic patterns with a thin brush. She is in a bright, modern studio with white walls and professional overhead lighting. The scene is clean and focused, representing the blend of traditional craft with modern creative spaces. The colors are crisp and the mood is one of quiet concentration." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_g457GytyrvAtvMmbIPwuiid3w1wbuiwqy8XozsVX38pKfWlrl1cLfDVBCOSeWV10Kuc1Isa8IhNnPcMu7xSGTanIYZnHLo1nnB3KpzuFwzJXBdvzbA2XuFdULbQLFhYDvRPeTBvcYQdpldJIbKXwvJJwcwJZgc2srZwfWMnCZfJGPH-1yYx8CGrWyzWiMwzgmhp3fKR6kQLGTcSnRHqlMqm6M6NIiq0LKU9Av75TqvrIFGOMAYo-wPnZr9vWZA4EBRg5wdkrwxA"/>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Shell -->
+<footer class="bg-surface-container-highest border-t border-outline-variant">
+<div class="max-w-container-max mx-auto px-lg py-xl">
+<div class="flex flex-col md:flex-row justify-between gap-xl mb-xl">
+<div class="space-y-md">
+<div class="text-headline-md font-headline-md font-bold text-primary-container">M3alem Marketplace</div>
+<p class="max-w-xs font-body-md text-body-md text-on-surface-variant">La plateforme de référence pour l'artisanat marocain authentique et moderne.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-xl">
+<div class="space-y-sm">
+<h5 class="font-label-md text-label-md font-bold text-on-surface">Place de marché</h5>
+<ul class="space-y-xs">
+<li><a class="text-on-surface-variant hover:text-primary-container font-label-sm text-label-sm transition-all" href="#">About Artisans</a></li>
+<li><a class="text-on-surface-variant hover:text-primary-container font-label-sm text-label-sm transition-all" href="#">Quality Standards</a></li>
+<li><a class="text-on-surface-variant hover:text-primary-container font-label-sm text-label-sm transition-all" href="#">Seller Policy</a></li>
+</ul>
+</div>
+<div class="space-y-sm">
+<h5 class="font-label-md text-label-md font-bold text-on-surface">Support</h5>
+<ul class="space-y-xs">
+<li><a class="text-on-surface-variant hover:text-primary-container font-label-sm text-label-sm transition-all" href="#">Support</a></li>
+<li><a class="text-on-surface-variant hover:text-primary-container font-label-sm text-label-sm transition-all" href="#">Contact</a></li>
+<li><a class="text-on-surface-variant hover:text-primary-container font-label-sm text-label-sm transition-all" href="#">Livraison</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-lg border-t border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
+<div class="flex gap-md mt-md md:mt-0">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-container cursor-pointer" data-icon="language">language</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-container cursor-pointer" data-icon="share">share</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
