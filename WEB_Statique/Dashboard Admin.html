@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>M3alem Marketplace - Artisan Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-container": "#694000",
+                        "primary-fixed": "#dde1ff",
+                        "surface-variant": "#d3e4fe",
+                        "surface": "#f8f9ff",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary-container": "#1e40af",
+                        "on-tertiary-container": "#ffa583",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#173bab",
+                        "primary": "#00288e",
+                        "surface-container-highest": "#d3e4fe",
+                        "outline-variant": "#c4c5d5",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbce",
+                        "tertiary-container": "#872d00",
+                        "on-background": "#0b1c30",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "inverse-surface": "#213145",
+                        "on-secondary-fixed": "#2b1700",
+                        "on-primary-container": "#a8b8ff",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary": "#611e00",
+                        "secondary-fixed-dim": "#ffb961",
+                        "secondary": "#865300",
+                        "outline": "#757684",
+                        "inverse-primary": "#b8c4ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#fea520",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-fixed-variant": "#663e00",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "background": "#f8f9ff",
+                        "on-primary-fixed": "#001453",
+                        "on-surface-variant": "#444653",
+                        "surface-container": "#e5eeff",
+                        "on-surface": "#0b1c30",
+                        "surface-tint": "#3755c3",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#380d00",
+                        "secondary-fixed": "#ffddb9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant py-md z-50">
+<div class="px-lg mb-xl">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary-container">Artisan Portal</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Manage your craft</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active Tab: Dashboard -->
+<a class="flex items-center gap-md px-lg py-md bg-primary-container text-on-primary rounded-lg mx-2 my-1 active:scale-98 duration-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 active:scale-98 duration-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-md text-label-md">My Products</span>
+</a>
+<a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 active:scale-98 duration-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+<a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 active:scale-98 duration-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span class="font-label-md text-label-md">Workshops</span>
+</a>
+<a class="flex items-center gap-md px-lg py-md text-on-surface-variant hover:bg-surface-container-high rounded-lg mx-2 my-1 active:scale-98 duration-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</nav>
+<div class="px-lg mt-auto">
+<button class="w-full flex items-center justify-center gap-sm bg-primary text-on-primary py-md rounded-xl font-label-md text-label-md hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                List New Item
+            </button>
+</div>
+</aside>
+<div class="md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest border-b border-outline-variant shadow-sm h-16 sticky top-0 z-40">
+<div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto h-full">
+<div class="flex items-center gap-lg">
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<div class="hidden md:flex items-center bg-surface-container-low rounded-full px-md py-xs border border-outline-variant w-96">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full" placeholder="Search orders or artisans..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-secondary rounded-full border-2 border-surface-container-lowest"></span>
+</button>
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-sm"></div>
+<div class="flex items-center gap-sm">
+<img alt="Artisan Profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of a mature craftsman with graying hair and a warm smile, wearing a clean canvas apron. The background is a brightly lit, modern workshop with tools neatly organized on a pegboard. The lighting is soft and natural, emphasizing a professional yet approachable aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQIrsvFXe2s5zOkn12T3H2Y3-3bGEbBLT9R-5FzJb0r5kD3b2rYEAFGuWQlPNsm5ysh2VWbZAmQSAWsWinatDfDQ91R_atqO5mclstjs04E_2GiN0uzeT3z7cHGD5gEUJt1Q2ueVCw0onLLXhPybN46cqBvhoVpLhQ_8TaHCXCyLi1TtAqgrdnCPoaj6X7lJSji93O2g-eoRUOm-xE0TwOcWWlEIK6QXtM3AzoRZZinVy4Z5bmxAIm_qE5dwsD6hyMxPfn2vGyq7Y"/>
+<span class="hidden lg:block font-label-md text-label-md font-bold text-on-surface">M. Ahmed</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-lg max-w-container-max mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Performance Overview</h2>
+<p class="text-body-md text-on-surface-variant">Welcome back, M3alem. Here's what's happening today.</p>
+</div>
+<div class="flex items-center gap-sm bg-surface-container rounded-lg p-xs">
+<button class="px-md py-sm rounded-md bg-surface-container-lowest shadow-sm text-label-sm font-label-sm text-primary">Day</button>
+<button class="px-md py-sm rounded-md text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-container-high transition-all">Week</button>
+<button class="px-md py-sm rounded-md text-label-sm font-label-sm text-on-surface-variant hover:bg-surface-container-high transition-all">Month</button>
+</div>
+</div>
+<!-- Bento Grid KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg mb-xl">
+<!-- KPI 1 -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between h-40 group hover:border-primary-container transition-all">
+<div class="flex justify-between items-start">
+<div class="p-sm bg-surface-container rounded-lg text-primary-container">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="text-secondary font-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span>
+                            +12.5%
+                        </span>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant">Total Revenue</p>
+<h3 class="text-headline-md font-headline-md font-bold text-on-surface">$24,500.00</h3>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between h-40 group hover:border-primary-container transition-all">
+<div class="flex justify-between items-start">
+<div class="p-sm bg-surface-container rounded-lg text-primary-container">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<span class="text-secondary font-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span>
+                            +8.2%
+                        </span>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant">Active Customers</p>
+<h3 class="text-headline-md font-headline-md font-bold text-on-surface">1,284</h3>
+</div>
+</div>
+<!-- KPI 3: Amber Alert KPI -->
+<div class="bg-secondary-container bg-opacity-10 p-lg rounded-xl border border-secondary border-opacity-30 shadow-sm flex flex-col justify-between h-40 group hover:shadow-md transition-all">
+<div class="flex justify-between items-start">
+<div class="p-sm bg-secondary-fixed text-on-secondary-container rounded-lg">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<span class="bg-secondary text-white text-[10px] px-sm py-xs rounded-full font-bold">URGENT</span>
+</div>
+<div>
+<p class="text-label-md text-on-secondary-fixed-variant">Pending Moderation</p>
+<h3 class="text-headline-md font-headline-md font-bold text-on-secondary-container">14 Alerts</h3>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between h-40 group hover:border-primary-container transition-all">
+<div class="flex justify-between items-start">
+<div class="p-sm bg-surface-container rounded-lg text-primary-container">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-on-surface-variant font-label-sm">Steady</span>
+</div>
+<div>
+<p class="text-label-md text-on-surface-variant">Avg. Rating</p>
+<h3 class="text-headline-md font-headline-md font-bold text-on-surface">4.9 / 5.0</h3>
+</div>
+</div>
+</div>
+<!-- Dashboard Analytics & Alerts Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Large Chart Card -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<div class="flex justify-between items-center mb-xl">
+<h4 class="font-headline-md text-headline-md text-on-surface">Sales Growth</h4>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="h-64 flex items-end gap-sm md:gap-lg px-md">
+<div class="flex-1 bg-surface-container-high rounded-t-lg h-[40%] group relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$12k</div>
+</div>
+<div class="flex-1 bg-surface-container-high rounded-t-lg h-[60%] group relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$18k</div>
+</div>
+<div class="flex-1 bg-primary-container rounded-t-lg h-[85%] group relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$24k</div>
+</div>
+<div class="flex-1 bg-surface-container-high rounded-t-lg h-[55%] group relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$15k</div>
+</div>
+<div class="flex-1 bg-surface-container-high rounded-t-lg h-[70%] group relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$21k</div>
+</div>
+<div class="flex-1 bg-secondary-container rounded-t-lg h-[95%] group relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">$28k</div>
+</div>
+</div>
+<div class="flex justify-between mt-md px-md text-label-sm text-on-surface-variant">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+</div>
+</div>
+<!-- System Notifications & Alerts -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-lg">System Alerts</h4>
+<div class="space-y-md">
+<!-- Moderation Alert -->
+<div class="p-md bg-secondary-container bg-opacity-5 rounded-lg border-l-4 border-secondary flex gap-md">
+<span class="material-symbols-outlined text-secondary" data-icon="report">report</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Review Required</p>
+<p class="text-label-sm text-on-surface-variant">New listing "Hand-carved Oak Table" needs quality verification.</p>
+</div>
+</div>
+<!-- Normal Notif -->
+<div class="p-md bg-surface-container rounded-lg flex gap-md">
+<span class="material-symbols-outlined text-primary-container" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Server Healthy</p>
+<p class="text-label-sm text-on-surface-variant">System synchronization completed successfully at 04:00 AM.</p>
+</div>
+</div>
+<!-- Moderation Alert -->
+<div class="p-md bg-secondary-container bg-opacity-5 rounded-lg border-l-4 border-secondary flex gap-md">
+<span class="material-symbols-outlined text-secondary" data-icon="notification_important">notification_important</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Payout Delayed</p>
+<p class="text-label-sm text-on-surface-variant">Verification needed for transaction #882193-TX.</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-xl py-sm border border-outline text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-colors">View All Notifications</button>
+</div>
+</div>
+<!-- Recent Activity Table Section -->
+<section class="mt-xl bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h4 class="font-headline-md text-headline-md text-on-surface">Recent Orders</h4>
+<a class="text-primary font-label-md text-label-md hover:underline" href="#">View All Orders</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+<tr>
+<th class="px-lg py-md">Product</th>
+<th class="px-lg py-md">Customer</th>
+<th class="px-lg py-md">Status</th>
+<th class="px-lg py-md">Amount</th>
+<th class="px-lg py-md">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 bg-surface-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="image">image</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Leather Satchel</span>
+</div>
+</td>
+<td class="px-lg py-md text-on-surface-variant text-body-md">Sarah Williams</td>
+<td class="px-lg py-md">
+<span class="px-md py-xs bg-green-100 text-green-700 rounded-full text-label-sm font-label-sm">Completed</span>
+</td>
+<td class="px-lg py-md font-bold text-on-surface">$120.00</td>
+<td class="px-lg py-md">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 bg-surface-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="image">image</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface">Ceramic Vase</span>
+</div>
+</td>
+<td class="px-lg py-md text-on-surface-variant text-body-md">John Doe</td>
+<td class="px-lg py-md">
+<span class="px-md py-xs bg-secondary-container bg-opacity-20 text-on-secondary-container rounded-full text-label-sm font-label-sm">Processing</span>
+</td>
+<td class="px-lg py-md font-bold text-on-surface">$85.00</td>
+<td class="px-lg py-md">
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined" data-icon="visibility">visibility</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-outline-variant mt-xl">
+<div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
+<div class="flex flex-col items-center md:items-start">
+<p class="text-headline-md font-headline-md font-bold text-primary-container">M3alem Marketplace</p>
+<p class="text-label-sm text-label-sm text-on-surface-variant mt-xs">© 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
+</div>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm font-label-sm transition-all hover:underline" href="#">About Artisans</a>
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm font-label-sm transition-all hover:underline" href="#">Quality Standards</a>
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm font-label-sm transition-all hover:underline" href="#">Seller Policy</a>
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm font-label-sm transition-all hover:underline" href="#">Support</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

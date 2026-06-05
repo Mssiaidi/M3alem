@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>M3alem Marketplace - Catalogue Artisan</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#cbdbf5",
+                        "on-secondary-container": "#694000",
+                        "primary-fixed": "#dde1ff",
+                        "surface-variant": "#d3e4fe",
+                        "surface": "#f8f9ff",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "primary-container": "#1e40af",
+                        "on-tertiary-container": "#ffa583",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#173bab",
+                        "primary": "#00288e",
+                        "surface-container-highest": "#d3e4fe",
+                        "outline-variant": "#c4c5d5",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdbce",
+                        "tertiary-container": "#872d00",
+                        "on-background": "#0b1c30",
+                        "primary-fixed-dim": "#b8c4ff",
+                        "inverse-surface": "#213145",
+                        "on-secondary-fixed": "#2b1700",
+                        "on-primary-container": "#a8b8ff",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary": "#611e00",
+                        "secondary-fixed-dim": "#ffb961",
+                        "secondary": "#865300",
+                        "outline": "#757684",
+                        "inverse-primary": "#b8c4ff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#fea520",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-fixed-variant": "#663e00",
+                        "surface-container-high": "#dce9ff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "background": "#f8f9ff",
+                        "on-primary-fixed": "#001453",
+                        "on-surface-variant": "#444653",
+                        "surface-container": "#e5eeff",
+                        "on-surface": "#0b1c30",
+                        "surface-tint": "#3755c3",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#380d00",
+                        "secondary-fixed": "#ffddb9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 z-50 w-full bg-surface-container-lowest border-b border-outline-variant shadow-sm h-16">
+<div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto h-full">
+<div class="flex items-center gap-xl">
+<span class="text-headline-md font-headline-md font-bold text-primary-container">M3alem Marketplace</span>
+<div class="hidden md:flex gap-md">
+<a class="text-primary-container font-bold border-b-2 border-primary-container px-sm py-xs font-label-md text-label-md" href="#">Explore</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-sm py-xs rounded-lg font-label-md text-label-md" href="#">Artisans</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-colors px-sm py-xs rounded-lg font-label-md text-label-md" href="#">Workshops</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 w-64 focus:ring-2 focus:ring-primary-container text-body-md font-body-md" placeholder="Rechercher un artisan ou un produit..." type="text"/>
+</div>
+<div class="flex gap-sm">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full active:scale-95">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+<img alt="Artisan Profile" class="w-10 h-10 rounded-full border border-outline-variant object-cover" data-alt="A professional close-up headshot of a skilled artisan in their early 40s, looking confidently at the camera with a warm, welcoming expression. The background is a soft-focus workshop filled with woodworking tools and natural warm lighting. The overall mood is professional, trustworthy, and masterfully composed in a clean, high-fidelity light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmARtddYGSfve14zSw8efoaXNYOLnbTFPn5r01sZ9PqlyeLigqDVm4FSSlUylNzpEXd68Ih4GQMQXgWCUnnboYsvHY7KT_ydQPzeqVXNJFv5R--0h886c7bXUMHFR30giS2cMvE_mXhZ9yxti1Oz-qIU5-pataJ7_kcT4UxXwOX5lDXsDV8zfpYnFVQOofhBVCmQKIShx-XWJw13KVXWLQ3d4M9IcXLhytSw8rN05zFYO9UGxl9ZtydwBCW64nxWS59qXV7xvY8RE"/>
+</div>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto pt-xl px-lg pb-xl mt-16 flex flex-col md:flex-row gap-lg">
+<!-- Sidebar Filters -->
+<aside class="w-full md:w-64 flex-shrink-0">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md sticky top-24">
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface">Filtres</h2>
+<span class="material-symbols-outlined text-primary" data-icon="filter_list">filter_list</span>
+</div>
+<div class="space-y-xl">
+<!-- Category -->
+<section>
+<h3 class="font-label-md text-label-md text-outline mb-md uppercase tracking-wider">Catégories</h3>
+<div class="space-y-sm">
+<label class="flex items-center gap-sm cursor-pointer group">
+<input checked="" class="rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-container transition-colors">Céramique</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-container transition-colors">Ebénisterie</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-container transition-colors">Tissage</span>
+</label>
+<label class="flex items-center gap-sm cursor-pointer group">
+<input class="rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-container transition-colors">Bijouterie</span>
+</label>
+</div>
+</section>
+<!-- Price Range -->
+<section>
+<h3 class="font-label-md text-label-md text-outline mb-md uppercase tracking-wider">Prix</h3>
+<input class="w-full h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary-container" type="range"/>
+<div class="flex justify-between mt-sm text-label-sm font-label-sm text-on-surface-variant">
+<span>0€</span>
+<span>1000€+</span>
+</div>
+</section>
+<!-- Rating -->
+<section>
+<h3 class="font-label-md text-label-md text-outline mb-md uppercase tracking-wider">Note Minimum</h3>
+<div class="space-y-sm">
+<button class="flex items-center gap-sm w-full hover:bg-surface-container-low p-sm rounded-lg transition-colors">
+<div class="flex text-secondary-container">
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="star">star</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">&amp; plus</span>
+</button>
+</div>
+</section>
+</div>
+<button class="w-full mt-xl bg-primary-container text-on-primary py-md rounded-lg font-label-md text-label-md hover:bg-primary transition-all active:scale-95 shadow-md">
+                    Appliquer les filtres
+                </button>
+</div>
+</aside>
+<!-- Product Grid Area -->
+<section class="flex-1">
+<!-- Header section -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-lg gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Produits d'Exception</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Découvrez des pièces uniques façonnées à la main par nos maîtres artisans.</p>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg">
+<span class="font-label-sm text-label-sm text-outline">Trier par:</span>
+<select class="border-none bg-transparent font-label-md text-label-md focus:ring-0 cursor-pointer text-primary">
+<option>Nouveautés</option>
+<option>Prix croissant</option>
+<option>Mieux notés</option>
+</select>
+</div>
+</div>
+<!-- Bento-style Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Product Card 1 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<div class="absolute top-md left-md z-10 flex flex-col gap-xs">
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-md py-xs rounded-full shadow-sm">Nouveau</span>
+</div>
+<button class="absolute top-md right-md z-10 bg-surface-container-lowest/80 backdrop-blur-md p-sm rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A beautiful, handcrafted ceramic vase with an organic, wavy silhouette and a matte teal glaze. The vase is positioned on a minimalist concrete surface against a soft cream backdrop. Morning sunlight filters through a nearby window, casting delicate shadows. The scene is clean, high-end, and perfectly aligned with a professional artisanal catalog aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU7LkmsvnjI387rBUCVkpyK3-c3_gO6xHifmsq9PGUKeDIXAnX-x3HZmCwWnKTVKZALJJosPky_WmjjXTgSq-8-LIOnzYDdTZzK6nSqNaHmiM0y9k-0flHVfIzFAVi8ntHTSQ0zIIWN8HswKTfImnXU0yIyJ0ZJt00s88xring0tlbRuqUdgMeHEI_MZW9hba_kzGF6h28f713ceSmTSh7M1PCbw-MVE5s_ICjWHXzdbrM_cPAcpOIu6h3nXAjme8nkPmFCSQsO0E"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Céramique</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.9</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Vase Ondulé "Azur"</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Façonné au tour avec une argile locale et fini avec un émail bleu profond exclusif.</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-primary-container">145,00 €</span>
+<button class="bg-surface-container-low hover:bg-primary-container hover:text-on-primary p-sm rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<button class="absolute top-md right-md z-10 bg-surface-container-lowest/80 backdrop-blur-md p-sm rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A premium solid walnut wooden chair with a mid-century modern influence, showcasing intricate joinery and a smooth hand-rubbed oil finish. The chair is placed in a bright, airy studio with light grey floors. The lighting is soft and diffuse, highlighting the rich wood grain and the professional craftsmanship of the piece. Modern, corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4X-A60iini7HM9inzZZxm_fnpO1WuvvXbILBWnAayYTK9ycQQPHtZo7198Fo3eoluEageZm_VnIMGVMLw9PwDazHZvx8PlB4RG4-mqe-kKTvT3oxwR2kdIiWdxUNrWDLMURnWF-mCwWBMRjYMlsoiCU_8Y4hEmpQB7_hcDdc4IplTiqouuXXCVenP0wg4OPraCzjeP3wqk9CXatsm3NCrug3l0GJuAVkJSo_ZrLp10xToU1kPnRf3UAS5mBQSTksfgBNJJGe5j1k"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Ebénisterie</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.8</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Chaise "Horizon"</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Noyer massif sculpté pour un confort ergonomique exceptionnel et une durabilité éternelle.</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-primary-container">420,00 €</span>
+<button class="bg-surface-container-low hover:bg-primary-container hover:text-on-primary p-sm rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<div class="absolute top-md left-md z-10 flex flex-col gap-xs">
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-md py-xs rounded-full shadow-sm">Premium</span>
+</div>
+<button class="absolute top-md right-md z-10 bg-surface-container-lowest/80 backdrop-blur-md p-sm rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A hand-woven textile wall hanging featuring a complex geometric pattern in shades of cream, ochre, and slate blue. The texture is rich and varied, utilizing wool and linen threads. It is displayed on a minimalist white wall in a high-end interior setting. The lighting is cinematic, coming from the side to emphasize the three-dimensional quality of the weave. Clean and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeQlF28a4tXWDuBBf1ZXyxySL8A9mk0yf1YYzyNGVh1vAN3xsQprdatjgLQqlcdFwGylWAzCDSJd9jBvya29A6Co7coHjGWohfa6snmg-3ELxlWGZ7yFejEP_qkze3swUy3uIpHLQLX8wdi5kAOvbPGb6iCD_s6WWbNeph5F-v61pH6XTAjFId3CkEN6qKLgXGQJioC8RDMMwedm4QkGk1h8pxZSNoDb6KkkqCENSaXbP5axiEbAOsxEJ91r9b73OND1_hT37d8qE"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Tissage</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">5.0</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Tapisserie "Atlas"</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Œuvre murale complexe mêlant techniques ancestrales et design géométrique moderne.</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-primary-container">280,00 €</span>
+<button class="bg-surface-container-low hover:bg-primary-container hover:text-on-primary p-sm rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<button class="absolute top-md right-md z-10 bg-surface-container-lowest/80 backdrop-blur-md p-sm rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up of an artisan hand-hammered brass bowl with a subtle golden sheen and a unique dimpled texture. The bowl sits on a dark slate surface, with soft warm lighting highlighting the metallic reflections. The atmosphere is quiet, luxurious, and focused on the materiality of the object. High-resolution commercial photography style with deep contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCocurCBV7NHD2QWgAt7XiFR6S7M2tE_8fzPSomqi_hxuqfD4g233Rstt9GqUWc-I_gIbuQ5kMgixulefHDHjCbxm-DHNBoKoEwQazFVL8tMYZ62WO7R3MGwMU-yUVDKyK_cfGpMSTS2vh70VOg95y6x-qvB0f5EeDU19aexjtCwqiK7XNEqYw6eTZRpBn6nGu-famqeVTZkzywxd846WCEDBg19IDmfZuLdzW77rBPtuS5ASOmliXvYXUIAr8lQkhJ0i_4D-Tg5FQ"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Dinanderie</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.7</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Coupe en Laiton</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Martelée à la main pendant des heures pour obtenir une texture organique parfaite.</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-primary-container">85,00 €</span>
+<button class="bg-surface-container-low hover:bg-primary-container hover:text-on-primary p-sm rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<div class="absolute top-md left-md z-10 flex flex-col gap-xs">
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-md py-xs rounded-full shadow-sm">Nouveau</span>
+</div>
+<button class="absolute top-md right-md z-10 bg-surface-container-lowest/80 backdrop-blur-md p-sm rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A set of four hand-blown glass tumblers with subtle internal bubbles and a light amber tint. The glasses are arranged on a clean wooden table. Sunlight passes through the glass, creating beautiful refractive patterns on the surface. The background is a blurry high-end kitchen. Professional, bright, and modern design aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7juA1SYuOfWurt536_uMEwHoOrbA9JuRdvcuglaYMxVd3nIWwwYNC1bLBhazY1cYqXGNIaHhB9LDXxNsmKTOvvZ6-9vTvqZdF7PMRB9VtCvKzDoDELD6_rJfouUNmV827pnnX66DgM3PNU0B_MnOj8sPvax0z6L19vjwYxth47IRB89Ac_utivNDcgluulatlgLAJSveadLqjneDW42K3iGKVv1uH0fWfRU_-2mrBaiukgyjybkNGhgr0T1OcMz1lsFUr8pLEc5I"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Verrerie</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.9</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Verres "Ambre" (x4)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Soufflés à la bouche, chaque verre présente de légères variations qui le rendent unique.</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-primary-container">64,00 €</span>
+<button class="bg-surface-container-low hover:bg-primary-container hover:text-on-primary p-sm rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="relative h-64 overflow-hidden">
+<button class="absolute top-md right-md z-10 bg-surface-container-lowest/80 backdrop-blur-md p-sm rounded-full text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A collection of handmade leather-bound notebooks with varied textures, from smooth calfskin to pebbled top-grain leather in earth tones like terracotta, charcoal, and forest green. They are stacked neatly on a minimalist dark desk next to a professional fountain pen. The lighting is focused and moody, emphasizing the high-quality materials and professional executive feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUkbbqppCuGcybgK8SWx9C7BK8KXxUT4O502UBhUWvh8Zl8hzPG3yzETHv-YjnvBi2jTsFjuIyjtNDj5H9wIBX6GEBH_C6RtDdD8fwggROt084Zff6g2sN3dhl52stW5NJbatQoGuOWpmQuf9YeHka_DbBcJrbuko9VR48Uw_5lSWynqtm7ZV0weS9TEHZ5kje3C0ZkuZJRrN6x8mwL91wdZ0olHE72Wm6Vj72czt7EFYxjDuMF4qqEqd6LbJu1-XZfFOH_FV6XrQ"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Maroquinerie</span>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.6</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Carnet en Cuir</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Cuir à tannage végétal qui se patinera magnifiquement avec le temps. Papier premium.</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-headline-md text-primary-container">45,00 €</span>
+<button class="bg-surface-container-low hover:bg-primary-container hover:text-on-primary p-sm rounded-lg transition-all">
+<span class="material-symbols-outlined" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-xl flex justify-center items-center gap-sm">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md">1</button>
+<button class="w-10 h-10 rounded-lg hover:bg-surface-container-low font-label-md text-label-md transition-colors">2</button>
+<button class="w-10 h-10 rounded-lg hover:bg-surface-container-low font-label-md text-label-md transition-colors">3</button>
+<span class="px-md text-outline">...</span>
+<button class="w-10 h-10 rounded-lg hover:bg-surface-container-low font-label-md text-label-md transition-colors">12</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-outline-variant mt-xl">
+<div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
+<div class="flex flex-col items-center md:items-start gap-sm">
+<span class="text-headline-md font-headline-md font-bold text-primary-container">M3alem Marketplace</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-xl">
+<a class="text-on-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">About Artisans</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">Quality Standards</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">Seller Policy</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">Support</a>
+</div>
+<div class="flex gap-md">
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-primary-container hover:text-on-primary transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">language</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-primary-container hover:text-on-primary transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+</div>
+</div>
+</footer>
+</body></html>

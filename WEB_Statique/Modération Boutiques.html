@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>M3alem Marketplace - Modération Boutiques</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#cbdbf5",
+                    "on-secondary-container": "#694000",
+                    "primary-fixed": "#dde1ff",
+                    "surface-variant": "#d3e4fe",
+                    "surface": "#f8f9ff",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary-container": "#1e40af",
+                    "on-tertiary-container": "#ffa583",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#173bab",
+                    "primary": "#00288e",
+                    "surface-container-highest": "#d3e4fe",
+                    "outline-variant": "#c4c5d5",
+                    "on-tertiary-fixed-variant": "#802a00",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbce",
+                    "tertiary-container": "#872d00",
+                    "on-background": "#0b1c30",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed": "#2b1700",
+                    "on-primary-container": "#a8b8ff",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary": "#611e00",
+                    "secondary-fixed-dim": "#ffb961",
+                    "secondary": "#865300",
+                    "outline": "#757684",
+                    "inverse-primary": "#b8c4ff",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#fea520",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-fixed-variant": "#663e00",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "background": "#f8f9ff",
+                    "on-primary-fixed": "#001453",
+                    "on-surface-variant": "#444653",
+                    "surface-container": "#e5eeff",
+                    "on-surface": "#0b1c30",
+                    "surface-tint": "#3755c3",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#380d00",
+                    "secondary-fixed": "#ffddb9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "container-max": "1280px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9ff; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest dark:bg-on-background border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto h-16">
+<div class="text-headline-md font-headline-md font-bold text-primary-container dark:text-primary-fixed">
+                M3alem Marketplace
+            </div>
+<div class="hidden md:flex gap-lg">
+<nav class="flex items-center space-x-md">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors px-sm py-xs rounded-lg font-label-md text-label-md" href="#">Artisans</a>
+<a class="text-primary-container dark:text-primary-fixed font-bold border-b-2 border-primary-container px-sm py-xs font-label-md text-label-md" href="#">Modération</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors px-sm py-xs rounded-lg font-label-md text-label-md" href="#">Rapports</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-sm rounded-full transition-colors">shopping_cart</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-sm rounded-full transition-colors relative">
+                    notifications
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Artisan Profile" data-alt="A professional headshot of a middle-aged artisan with a friendly expression, set against a blurred studio background with soft natural lighting. The image has a clean, high-fidelity corporate aesthetic with neutral tones and a slight blue tint in the shadows to match the marketplace brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbQp0EV5rLLY7hzKYXpAtw0qnQ_5rIHyzSZt4NdCPx7ICFPj3AsfPpv0q5alaR0UVltjBxAVel0kkjj5gWreqhymZGj42dgJopJotCLGlqBhzb673JH26GuA0n4nor-UIBMdzUrcDxwas5FG5EQm_d99Y4rahGjqo6Da-aV_7iNiSL3Vsa7nynxGEIJv77xmkDCxGEkA4dQGrKx7i94plX47BeILNVO7ZNtX5dKksRhkTOC66UTErL4xOZrQ5Xk58slNAwUF5BDK8"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline h-screen w-64 fixed left-0 top-0 pt-16 hidden lg:flex flex-col py-md z-40">
+<div class="px-lg py-md mb-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">palette</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md font-bold text-primary-container dark:text-primary-fixed text-sm">Artisan Portal</h3>
+<p class="text-label-sm text-on-surface-variant text-xs">Manage your craft</p>
+</div>
+</div>
+</div>
+<nav class="flex-1">
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg mx-2 my-1 px-md py-sm transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-md bg-primary-container dark:bg-primary text-on-primary rounded-lg mx-2 my-1 px-md py-sm transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">shopping_bag</span> My Products
+                </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg mx-2 my-1 px-md py-sm transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">receipt_long</span> Orders
+                </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg mx-2 my-1 px-md py-sm transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">palette</span> Workshops
+                </a>
+<a class="flex items-center gap-md text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant dark:hover:bg-on-surface-variant rounded-lg mx-2 my-1 px-md py-sm transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">bar_chart</span> Analytics
+                </a>
+</nav>
+<div class="px-md mt-auto">
+<button class="w-full bg-primary text-on-primary py-sm rounded-lg font-label-md active:scale-98 duration-100 flex items-center justify-center gap-sm shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span> List New Item
+                </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-64 p-lg">
+<div class="max-w-container-max mx-auto pt-4">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-background">Modération des Boutiques</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Contrôlez et validez les nouvelles inscriptions d'artisans.</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high text-on-surface px-md py-sm rounded-lg font-label-md flex items-center gap-xs border border-outline-variant hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-md">filter_list</span> Filtrer
+                        </button>
+<button class="bg-primary-container text-on-primary px-lg py-sm rounded-lg font-label-md flex items-center gap-xs shadow-sm hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined text-md">download</span> Exporter Rapport
+                        </button>
+</div>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-xl">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-md">Total En Attente</span>
+<span class="material-symbols-outlined text-secondary">pending_actions</span>
+</div>
+<div class="mt-md">
+<p class="text-display-lg font-display-lg text-on-surface">24</p>
+<p class="text-label-sm text-secondary font-bold">+12% cette semaine</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-md">Risque Élevé</span>
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="mt-md">
+<p class="text-display-lg font-display-lg text-on-surface">03</p>
+<p class="text-label-sm text-error font-bold">Action immédiate requise</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg flex flex-col justify-between shadow-sm">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant font-label-md">Validés Aujourd'hui</span>
+<span class="material-symbols-outlined text-primary">verified_user</span>
+</div>
+<div class="mt-md">
+<p class="text-display-lg font-display-lg text-on-surface">15</p>
+<p class="text-label-sm text-on-surface-variant">Performance stable</p>
+</div>
+</div>
+<div class="bg-secondary-container rounded-xl p-lg flex flex-col justify-between shadow-md">
+<div class="flex justify-between items-start">
+<span class="text-on-secondary-container font-label-md">Temps de Traitement</span>
+<span class="material-symbols-outlined text-on-secondary-container">timer</span>
+</div>
+<div class="mt-md">
+<p class="text-display-lg font-display-lg text-on-secondary-container">4.2h</p>
+<p class="text-label-sm text-on-secondary-container font-bold">-20m vs hier</p>
+</div>
+</div>
+</div>
+<!-- Moderation List -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<h2 class="font-headline-md text-headline-md text-on-surface">Files de modération</h2>
+<div class="flex gap-md">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-md">search</span>
+<input class="pl-10 pr-md py-sm rounded-lg border border-outline-variant focus:ring-2 focus:ring-primary-container outline-none bg-surface text-on-surface font-body-md text-sm w-64" placeholder="Rechercher une boutique..." type="text"/>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-left">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-lg py-md font-label-sm text-on-surface-variant uppercase tracking-wider">Boutique &amp; Artisan</th>
+<th class="px-lg py-md font-label-sm text-on-surface-variant uppercase tracking-wider">Date Inscription</th>
+<th class="px-lg py-md font-label-sm text-on-surface-variant uppercase tracking-wider">Statut</th>
+<th class="px-lg py-md font-label-sm text-on-surface-variant uppercase tracking-wider">Risque</th>
+<th class="px-lg py-md font-label-sm text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-variant overflow-hidden">
+<img alt="Atelier Maroquinerie" data-alt="A detailed close-up of a rustic leatherworking workshop. High-quality tanned leather hides are draped over a wooden workbench with specialized tools like chisels and mallets laid out neatly. The lighting is warm and cinematic, highlighting the rich textures of the material and the professional atmosphere of an artisan's space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsxa8twt53enNXIFHNfmtsYIx3SqFbotBXdH0z_7q2_U8knxrT3jLHsKuyURJ1LhXrsrP6sC2gr3m6GwTLs-wOleXaohrhG26dtEKwKvJuNCJT-JIS1cuw_V35WbX2e0s36PasGSQ5spuiQfurf1otxF20SPm_9IcEnRONLAxyJPEBjWgxFzGDv9I3H0CM83UTyAhxLw2-WYd40PNaHumWXfGNXUqnw46VBvvHGAuK9hj9B1itJ-Bwi86-bHAykZgQzrWRg9yVebw"/>
+</div>
+<div>
+<p class="font-bold text-on-surface font-body-md">Atelier Maroquinerie Atlas</p>
+<p class="text-label-sm text-on-surface-variant">Yassine El Fassi</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-on-surface font-body-md">14 Oct 2023, 09:45</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-md py-xs rounded-full font-label-sm flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-sm">schedule</span> En Attente
+                                        </span>
+</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-container/20 text-secondary font-bold px-md py-xs rounded-lg font-label-sm">Faible</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="text-primary-container hover:bg-primary-container hover:text-on-primary border border-primary-container px-md py-xs rounded-lg font-label-md transition-all">Consulter</button>
+<button class="bg-primary-container text-on-primary px-md py-xs rounded-lg font-label-md shadow-sm hover:opacity-90 active:scale-95 transition-all">Approuver</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-variant overflow-hidden">
+<img alt="Ceramique Moderne" data-alt="A minimalist pottery studio scene featuring several handcrafted ceramic vases in neutral tones of beige and sand. The vases are arranged on a clean, light-colored stone surface with soft morning light streaming through a nearby window, creating gentle shadows. The aesthetic is modern, high-end, and perfectly aligned with a professional artisanal marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-nXJlDAtFeSNgxKKY7gkHERE51lOtHaIPGjLGulfFgRII2y2-2BWNEY39vWKKW9OKSjNT2og2ix-a71aTANm38NRYQpSASAgePN90twXfmdGla9gyUeeOHRX_XZ7QSGHxvxlaU7Ms_yIiHMbUO_h_HwG1GCnzOmix2O_ZQqDI1rEVp3qUYgtsXHCB9a15b4VdBFBlAddXzb4H-ME4HGRVlhyl95ynBbkBtiosdUy19LO79eQt_Ql4Z0RQUjxXbivNSlcqz7ypQmQ"/>
+</div>
+<div>
+<p class="font-bold text-on-surface font-body-md">Céramique de Safi Design</p>
+<p class="text-label-sm text-on-surface-variant">Laila Benjelloun</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-on-surface font-body-md">13 Oct 2023, 16:20</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-md py-xs rounded-full font-label-sm flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-sm">schedule</span> En Attente
+                                        </span>
+</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-container text-on-secondary-container font-bold px-md py-xs rounded-lg font-label-sm">Moyen</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="text-primary-container hover:bg-primary-container hover:text-on-primary border border-primary-container px-md py-xs rounded-lg font-label-md transition-all">Consulter</button>
+<button class="bg-primary-container text-on-primary px-md py-xs rounded-lg font-label-md shadow-sm hover:opacity-90 active:scale-95 transition-all">Approuver</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 (High Risk) -->
+<tr class="hover:bg-error-container/10 transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-variant overflow-hidden">
+<img alt="Tissage Traditionnel" data-alt="A vibrant and intricate Moroccan weaving loom with multicolored wool threads in shades of indigo, terracotta, and amber. The workshop is atmospheric, with dust motes dancing in shafts of sunlight. The focus is on the manual dexterity and the high-fidelity detail of the textile patterns, evoking a sense of heritage and expert craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqZz7DwKDWA1fvxhf5ujY4VCVmSxSY-KKlSBS-_W6Wog-eZvRLMuuPbNTb2XFYTVTYQM6eOJ5GvDcaYh0mVCcUejfqGDhd3YG7KToccziEsHgpctPhMzGF8MBSG7WqR3MpIIV7g2E9vEn3dgS-iHQW7rszmkR_czZNiu6j6-PyXX1VhCjKKOZNmcpnqTx4GK3XysgHZpBCtx1ch5JaAIgdZjeLGC1Lea02q6q1YAKHFgxJ8-Rwd8c2_c6NLOJYxkAeP9FbdammKcE"/>
+</div>
+<div>
+<p class="font-bold text-on-surface font-body-md">Tissage Berbère Authentique</p>
+<p class="text-label-sm text-on-surface-variant">Inconnu (Doc. manquants)</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md text-on-surface font-body-md">13 Oct 2023, 14:05</td>
+<td class="px-lg py-md">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-md py-xs rounded-full font-label-sm flex items-center gap-xs w-fit">
+<span class="material-symbols-outlined text-sm">schedule</span> En Attente
+                                        </span>
+</td>
+<td class="px-lg py-md">
+<span class="bg-error text-on-error font-bold px-md py-xs rounded-lg font-label-sm">Élevé</span>
+</td>
+<td class="px-lg py-md text-right">
+<div class="flex justify-end gap-sm">
+<button class="text-primary-container hover:bg-primary-container hover:text-on-primary border border-primary-container px-md py-xs rounded-lg font-label-md transition-all">Examiner</button>
+<button class="bg-error text-on-error px-md py-xs rounded-lg font-label-md shadow-sm hover:opacity-90 active:scale-95 transition-all">Rejeter</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-lg bg-surface-container-low/30 border-t border-outline-variant flex justify-between items-center">
+<span class="text-label-sm text-on-surface-variant font-body-md">Affichage de 1-3 sur 24 boutiques</span>
+<div class="flex gap-xs">
+<button class="p-xs rounded hover:bg-surface-variant transition-colors border border-outline-variant text-on-surface-variant">
+<span class="material-symbols-outlined text-md">chevron_left</span>
+</button>
+<button class="px-md py-xs rounded bg-primary-container text-on-primary font-label-sm shadow-sm">1</button>
+<button class="px-md py-xs rounded hover:bg-surface-variant font-label-sm transition-colors border border-outline-variant">2</button>
+<button class="px-md py-xs rounded hover:bg-surface-variant font-label-sm transition-colors border border-outline-variant">3</button>
+<button class="p-xs rounded hover:bg-surface-variant transition-colors border border-outline-variant text-on-surface-variant">
+<span class="material-symbols-outlined text-md">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Component -->
+<footer class="mt-xl bg-surface-container-highest dark:bg-on-background border-t border-outline-variant dark:border-outline full-width">
+<div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
+<div class="flex flex-col items-center md:items-start">
+<div class="text-headline-md font-headline-md font-bold text-primary-container dark:text-primary-fixed mb-xs">
+                                M3alem Marketplace
+                            </div>
+<p class="text-on-surface-variant dark:text-surface-variant font-label-sm text-label-sm">© 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-lg">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">About Artisans</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">Quality Standards</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">Seller Policy</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container transition-all font-label-sm text-label-sm hover:underline" href="#">Support</a>
+</nav>
+</div>
+</footer>
+</div>
+</main>
+</div>
+</body></html>

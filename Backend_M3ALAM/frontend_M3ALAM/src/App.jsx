@@ -1,209 +1,89 @@
-import { useEffect, useState } from 'react'
-import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom'
-import HomePage from './components/HomePage'
-import PageView from './components/PageView'
-import PageList from './components/PageList'
-import StaticPage from './components/StaticPage'
-import LoadingState from './components/LoadingState'
-import NotFound from './components/NotFound'
-import SellerDashboard from './components/SellerDashboard'
-import { SellerOrders, SellerOrderDetail } from './components/SellerOrders'
-import AdminDashboard from './components/AdminDashboard'
-import SellerProducts from './components/SellerProducts'
-import ProductForm from './components/ProductForm'
-import AdminCategories from './components/AdminCategories'
-import AdminShopModeration from './components/AdminShopModeration'
-import AdminReviewModeration from './components/AdminReviewModeration'
-import UserProfile from './components/UserProfile'
-import SellerShop from './components/SellerShop'
-import {
-  CartPage,
-  CataloguePage,
-  CheckoutPage,
-  LoginPage,
-  OrderDetailPage,
-  OrdersPage,
-  ProductDetailPage,
-  RegisterPage,
-  ShopDetailPage,
-} from './components/ShopPages'
-import { getPage, getPages } from './lib/api'
-import { staticPages } from './data/staticPages'
+import { Route, Routes } from 'react-router-dom'
+import AdminLayout from './components/layout/AdminLayout'
+import AuthLayout from './components/layout/AuthLayout'
+import ClientLayout from './components/layout/ClientLayout'
+import PublicLayout from './components/layout/PublicLayout'
+import SellerLayout from './components/layout/SellerLayout'
+import Accueil from './pages/public/Accueil'
+import Catalogue from './pages/public/Catalogue'
+import ProductDetail from './pages/public/ProductDetail'
+import ShopDetail from './pages/public/ShopDetail'
+import Login from './pages/public/Login'
+import Register from './pages/public/Register'
+import Cart from './pages/client/Cart'
+import Checkout from './pages/client/Checkout'
+import LeaveReview from './pages/client/LeaveReview'
+import OrderDetail from './pages/client/OrderDetail'
+import Orders from './pages/client/Orders'
+import SellerDashboard from './pages/seller/SellerDashboard'
+import EditProduct from './pages/seller/EditProduct'
+import NewProduct from './pages/seller/NewProduct'
+import SellerOrderDetail from './pages/seller/SellerOrderDetail'
+import SellerOrders from './pages/seller/SellerOrders'
+import ShopManagement from './pages/seller/ShopManagement'
+import SellerProducts from './pages/seller/SellerProducts'
+import AdminDashboard from './pages/admin/AdminDashboard'
+import ReviewModeration from './pages/admin/ReviewModeration'
+import ShopModeration from './pages/admin/ShopModeration'
+import CategoryManagement from './pages/admin/CategoryManagement'
+import UserManagement from './pages/admin/UserManagement'
+import NotFound from './pages/NotFound'
 import './App.css'
 
-function PageRoute() {
-  const { slug } = useParams()
-  const [page, setPage] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const localPage = staticPages[slug]
-    if (localPage) {
-      setPage(localPage)
-      setLoading(false)
-      return undefined
-    }
-
-    let active = true
-
-    setLoading(true)
-    getPage(slug)
-      .then((data) => {
-        if (active) setPage(data)
-      })
-      .finally(() => {
-        if (active) setLoading(false)
-      })
-
-    return () => {
-      active = false
-    }
-  }, [slug])
-
-  if (loading) return <LoadingState />
-
-  if (staticPages[slug]) {
-    return <StaticPage page={page} />
-  }
-
-  return <PageView page={page} />
+function publicPage(page) {
+  return <PublicLayout>{page}</PublicLayout>
 }
 
-function AllPages() {
-  const [pages, setPages] = useState([])
+function authPage(page) {
+  return <AuthLayout>{page}</AuthLayout>
+}
 
-  useEffect(() => {
-    getPages().then(setPages).catch(() => setPages([]))
-  }, [])
+function clientPage(page) {
+  return <ClientLayout>{page}</ClientLayout>
+}
 
-  return (
-    <PageList pages={pages} />
-  )
+function sellerPage(page) {
+  return <SellerLayout>{page}</SellerLayout>
+}
+
+function adminPage(page) {
+  return <AdminLayout>{page}</AdminLayout>
 }
 
 function Shell() {
-  const location = useLocation()
-  const isHome = location.pathname === '/'
-
   return (
-    <div className="app-shell">
-      <header className="topbar">
-        <div className="topbar__inner">
-          <Link to="/" className="brand">
-            M3alem Marketplace
-          </Link>
+    <Routes>
+      {/* Personne 1: pages public + achat */}
+      <Route path="/" element={publicPage(<Accueil />)} />
+      <Route path="/catalogue" element={publicPage(<Catalogue />)} />
+      <Route path="/products/:slug" element={publicPage(<ProductDetail />)} />
+      <Route path="/shops/:slug" element={publicPage(<ShopDetail />)} />
+      <Route path="/login" element={authPage(<Login />)} />
+      <Route path="/register" element={authPage(<Register />)} />
+      <Route path="/cart" element={clientPage(<Cart />)} />
+      <Route path="/checkout" element={clientPage(<Checkout />)} />
 
-          <nav className="nav">
-            <Link className={isHome ? 'is-active' : ''} to="/">
-              Accueil
-            </Link>
-            <Link className={!isHome ? 'is-active' : ''} to="/pages/accueil">
-              Pages
-            </Link>
-            <Link to="/catalogue">Catalogue</Link>
-            <Link to="/orders">Commandes</Link>
-          </nav>
+      {/* Personne 2: commandes client + vendeur */}
+      <Route path="/orders/:id/review" element={clientPage(<LeaveReview />)} />
+      <Route path="/orders/:id" element={clientPage(<OrderDetail />)} />
+      <Route path="/orders" element={clientPage(<Orders />)} />
+      <Route path="/seller/dashboard" element={sellerPage(<SellerDashboard />)} />
+      <Route path="/seller/shop" element={sellerPage(<ShopManagement />)} />
+      <Route path="/seller/orders/:id" element={sellerPage(<SellerOrderDetail />)} />
+      <Route path="/seller/orders" element={sellerPage(<SellerOrders />)} />
 
-          <div className="topbar__actions">
-            <Link to="/admin/dashboard" className="chip">Admin</Link>
-            <Link to="/admin/shops" className="chip">Boutiques</Link>
-            <Link to="/admin/reviews" className="chip">Avis</Link>
-            <Link to="/seller/dashboard" className="chip">Vendeur</Link>
-            <Link to="/cart" className="icon-button" aria-label="Panier">
-              cart
-            </Link>
-            <Link to="/profile" className="icon-button">settings</Link>
-            <Link to="/login" className="chip">Connexion</Link>
-            <Link to="/profile">
-              <img
-                className="avatar"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz6elkLbL52JF6stjvCQPFHlbSel1qmr0dArACO2NpZNlUsOHRy4Iz49McMNGiHTuEbT_Y5qVDKqLz3KSV5P-vuVPBJ_fdoNGzZMX_BED-fQUgAmm18hD4hSwiz3QDvc7Lyl6uO-hDDr5d1HlfENq8im3eZ3qnU_Ds6TPQLQ5NIRZMzzhWnWJPPma_CW9rQ51i_xf8c9hGDMPgvvxuV6sya26YeH1iVH8unFGrg7tlgzUd8lNykOtdUUHTuI2UJ6S-ZFH_aq8Umew"
-                alt="Artisan Profile"
-              />
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Personne 3: produits vendeur + admin */}
+      <Route path="/seller/products/new" element={sellerPage(<NewProduct />)} />
+      <Route path="/seller/products/:id/edit" element={sellerPage(<EditProduct />)} />
+      <Route path="/seller/products" element={sellerPage(<SellerProducts />)} />
+      <Route path="/admin/dashboard" element={adminPage(<AdminDashboard />)} />
+      <Route path="/admin/users" element={adminPage(<UserManagement />)} />
+      <Route path="/admin/reviews" element={adminPage(<ReviewModeration />)} />
+      <Route path="/admin/shops" element={adminPage(<ShopModeration />)} />
+      <Route path="/admin/categories" element={adminPage(<CategoryManagement />)} />
 
-      <main className="main">
-        <Routes>
-          <Route path="/" element={<><HomePage /><AllPages /></>} />
-          <Route path="/catalogue" element={<CataloguePage />} />
-          <Route path="/products/:slug" element={<ProductDetailPage />} />
-          <Route path="/shops/:slug" element={<ShopDetailPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/orders/:id" element={<OrderDetailPage />} />
-          <Route path="/profile" element={<UserProfile />} />
-
-          <Route path="/seller/dashboard" element={<SellerDashboard />} />
-          <Route path="/seller/shop" element={<SellerShop />} />
-          <Route path="/seller/products" element={<SellerProducts />} />
-          <Route path="/seller/products/new" element={<ProductForm />} />
-          <Route path="/seller/products/:id/edit" element={<ProductForm />} />
-          <Route path="/seller/orders" element={<SellerOrders />} />
-          <Route path="/seller/orders/:id" element={<SellerOrderDetail />} />
-
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/categories" element={<AdminCategories />} />
-          <Route path="/admin/shops" element={<AdminShopModeration />} />
-          <Route path="/admin/reviews" element={<AdminReviewModeration />} />
-
-          <Route path="/pages/:slug" element={<PageRoute />} />
-          <Route path="/pages" element={<AllPages />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-
-      <footer className="footer">
-        <div className="footer__inner">
-          <div className="footer__top">
-            <div className="footer__brand">
-              <h4>M3alem Marketplace</h4>
-              <p>
-                La plateforme de reference pour l'artisanat marocain authentique
-                et moderne.
-              </p>
-            </div>
-
-            <div className="footer__links">
-              <div>
-                <h5>Place de marche</h5>
-                <a href="#about">About Artisans</a>
-                <br />
-                <a href="#quality">Quality Standards</a>
-                <br />
-                <a href="#policy">Seller Policy</a>
-              </div>
-
-              <div>
-                <h5>Support</h5>
-                <a href="#support">Support</a>
-                <br />
-                <a href="#contact">Contact</a>
-                <br />
-                <a href="#shipping">Livraison</a>
-              </div>
-            </div>
-          </div>
-
-          <div className="footer__bottom">
-            <p>(c) 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
-            <div className="footer__icons">
-              <span className="icon-button" aria-hidden="true">
-                lang
-              </span>
-              <span className="icon-button" aria-hidden="true">
-                share
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+      <Route path="*" element={publicPage(<NotFound />)} />
+    </Routes>
   )
 }
 

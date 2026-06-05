@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#cbdbf5",
+                    "on-secondary-container": "#694000",
+                    "primary-fixed": "#dde1ff",
+                    "surface-variant": "#d3e4fe",
+                    "surface": "#f8f9ff",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary-container": "#1e40af",
+                    "on-tertiary-container": "#ffa583",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#173bab",
+                    "primary": "#00288e",
+                    "surface-container-highest": "#d3e4fe",
+                    "outline-variant": "#c4c5d5",
+                    "on-tertiary-fixed-variant": "#802a00",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdbce",
+                    "tertiary-container": "#872d00",
+                    "on-background": "#0b1c30",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed": "#2b1700",
+                    "on-primary-container": "#a8b8ff",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary": "#611e00",
+                    "secondary-fixed-dim": "#ffb961",
+                    "secondary": "#865300",
+                    "outline": "#757684",
+                    "inverse-primary": "#b8c4ff",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#fea520",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-secondary-fixed-variant": "#663e00",
+                    "surface-container-high": "#dce9ff",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "background": "#f8f9ff",
+                    "on-primary-fixed": "#001453",
+                    "on-surface-variant": "#444653",
+                    "surface-container": "#e5eeff",
+                    "on-surface": "#0b1c30",
+                    "surface-tint": "#3755c3",
+                    "surface-container-low": "#eff4ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#380d00",
+                    "secondary-fixed": "#ffddb9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "container-max": "1280px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface-container-lowest dark:bg-on-background shadow-sm dark:shadow-none docked full-width top-0 border-b border-outline-variant dark:border-outline z-50 sticky">
+<div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-md font-bold text-primary-container dark:text-primary-fixed">M3alem Marketplace</span>
+</div>
+<div class="hidden md:flex items-center gap-lg">
+<nav class="flex gap-lg">
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors px-sm py-xs rounded-lg" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors px-sm py-xs rounded-lg" href="#">Browse</a>
+<a class="text-primary-container dark:text-primary-fixed font-bold border-b-2 border-primary-container px-sm py-xs" href="#">Orders</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-label-md w-64 focus:ring-2 focus:ring-primary-container" placeholder="Search orders..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">shopping_cart</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">notifications</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Artisan Profile" data-alt="A professional headshot of a middle-aged artisan worker with a warm, confident smile. He is wearing a clean denim apron in a brightly lit, modern workshop environment. The lighting is soft and natural, emphasizing a professional yet approachable aesthetic. The background features blurred wooden textures and high-end tools, maintaining a corporate and reliable brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZEc4eA3KuNMBV1jk7aCgDIVdxn1-rJXG_aduHhqjoQLGCrY3XBXOOmXMfAcsj4MVDrZXh4QmA0G3bdsYOszjYVTdYLR7cHBNjsjF68zUpyyEDZk-LGoD1NPLZKOZdxGxoTNpqVvJulxjf0uKDAqYcauN_IEGZAuj-hdI9uGiqECQCXwUpPNcsbFeZMFpUrpeLI5Tf8ZCLQlo0mDY_dFZh6uVqY2H752fJrYk507HOHu_8sTnihbdYpGqfMBeUlDneOHQhQy1UN50"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-md md:px-lg py-xl">
+<!-- Breadcrumbs & Header -->
+<div class="mb-lg">
+<div class="flex items-center gap-xs text-label-sm text-on-surface-variant mb-sm">
+<span>Dashboard</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Mes Commandes</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Commande #ORD-88291</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<h1 class="font-headline-lg text-headline-lg">Détails de la commande</h1>
+<div class="flex gap-md">
+<button class="flex items-center gap-xs px-md py-sm border border-outline rounded-lg font-label-md text-on-surface hover:bg-surface-container-low transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Facture PDF
+                    </button>
+<button class="flex items-center gap-xs px-md py-sm bg-primary-container text-on-primary rounded-lg font-label-md hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+                        Contacter l'Artisan
+                    </button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<!-- Left Column: Delivery Progress & Items -->
+<div class="lg:col-span-2 space-y-lg">
+<!-- Delivery Tracking Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<div class="flex items-center justify-between mb-xl">
+<div>
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Statut de livraison</p>
+<p class="text-headline-md text-primary mt-xs">En cours de préparation</p>
+</div>
+<div class="text-right">
+<p class="text-label-sm text-on-surface-variant">Livraison estimée</p>
+<p class="font-bold text-on-surface">24 Octobre 2024</p>
+</div>
+</div>
+<!-- Progress Bar Component -->
+<div class="relative pt-8 pb-4">
+<!-- Connecting Line -->
+<div class="absolute top-[52px] left-0 w-full h-[2px] bg-surface-container-high"></div>
+<div class="absolute top-[52px] left-0 w-1/2 h-[2px] bg-secondary-container"></div>
+<div class="relative flex justify-between">
+<!-- Step 1: Completed -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center z-10 shadow-md">
+<span class="material-symbols-outlined">check</span>
+</div>
+<p class="mt-sm font-label-md text-on-surface">Confirmée</p>
+<p class="text-label-sm text-on-surface-variant">18 Oct, 09:42</p>
+</div>
+<!-- Step 2: Current (Amber Accent) -->
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center z-10 shadow-[0_0_0_4px_#fef3c7] ring-2 ring-secondary animate-pulse">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<p class="mt-sm font-label-md text-secondary font-bold">Préparation</p>
+<p class="text-label-sm text-on-surface-variant">En cours</p>
+</div>
+<!-- Step 3: Upcoming -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center z-10">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<p class="mt-sm font-label-md text-on-surface-variant">Expédiée</p>
+<p class="text-label-sm text-outline">À venir</p>
+</div>
+<!-- Step 4: Upcoming -->
+<div class="flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center z-10">
+<span class="material-symbols-outlined">package_2</span>
+</div>
+<p class="mt-sm font-label-md text-on-surface-variant">Livrée</p>
+<p class="text-label-sm text-outline">Prévu</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Order Items Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="px-lg py-md border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h2 class="font-headline-md text-on-surface">Articles commandés (3)</h2>
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-sm py-xs rounded text-label-sm font-bold">Premium Shipping</span>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Item 1 -->
+<div class="p-lg flex gap-lg hover:bg-surface-container-lowest transition-colors">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-low">
+<img alt="Handcrafted Satchel" data-alt="A close-up shot of a handcrafted leather satchel with intricate stitching. The leather is a rich mahogany brown, shot in a soft, studio-quality light that highlights its natural texture. The background is a clean, neutral slate grey, creating a modern and high-end feel. The overall aesthetic is professional, sophisticated, and focused on material quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL-51dVBt_EgTOH99BZt0z-BpfBBSht4F5DQW07bm8JpdlGP-yhrQuMPkAvlAaqWWJ6S5fVteC9MU7HrsUI6_MKaK7ZNuby3LWMU4MBNJbPMgxvA_Fiw-mcw83MxFt34IKoBcp-vhy_J3brbUNg_lNLjLLH37qywjiYL_jd3Z6LBO_9saxDrZmlKfNyF4FG_hsOz1wZnP_Bj1zZSfA5eY49PL1tFaoX5JR5brmalVhlaqLj2D88fbR1U85BC7DsJDEsg0pSGn_AiM"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-body-lg font-bold text-on-surface">Sacoche en Cuir Artisanal - Modèle 'Atlas'</h3>
+<p class="text-body-md text-on-surface-variant">Couleur: Cognac Brun | Taille: Large</p>
+<div class="flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm font-bold text-on-surface">4.9</span>
+<span class="text-label-sm text-outline">(128 avis)</span>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<p class="text-label-md">Quantité: <span class="font-bold">1</span></p>
+<p class="font-headline-md text-primary">189,00 €</p>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-lg flex gap-lg hover:bg-surface-container-lowest transition-colors">
+<div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container-low">
+<img alt="Wooden Jewelry Box" data-alt="A beautifully carved wooden jewelry box made from dark walnut wood. The box is open, revealing a soft velvet lining. It is placed on a minimalist white marble surface with soft, directional lighting from a nearby window. The mood is serene, luxurious, and elegant, emphasizing professional craftsmanship and attention to detail." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD2TeyLeNOrVP4xtDgh8mhMelZCEwnlB0tCC_8uMEqO-6K7XyP0eOUgafvrKDw7P21ehCm54I4pi2o8zt5XrI3lTS0JVFiY71SaI0B7QvZUo1ZsJkcUq4iNdORrJFSFnrHRjYXmf8gtkxBJEs434rJe9_ZgGl7z8E0pZqV3SMOAjqfgcAFfAOjb6ibuKCiK9BKyZRV_akKy155S5qpqR3aSDKiyIJRfMW-waRWLribjODYJs04U5VPJ4TegidMONPqmTbSdQyUtPw"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<h3 class="font-body-lg font-bold text-on-surface">Coffret à Bijoux en Noyer Sculpté</h3>
+<p class="text-body-md text-on-surface-variant">Finition: Huile Naturelle</p>
+<span class="inline-block mt-xs bg-tertiary-fixed text-on-tertiary-fixed-variant px-xs py-1 rounded text-[10px] font-bold uppercase">Personnalisé</span>
+</div>
+<div class="flex justify-between items-end">
+<p class="text-label-md">Quantité: <span class="font-bold">1</span></p>
+<p class="font-headline-md text-primary">75,00 €</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Summary & Info -->
+<div class="space-y-lg">
+<!-- Delivery Info Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<h2 class="font-headline-md text-on-surface mb-md flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">location_on</span>
+                        Détails Livraison
+                    </h2>
+<div class="space-y-md">
+<div>
+<p class="text-label-sm text-on-surface-variant uppercase font-bold tracking-tight">Adresse de réception</p>
+<p class="text-body-md mt-xs font-bold text-on-surface">Jean-Marc Lefebvre</p>
+<p class="text-body-md text-on-surface-variant">14 Rue de la République<br/>75004 Paris, France</p>
+<p class="text-body-md text-on-surface-variant">+33 6 12 34 56 78</p>
+</div>
+<div class="pt-md border-t border-outline-variant">
+<p class="text-label-sm text-on-surface-variant uppercase font-bold tracking-tight">Méthode de livraison</p>
+<div class="flex items-center gap-sm mt-xs">
+<span class="material-symbols-outlined text-on-surface-variant">local_post_office</span>
+<p class="text-body-md text-on-surface">Colissimo Expert - Signature requise</p>
+</div>
+</div>
+<!-- Micro Map Placeholder -->
+<div class="mt-md h-32 rounded-lg overflow-hidden bg-surface-container border border-outline-variant relative">
+<img alt="Delivery Map" class="w-full h-full object-cover" data-alt="A stylized, minimalist vector map of central Paris streets. The map uses a sophisticated color palette of light greys and slate blues, with a prominent blue marker indicating a location near the Seine. The lighting is clean and flat, suitable for a professional UI application. The overall look is modern, authoritative, and focuses on geographical clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoG8n6ECvaNKE4-j1QYR-z6QIL8Uad5yj5N2nXZs6xojwQidSgQWxd6xLt40CLWLhJLxrDVyIwPCMfBT001xwQB5Ea-ozSV7id6wA2Ypu57ZNmqzXjYf0e70mJvTQ9sURhMI18Ksi2Lk7kF0KcfJBCt9Ia7nrgi0pEL_aQ41Z3BwvYpMztAlzNIGqSHBNAWUOos2XahFqPtXhc_f6506y4aGhfGHlxUkyqeeJ2fZiAPOIcQj7V-bcdB2o9GT2g2FR6T2xCmIZpASc"/>
+<div class="absolute inset-0 bg-primary-container/10 flex items-center justify-center">
+<div class="bg-surface-container-lowest p-2 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Payment Summary Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-sm">
+<h2 class="font-headline-md text-on-surface mb-md">Résumé du paiement</h2>
+<div class="space-y-sm">
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Sous-total</span>
+<span class="text-on-surface">264,00 €</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Frais de livraison</span>
+<span class="text-on-surface">12,50 €</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant text-error font-bold">Réduction (M3ALEM10)</span>
+<span class="text-error font-bold">-26,40 €</span>
+</div>
+<div class="pt-md mt-md border-t border-outline-variant flex justify-between items-baseline">
+<span class="text-headline-md">Total TTC</span>
+<span class="text-display-lg text-primary">250,10 €</span>
+</div>
+</div>
+<div class="mt-xl pt-md border-t border-outline-variant">
+<p class="text-label-sm text-on-surface-variant uppercase font-bold tracking-tight mb-sm">Moyen de paiement</p>
+<div class="flex items-center gap-md p-sm bg-surface-container rounded-lg">
+<div class="bg-surface-container-lowest p-1 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-primary-container">credit_card</span>
+</div>
+<div>
+<p class="text-label-md font-bold">Visa terminant par **** 4421</p>
+<p class="text-label-sm text-on-surface-variant">Payé le 18/10/2024</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-highest dark:bg-on-background border-t border-outline-variant dark:border-outline mt-xl">
+<div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
+<div class="flex flex-col items-center md:items-start">
+<span class="text-headline-md font-headline-md font-bold text-primary-container dark:text-primary-fixed">M3alem</span>
+<p class="text-on-surface-variant dark:text-surface-variant text-body-md mt-sm">© 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
+</div>
+<div class="flex gap-lg">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container hover:underline transition-all text-label-md" href="#">About Artisans</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container hover:underline transition-all text-label-md" href="#">Quality Standards</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container hover:underline transition-all text-label-md" href="#">Seller Policy</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary-container hover:underline transition-all text-label-md" href="#">Support</a>
+</div>
+</div>
+</footer>
+</body></html>

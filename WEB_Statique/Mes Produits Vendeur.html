@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-dim": "#cbdbf5",
+                "on-secondary-container": "#694000",
+                "primary-fixed": "#dde1ff",
+                "surface-variant": "#d3e4fe",
+                "surface": "#f8f9ff",
+                "on-secondary": "#ffffff",
+                "error": "#ba1a1a",
+                "primary-container": "#1e40af",
+                "on-tertiary-container": "#ffa583",
+                "on-tertiary": "#ffffff",
+                "error-container": "#ffdad6",
+                "on-primary-fixed-variant": "#173bab",
+                "primary": "#00288e",
+                "surface-container-highest": "#d3e4fe",
+                "outline-variant": "#c4c5d5",
+                "on-tertiary-fixed-variant": "#802a00",
+                "on-primary": "#ffffff",
+                "tertiary-fixed": "#ffdbce",
+                "tertiary-container": "#872d00",
+                "on-background": "#0b1c30",
+                "primary-fixed-dim": "#b8c4ff",
+                "inverse-surface": "#213145",
+                "on-secondary-fixed": "#2b1700",
+                "on-primary-container": "#a8b8ff",
+                "surface-bright": "#f8f9ff",
+                "tertiary": "#611e00",
+                "secondary-fixed-dim": "#ffb961",
+                "secondary": "#865300",
+                "outline": "#757684",
+                "inverse-primary": "#b8c4ff",
+                "on-error-container": "#93000a",
+                "secondary-container": "#fea520",
+                "inverse-on-surface": "#eaf1ff",
+                "on-secondary-fixed-variant": "#663e00",
+                "surface-container-high": "#dce9ff",
+                "tertiary-fixed-dim": "#ffb59a",
+                "background": "#f8f9ff",
+                "on-primary-fixed": "#001453",
+                "on-surface-variant": "#444653",
+                "surface-container": "#e5eeff",
+                "on-surface": "#0b1c30",
+                "surface-tint": "#3755c3",
+                "surface-container-low": "#eff4ff",
+                "surface-container-lowest": "#ffffff",
+                "on-error": "#ffffff",
+                "on-tertiary-fixed": "#380d00",
+                "secondary-fixed": "#ffddb9"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "xs": "4px",
+                "container-max": "1280px",
+                "md": "16px",
+                "xl": "32px",
+                "sm": "8px",
+                "gutter": "24px",
+                "base": "4px",
+                "lg": "24px"
+            },
+            "fontFamily": {
+                "headline-lg": ["Inter"],
+                "label-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "label-sm": ["Inter"],
+                "body-lg": ["Inter"],
+                "body-md": ["Inter"],
+                "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: #f8f9ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-outline-variant flex flex-col py-md z-50">
+<div class="px-lg mb-xl">
+<h1 class="text-headline-md font-headline-md font-bold text-primary-container">Artisan Portal</h1>
+<p class="text-label-sm text-on-surface-variant">Manage your craft</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-lg py-md text-on-surface-variant hover:bg-surface-container-high mx-2 my-1 rounded-lg transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="dashboard">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center px-lg py-md bg-primary-container text-on-primary mx-2 my-1 rounded-lg transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-md">My Products</span>
+</a>
+<a class="flex items-center px-lg py-md text-on-surface-variant hover:bg-surface-container-high mx-2 my-1 rounded-lg transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md">Orders</span>
+</a>
+<a class="flex items-center px-lg py-md text-on-surface-variant hover:bg-surface-container-high mx-2 my-1 rounded-lg transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="palette">palette</span>
+<span class="font-label-md">Workshops</span>
+</a>
+<a class="flex items-center px-lg py-md text-on-surface-variant hover:bg-surface-container-high mx-2 my-1 rounded-lg transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined mr-md" data-icon="bar_chart">bar_chart</span>
+<span class="font-label-md">Analytics</span>
+</a>
+</nav>
+<div class="px-md mt-auto">
+<button class="w-full bg-primary-container text-on-primary py-md rounded-lg font-label-md flex items-center justify-center gap-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                List New Item
+            </button>
+</div>
+</aside>
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar (Authority: JSON) -->
+<header class="sticky top-0 z-40 bg-surface-container-lowest border-b border-outline-variant shadow-sm h-16 flex items-center">
+<div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto">
+<div class="flex items-center gap-lg">
+<span class="text-headline-md font-headline-md font-bold text-primary-container">M3alem Marketplace</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative flex items-center">
+<input class="bg-surface-container-low border border-outline-variant rounded-lg px-md py-xs text-body-md w-64 focus:ring-2 focus:ring-primary-container focus:outline-none" placeholder="Rechercher mes produits..." type="text"/>
+<span class="material-symbols-outlined absolute right-md text-on-surface-variant" data-icon="search">search</span>
+</div>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-xs text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-surface-dim overflow-hidden border border-outline-variant">
+<img alt="Artisan Profile" data-alt="A professional headshot of a middle-aged artisan worker in a brightly lit, modern workshop environment. He is wearing a clean denim apron and has a friendly, authoritative expression. The background is softly blurred, showing glimpses of woodworking tools and high-end finished furniture, maintaining a professional and clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZHtCiWFlCbfd3rwWkwbf17BOqwGVc1Rstemt63hdrq60RlYYMifRw5hM1snRO6VVdi1mZZciCZdV6vKIJZzn29jRseKcW3SdPBSnhMsEVx3DsKyroEbHYz_GOYnFCssNXyHifgEq6BTHZXExpbnghzVfrTWveM4BoJQZ9AL7MkhCks4-z1ldAWwA64JatFmPMUQPiGW_gsf2fb6IWPMgsOc-M5sKTvkzprP0XWnU98G66SNyc4o1w6bUvf63Phe41ejIYYxHXf8w"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<div class="p-lg max-w-container-max mx-auto">
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg mb-xl">
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant">
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Total Produits</p>
+<h2 class="text-display-lg font-display-lg mt-xs text-primary">42</h2>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant">
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Ventes du mois</p>
+<h2 class="text-display-lg font-display-lg mt-xs text-secondary">€2,840</h2>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant border-secondary-container">
+<p class="text-label-sm text-on-secondary-fixed-variant uppercase tracking-wider">Alertes Stock</p>
+<div class="flex items-center gap-sm">
+<h2 class="text-display-lg font-display-lg mt-xs text-secondary">05</h2>
+<span class="bg-secondary-container text-on-secondary-container text-label-sm px-sm py-xs rounded-full">Action Requise</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant">
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider">Note Artisan</p>
+<div class="flex items-center gap-xs mt-xs">
+<h2 class="text-display-lg font-display-lg text-primary">4.9</h2>
+<span class="material-symbols-outlined text-secondary" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+<!-- Header & Filter -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-lg mb-lg">
+<div>
+<h3 class="text-headline-lg font-headline-lg text-on-surface">Inventaire des Produits</h3>
+<p class="text-body-md text-on-surface-variant">Gérez vos créations artisanales et surveillez vos niveaux de stock.</p>
+</div>
+<div class="flex gap-md">
+<button class="bg-surface-container-highest text-on-surface px-lg py-md rounded-lg font-label-md flex items-center gap-sm hover:bg-surface-variant transition-colors border border-outline-variant">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+                        Filtres
+                    </button>
+<button class="bg-primary-container text-on-primary px-lg py-md rounded-lg font-label-md flex items-center gap-sm hover:opacity-90 transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                        Ajouter un produit
+                    </button>
+</div>
+</div>
+<!-- Product Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Product Card 1: Alert State -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border-2 border-secondary-container overflow-hidden group">
+<div class="relative h-48 bg-surface-dim overflow-hidden">
+<img alt="Ceramic Pot" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up shot of a handcrafted ceramic vase with a unique turquoise glaze, placed on a clean wooden surface in a bright minimalist studio. Soft natural light streams in from the side, highlighting the intricate texture and high-quality finish of the clay. The atmosphere is serene and professional, focusing on artisanal excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC53sFqVtRkvr3AFLRzyxdKF454ni3YXgqceWHADuXsNDm3XMwW8OVr4-bcI7mlG0yICa8cri-fdD24NGjTC_j-dN92p1piOu2j5pX8KCtv2bXubQtTSRWEPrJLfndfRFs64dm0mhXkNISAe0dD8kKP26P777zZgvFAu421XFE1oiO4uW4MVPkwuYvpXJrwQgFdOZTmpBfJ2ZD6Vsk40wUyYVQ6VhCVXtDnE4WH2hIxtRwDO12yaCgqAallrQVzb9f8D0DYC5z8aq8"/>
+<div class="absolute top-md left-md">
+<span class="bg-secondary-container text-on-secondary-container px-md py-xs rounded-full text-label-sm font-bold shadow-sm">STOCK FAIBLE</span>
+</div>
+<div class="absolute top-md right-md">
+<span class="bg-surface-container-lowest/80 backdrop-blur-md text-on-surface px-md py-xs rounded-full text-label-sm font-bold">Poterie</span>
+</div>
+</div>
+<div class="p-lg">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="text-headline-md font-headline-md text-on-surface">Vase "Azur" Artisanal</h4>
+<span class="text-headline-md font-bold text-primary">85€</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-lg line-clamp-2">Grès tourné à la main avec glaçure réactive unique. Chaque pièce est numérotée.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="inventory_2">inventory_2</span>
+<span class="text-label-md font-bold text-secondary">2 unités restantes</span>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2: Healthy Stock -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden group">
+<div class="relative h-48 bg-surface-dim overflow-hidden">
+<img alt="Leather Bag" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A premium hand-stitched leather satchel in a rich tan color, displayed on a minimalist slate background. The lighting is sophisticated and directional, creating deep shadows that emphasize the craftsmanship and high-quality leather texture. The scene is clean, modern, and exudes luxury and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPaX-EHsM66xNZWuAIiLHG7x9GoqiXX3H2ljoCdhmm4sAnoSsncLuTUFs4fLLAiGS-Iiq7MNvF28H1ye2BDumMvZGPVE5Ys8mhiCaincHrjr7NW61K636y9dBElnIXztKYgRahSRUfD1oe9gTud2jOtIsr83dcdw-PuBOXL6WzCNr-PVJ670JCbQBnUIh4i8mpc4lGV0HVDpw-xqSLdE7fZWSee7JWYU1vu9Cx_BdwqEbbkSQbIOL2f5zZXiAvianCSO23k5c1Aso"/>
+<div class="absolute top-md left-md">
+<span class="bg-primary text-on-primary px-md py-xs rounded-full text-label-sm font-bold shadow-sm">EN VENTE</span>
+</div>
+<div class="absolute top-md right-md">
+<span class="bg-secondary-container/90 text-on-secondary-container px-md py-xs rounded-full text-label-sm font-bold">Maroquinerie</span>
+</div>
+</div>
+<div class="p-lg">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="text-headline-md font-headline-md text-on-surface">Besace Cuir "Héritage"</h4>
+<span class="text-headline-md font-bold text-primary">145€</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-lg line-clamp-2">Cuir de vachette tanné végétalement. Couture point de sellier faite main.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="inventory_2">inventory_2</span>
+<span class="text-label-md text-on-surface-variant">15 unités en stock</span>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3: New Collection -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden group">
+<div class="relative h-48 bg-surface-dim overflow-hidden">
+<img alt="Wooden Lamp" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A modern table lamp made of light-toned reclaimed wood with an Edison bulb, casting a warm and inviting amber glow. The lamp is positioned in a stylish, contemporary living room setup with neutral tones and soft textiles. The lighting is low-key, focusing on the warm radiance of the lamp, creating a cozy and professional product display." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxSY4WmpQ_CJhKyuMNGBbh_fUQayt-P-X6ZTBP4JzrGY5ImkP1XGoZgq2azCcHqN9fjjR8J2IpdLNZ23fHr8Uf2lqEpduOFHF3UBlpyoQCiNBSoGaWrQjm8xsk-Qd9TtOS8IZ5GQGRmxZiWGRdMCl0B6sSg3KqQYd3vCZmBY9ci7RbjhOjV1uKT4Sb5S57JA67EBT_sS-h2Vw4LGOi7EpispZeGFljZhbLFOqt1haAJdC2slCorEaCP12H0VAL94VCCDradHVJZ60"/>
+<div class="absolute top-md left-md">
+<span class="bg-secondary-container text-on-secondary-container px-md py-xs rounded-full text-label-sm font-bold shadow-sm">NOUVEAU</span>
+</div>
+<div class="absolute top-md right-md">
+<span class="bg-secondary-container/90 text-on-secondary-container px-md py-xs rounded-full text-label-sm font-bold">Luminaires</span>
+</div>
+</div>
+<div class="p-lg">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="text-headline-md font-headline-md text-on-surface">Lampe "Eclipse" Chêne</h4>
+<span class="text-headline-md font-bold text-primary">110€</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-lg line-clamp-2">Structure en chêne massif huilé. Design minimaliste et lumière chaude.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="inventory_2">inventory_2</span>
+<span class="text-label-md text-on-surface-variant">8 unités en stock</span>
+</div>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-xs hover:bg-surface-container-low rounded-lg transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4: Out of Stock Alert -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border-2 border-error-container overflow-hidden group">
+<div class="relative h-48 bg-surface-dim overflow-hidden grayscale">
+<img alt="Scented Candle" class="w-full h-full object-cover" data-alt="A set of organic, artisan-made candles in frosted glass jars, arranged artistically on a marble tray. The image is rendered in grayscale to indicate out-of-stock status, yet the quality of the glass and the wax texture is still clearly visible under high-end studio lighting. The aesthetic is clean and high-fidelity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmKaccizb8ycjFXICVmeqVvgQM3CcrfhkUOpDk6awdyLX_8LKGFxEvY7Q7mO0cvfzovvL4BbiEsm3Z9rQzSRT54KGqg71dw6c0S2ASWYRHlTbEnpUPQd5FvxNtoXB_Eca51HAAsVPiExjeUCPMi0_RN5uV2LTpSpfVvTZOJGOIcPNhQAdgBFYjMApXGxICnsBM54w1Nvv_gKRv5zxOIRwPvi1oINgwPdN6p3uSh9sNkCMhs3nFIWtD24IPYsZlplYrc1Fm207pBNA"/>
+<div class="absolute inset-0 bg-on-background/10 flex items-center justify-center">
+<span class="bg-error text-on-error px-xl py-md rounded-lg text-headline-md font-bold shadow-lg">RUPTURE DE STOCK</span>
+</div>
+<div class="absolute top-md right-md">
+<span class="bg-secondary-container/90 text-on-secondary-container px-md py-xs rounded-full text-label-sm font-bold">Bien-être</span>
+</div>
+</div>
+<div class="p-lg">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="text-headline-md font-headline-md text-on-surface opacity-50">Bougie "Cèdre &amp; Ambre"</h4>
+<span class="text-headline-md font-bold text-outline">28€</span>
+</div>
+<p class="text-body-md text-on-surface-variant mb-lg line-clamp-2 opacity-50">Cire de soja naturelle et huiles essentielles bio. 40h de combustion.</p>
+<div class="flex items-center justify-between border-t border-outline-variant pt-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<span class="text-label-md font-bold text-error">Re-stockage nécessaire</span>
+</div>
+<div class="flex gap-xs">
+<button class="bg-primary-container text-on-primary px-md py-xs rounded-lg text-label-sm hover:opacity-90 transition-all">
+                                    Réapprovisionner
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer (Authority: JSON) -->
+<footer class="mt-xl bg-surface-container-highest border-t border-outline-variant">
+<div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
+<div class="flex flex-col items-center md:items-start">
+<span class="text-headline-md font-headline-md font-bold text-primary-container mb-xs">M3alem Marketplace</span>
+<p class="text-label-sm text-on-surface-variant">© 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
+</div>
+<nav class="flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm transition-all hover:underline" href="#">About Artisans</a>
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm transition-all hover:underline" href="#">Quality Standards</a>
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm transition-all hover:underline" href="#">Seller Policy</a>
+<a class="text-on-surface-variant hover:text-primary-container text-label-sm transition-all hover:underline" href="#">Support</a>
+</nav>
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-container" data-icon="language">language</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary-container" data-icon="security">security</span>
+</div>
+</div>
+</footer>
+</main>
+</body></html>
