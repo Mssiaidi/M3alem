@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Product extends Model
 {
@@ -46,5 +47,17 @@ class Product extends Model
     public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class)->orderBy('position');
+    }
+
+    public function reviews(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Review::class,
+            OrderItem::class,
+            'product_id',
+            'order_id',
+            'id',
+            'order_id',
+        );
     }
 }
