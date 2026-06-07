@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -38,7 +39,7 @@ class ProductController extends Controller
             'is_active' => $request->boolean('is_active', true),
         ]);
 
-        $this->syncImages($product, $request->input('images', []));
+        $this->syncImages($product, $request->file('images', []));
 
         return response()->json($product->load(['category', 'images']), 201);
     }
@@ -56,7 +57,7 @@ class ProductController extends Controller
         $product->update($data);
 
         if ($request->has('images')) {
-            $this->syncImages($product, $request->input('images', []));
+            $this->syncImages($product, $request->file('images', []));
         }
 
         return response()->json($product->load(['category', 'images']));
@@ -76,8 +77,10 @@ class ProductController extends Controller
         $product->images()->delete();
 
         foreach (array_values($images) as $index => $path) {
+            $storedPath = $path->store('products', 'public');
+
             $product->images()->create([
-                'path' => $path,
+                'path' => Storage::disk('public')->url($storedPath),
                 'alt_text' => $product->name,
                 'position' => $index + 1,
             ]);

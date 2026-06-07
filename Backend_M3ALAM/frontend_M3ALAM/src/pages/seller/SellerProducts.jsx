@@ -77,9 +77,11 @@ function SellerProducts() {
         </div>
         <div className="action-row">
           <button className="button--ghost button--ghost-dark" type="button">
+            <span className="material-symbols-outlined">filter_list</span>
             Filtres
           </button>
           <Link className="button" to="/seller/products/new">
+            <span className="material-symbols-outlined">add_circle</span>
             Ajouter un produit
           </Link>
         </div>
@@ -117,10 +119,10 @@ function SellerProducts() {
                   <span>{stock === 0 ? 'Re-stockage nécessaire' : `${stock} unités ${stock <= 5 ? 'restantes' : 'en stock'}`}</span>
                   <div className="seller-product-card__actions">
                     <Link to={editPath} className="icon-link" aria-label={`Modifier ${product.name}`}>
-                      ✎
+                      <span className="material-symbols-outlined">edit</span>
                     </Link>
                     <button className="icon-link" type="button" aria-label={`Plus d'actions pour ${product.name}`}>
-                      ⋮
+                      <span className="material-symbols-outlined">more_vert</span>
                     </button>
                   </div>
                 </div>
@@ -129,6 +131,7 @@ function SellerProducts() {
                   <div className="seller-product-card__restock">
                     <span>Re-stockage nécessaire</span>
                     <button className="button button--small" type="button">
+                      <span className="material-symbols-outlined">inventory_2</span>
                       Réapprovisionner
                     </button>
                   </div>

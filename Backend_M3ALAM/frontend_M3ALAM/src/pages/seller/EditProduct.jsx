@@ -10,6 +10,7 @@ function EditProduct() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [product, setProduct] = useState(null)
+  const [previews, setPreviews] = useState([])
   const [form, setForm] = useState({
     category_id: '',
     name: '',
@@ -17,7 +18,7 @@ function EditProduct() {
     stock: '',
     description: '',
     is_active: true,
-    images: '',
+    images: [],
   })
 
   useEffect(() => {
@@ -37,7 +38,7 @@ function EditProduct() {
             stock: String(found.stock ?? ''),
             description: found.description || '',
             is_active: Boolean(found.is_active),
-            images: (found.images || []).map((image) => image.path).join('\n'),
+            images: [],
           })
         }
       } catch (err) {
@@ -60,20 +61,17 @@ function EditProduct() {
     setError('')
 
     try {
-      await updateProduct(id, {
-        category_id: Number(form.category_id),
-        name: form.name,
-        description: form.description,
-        price: Number(form.price),
-        stock: Number(form.stock),
-        is_active: form.is_active,
-        images: form.images
-          ? form.images
-              .split('\n')
-              .map((url) => url.trim())
-              .filter(Boolean)
-          : [],
-      })
+      const payload = new FormData()
+      payload.append('category_id', String(form.category_id))
+      payload.append('name', form.name)
+      payload.append('description', form.description)
+      payload.append('price', String(form.price))
+      payload.append('stock', String(form.stock))
+      payload.append('is_active', form.is_active ? '1' : '0')
+      form.images.forEach((file) => payload.append('images[]', file))
+      payload.append('_method', 'PUT')
+
+      await updateProduct(id, payload)
 
       navigate('/seller/products')
     } catch (err) {
@@ -165,11 +163,24 @@ function EditProduct() {
             />
           </div>
           <div className="form-field" style={{ gridColumn: '1 / -1' }}>
-            <label>Images (1 URL par ligne)</label>
-            <textarea
-              value={form.images}
-              onChange={(event) => setForm({ ...form, images: event.target.value })}
+            <label>Images du produit</label>
+            <input
+              accept="image/*"
+              multiple
+              type="file"
+              onChange={(event) => {
+                const files = Array.from(event.target.files || [])
+                setForm({ ...form, images: files })
+                setPreviews(files.map((file) => URL.createObjectURL(file)))
+              }}
             />
+            {previews.length ? (
+              <div className="upload-previews">
+                {previews.map((src) => (
+                  <img alt="Aperçu produit" key={src} src={src} />
+                ))}
+              </div>
+            ) : null}
           </div>
           <div className="form-field" style={{ gridColumn: '1 / -1' }}>
             <label>
