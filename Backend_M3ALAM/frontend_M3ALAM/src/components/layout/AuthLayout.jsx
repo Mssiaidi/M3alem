@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import Footer from './Footer'
 import TeamWorkBar from './TeamWorkBar'
 
@@ -8,9 +7,6 @@ function AuthLayout({ children }) {
       <TeamWorkBar />
 
       <main className="auth-layout">
-        <Link to="/" className="brand auth-layout__brand">
-          M3alem Marketplace
-        </Link>
         {children}
       </main>
 

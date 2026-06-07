@@ -1,12 +1,12 @@
-import { apiRequest, setAuthToken } from './api'
+import { apiRequest, clearAuthToken, setAuthToken } from './api'
 
-export async function login(credentials) {
+export async function login(credentials, remember = true) {
   const data = await apiRequest('/login', {
     method: 'POST',
     body: credentials,
   })
 
-  if (data?.token) setAuthToken(data.token)
+  if (data?.token) setAuthToken(data.token, remember)
   return data
 }
 
@@ -21,7 +21,7 @@ export async function register(payload) {
 }
 
 export function logoutLocal() {
-  setAuthToken(null)
+  clearAuthToken()
 }
 
 export function getProfile() {
