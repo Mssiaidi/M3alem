@@ -2,15 +2,21 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
 const TOKEN_KEY = 'm3alem_token'
 
 export function getAuthToken() {
-  return localStorage.getItem(TOKEN_KEY)
+  return sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY)
 }
 
-export function setAuthToken(token) {
-  if (token) {
-    localStorage.setItem(TOKEN_KEY, token)
-    return
-  }
+export function setAuthToken(token, remember = true) {
+  sessionStorage.removeItem(TOKEN_KEY)
+  localStorage.removeItem(TOKEN_KEY)
 
+  if (token) {
+    const storage = remember ? localStorage : sessionStorage
+    storage.setItem(TOKEN_KEY, token)
+  }
+}
+
+export function clearAuthToken() {
+  sessionStorage.removeItem(TOKEN_KEY)
   localStorage.removeItem(TOKEN_KEY)
 }
 
@@ -19,6 +25,7 @@ function buildHeaders(headers = {}) {
 
   return {
     Accept: 'application/json',
+    'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...headers,
   }
@@ -36,15 +43,10 @@ async function parseResponse(response) {
 }
 
 export async function apiRequest(endpoint, options = {}) {
-  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
-    headers: buildHeaders(isFormData ? options.headers : options.headers),
-    body: isFormData
-      ? options.body
-      : options.body
-        ? JSON.stringify(options.body)
-        : undefined,
+    headers: buildHeaders(options.headers),
+    body: options.body ? JSON.stringify(options.body) : undefined,
   })
 
   return parseResponse(response)
