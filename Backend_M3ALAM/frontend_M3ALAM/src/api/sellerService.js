@@ -1,4 +1,5 @@
 import { apiRequest, unwrapData } from './api'
+import { apiRequest as rawApiRequest } from './api'
 
 export function getSellerDashboard() {
   return apiRequest('/seller/dashboard')
@@ -59,4 +60,9 @@ export function updateOrderStatus(id, status) {
     method: 'PATCH',
     body: { status },
   })
+}
+
+export async function getCategories() {
+  const payload = await rawApiRequest('/categories')
+  return unwrapData(payload)
 }

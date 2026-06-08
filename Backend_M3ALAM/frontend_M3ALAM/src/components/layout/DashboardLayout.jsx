@@ -2,6 +2,28 @@ import { Link, useLocation } from 'react-router-dom'
 import Footer from './Footer'
 import TeamWorkBar from './TeamWorkBar'
 
+function getLinkIcon(label) {
+  switch (label) {
+    case 'Dashboard':
+      return 'dashboard'
+    case 'Boutique':
+      return 'store'
+    case 'Produits':
+    case 'Nouveau produit':
+      return 'inventory_2'
+    case 'Commandes':
+      return 'receipt_long'
+    case 'Utilisateurs':
+      return 'group'
+    case 'Categories':
+      return 'category'
+    case 'Avis':
+      return 'rate_review'
+    default:
+      return 'circle'
+  }
+}
+
 function DashboardLayout({ children, links, title }) {
   const location = useLocation()
 
@@ -23,6 +45,9 @@ function DashboardLayout({ children, links, title }) {
                 key={link.path}
                 to={link.path}
               >
+                <span className="material-symbols-outlined dashboard-sidebar__icon">
+                  {getLinkIcon(link.label)}
+                </span>
                 {link.label}
               </Link>
             ))}
@@ -32,7 +57,10 @@ function DashboardLayout({ children, links, title }) {
         <div className="dashboard-layout__body">
           <header className="dashboard-topbar">
             <strong>{title}</strong>
-            <Link to="/login" className="chip">Deconnexion</Link>
+            <Link to="/login" className="chip">
+              <span className="material-symbols-outlined">logout</span>
+              Deconnexion
+            </Link>
           </header>
 
           <main className="dashboard-main">
