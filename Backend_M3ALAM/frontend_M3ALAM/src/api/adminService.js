@@ -33,6 +33,16 @@ export async function getPendingShops() {
   return unwrapData(payload)
 }
 
+export async function getAdminReviews() {
+  const payload = await apiRequest('/admin/reviews')
+  return unwrapData(payload)
+}
+
+export async function getAdminOrders() {
+  const payload = await apiRequest('/admin/orders')
+  return unwrapData(payload)
+}
+
 export function approveShop(id) {
   return apiRequest(`/admin/shops/${id}/approve`, {
     method: 'PATCH',

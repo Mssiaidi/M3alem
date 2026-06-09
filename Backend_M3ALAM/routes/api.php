@@ -56,6 +56,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/shops/pending', [ShopModerationController::class, 'pending']);
         Route::patch('/shops/{shop}/approve', [ShopModerationController::class, 'approve']);
         Route::patch('/shops/{shop}/suspend', [ShopModerationController::class, 'suspend']);
+        Route::get('/orders', [\App\Http\Controllers\Api\Admin\OrderController::class, 'index']);
 
         Route::get('/reviews', [\App\Http\Controllers\Api\ReviewController::class, 'index']);
         Route::delete('/reviews/{review}', [\App\Http\Controllers\Api\ReviewController::class, 'destroy']);
