@@ -43,7 +43,7 @@ class UserController extends Controller
             'role' => ['required', Rule::in(['client', 'seller', 'admin'])],
         ]);
 
-        $validated['account_status'] = $validated['role'] === 'client' ? 'active' : 'pending';
+        $validated['account_status'] = $validated['role'] === 'seller' ? 'pending' : 'active';
 
         $user = User::create($validated);
 

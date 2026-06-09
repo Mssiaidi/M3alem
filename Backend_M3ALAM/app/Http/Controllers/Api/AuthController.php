@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $data['account_status'] = $data['role'] === 'client' ? 'active' : 'pending';
+        $data['account_status'] = $data['role'] === 'seller' ? 'pending' : 'active';
         $user = User::create($data);
 
         return response()->json([
@@ -35,9 +35,9 @@ class AuthController extends Controller
             ]);
         }
 
-        if ($user->account_status !== 'active') {
+        if ($user->account_status === 'pending' && $user->role === 'seller') {
             throw ValidationException::withMessages([
-                'email' => ['Votre compte est en attente de validation.'],
+                'email' => ['Votre compte vendeur est en attente de validation.'],
             ]);
         }
 
