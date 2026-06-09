@@ -15,7 +15,9 @@ class AuthController extends Controller
 {
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create($request->validated());
+        $data = $request->validated();
+        $data['account_status'] = $data['role'] === 'client' ? 'active' : 'pending';
+        $user = User::create($data);
 
         return response()->json([
             'user' => $user,
@@ -30,6 +32,12 @@ class AuthController extends Controller
         if (! $user || ! Hash::check($request->string('password'), $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['Les identifiants sont incorrects.'],
+            ]);
+        }
+
+        if ($user->account_status !== 'active') {
+            throw ValidationException::withMessages([
+                'email' => ['Votre compte est en attente de validation.'],
             ]);
         }
 

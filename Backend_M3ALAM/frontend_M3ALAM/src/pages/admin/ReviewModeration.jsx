@@ -1,18 +1,21 @@
 import { useEffect, useMemo, useState } from 'react'
-import { apiRequest, unwrapData } from '../../api/api'
+import { deleteAdminReview, getAdminReviews } from '../../api/adminService'
 
 function ReviewModeration() {
   const [reviews, setReviews] = useState([])
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     let active = true
 
     async function load() {
       try {
-        const payload = await apiRequest('/admin/reviews')
+        setLoading(true)
+        const payload = await getAdminReviews()
         if (!active) return
-        setReviews(unwrapData(payload))
+        setReviews(payload?.data || payload || [])
       } catch (err) {
         if (!active) return
         setError(
@@ -21,6 +24,8 @@ function ReviewModeration() {
             : err.message || 'Impossible de charger les avis.',
         )
         setReviews([])
+      } finally {
+        if (active) setLoading(false)
       }
     }
 
@@ -31,126 +36,136 @@ function ReviewModeration() {
   }, [])
 
   const stats = useMemo(() => {
-    const total = reviews.length || 0
-    const flagged = total ? Math.max(1, Math.ceil(total * 0.3)) : 12
-    const approved = total ? Math.max(1, total - flagged) : 128
-    return {
-      total,
-      flagged,
-      approved,
-      approvalRate: total ? Math.round((approved / total) * 100) : 84,
-    }
+    const total = reviews.length
+    const flagged = reviews.filter((review) => Number(review.rating || 0) <= 2).length
+    const approved = reviews.filter((review) => Number(review.rating || 0) >= 4).length
+    const approvalRate = total ? Math.round((approved / total) * 100) : 0
+    return { total, flagged, approved, approvalRate }
   }, [reviews])
 
-  const topArtisans = [
-    ['Atelier Bois Noir', '4.9/5 (128 avis)'],
-    ['Céramique d’Azur', '4.8/5 (92 avis)'],
-  ]
+  const visibleReviews = useMemo(() => {
+    const term = query.trim().toLowerCase()
+    if (!term) return reviews
+    return reviews.filter((review) => {
+      const haystack = `${review.user?.name || ''} ${review.comment || ''} ${review.order?.reference || ''}`.toLowerCase()
+      return haystack.includes(term)
+    })
+  }, [query, reviews])
+
+  const topUsers = useMemo(() => {
+    const grouped = new Map()
+    reviews.forEach((review) => {
+      const name = review.user?.name || 'Client'
+      const current = grouped.get(name) || { total: 0, count: 0 }
+      current.total += Number(review.rating || 0)
+      current.count += 1
+      grouped.set(name, current)
+    })
+
+    return Array.from(grouped.entries())
+      .map(([name, info]) => ({
+        name,
+        score: info.count ? (info.total / info.count).toFixed(1) : '0.0',
+        count: info.count,
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 4)
+  }, [reviews])
+
+  async function handleDelete(reviewId) {
+    try {
+      await deleteAdminReview(reviewId)
+      setReviews((current) => current.filter((review) => review.id !== reviewId))
+    } catch (err) {
+      setError(err.message || 'Impossible de supprimer l’avis.')
+    }
+  }
 
   return (
-    <div className="review-moderation-shell">
-      <div className="new-product-breadcrumbs">
-        <span>M3alem Marketplace</span>
-        <span>›</span>
-        <strong>Modération des Avis</strong>
-      </div>
-
+    <div className="review-moderation-shell admin-shell">
       <header className="review-moderation-head">
         <div>
-          <h1>File de Modération</h1>
-          <p>Gestion des signalements et validation de la qualité.</p>
+          <h1>Modération des Avis</h1>
+          <p>Gestion des signalements et validation de la qualité depuis la base de données.</p>
         </div>
         <div className="review-alert-pill">
           <span className="material-symbols-outlined">warning</span>
-          12 Signalements en attente
+          {stats.flagged} Signalements en attente
         </div>
       </header>
 
       {error ? <p className="error-text">{error}</p> : null}
+      {loading ? <p className="admin-state-note">Chargement des avis depuis la base de données...</p> : null}
 
       <div className="review-moderation-layout">
         <section className="review-feed">
-          {(reviews.length ? reviews : [
-            {
-              id: 1,
-              user: { name: 'Jean Dupont' },
-              comment:
-                'Le vase reçu est magnifique. Les détails sont encore plus beaux en vrai. Cependant, la livraison a pris 3 jours de plus que prévu.',
-              rating: 4,
-              product_name: 'Vase Azur Artisanal',
-              status: 'approved',
-              created_at: 'il y a 2 heures',
-            },
-            {
-              id: 2,
-              user: { name: 'Utilisateur_4502' },
-              comment:
-                "C'est une honte, le produit est cassé et le vendeur ne répond pas.",
-              rating: 1,
-              product_name: 'Table en Noyer Massif',
-              status: 'flagged',
-              created_at: 'il y a 5 heures',
-            },
-            {
-              id: 3,
-              user: { name: 'Marie Claire' },
-              comment:
-                'Je commande régulièrement et la qualité est toujours au rendez-vous. Le service client est très réactif.',
-              rating: 5,
-              product_name: 'Service de Table complet',
-              status: 'approved',
-              created_at: 'il y a 1 jour',
-            },
-          ]).map((review, index) => {
-            const isFlagged = review.status === 'flagged' || index === 1
-            const rating = review.rating || (isFlagged ? 1 : 5)
+          <div className="review-panel-head">
+            <div>
+              <h2>File de Modération</h2>
+              <p>Les cartes ci-dessous viennent de la base de données.</p>
+            </div>
+            <div className="toolbar__search review-search">
+              <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Rechercher un avis..." />
+            </div>
+          </div>
 
-            return (
-              <article
-                className={`review-card ${isFlagged ? 'is-flagged' : ''}`}
-                key={review.id}
-              >
-                <div className="review-card__head">
-                  <div className="review-user">
-                    <div className="review-avatar">👤</div>
-                    <div>
-                      <strong>{review.user?.name || 'Utilisateur'}</strong>
-                      <span>Client vérifié · {review.created_at || 'il y a quelques instants'}</span>
+          {visibleReviews.length ? (
+            visibleReviews.map((review) => {
+              const isFlagged = Number(review.rating || 0) <= 2
+              const rating = Number(review.rating || 0)
+
+              return (
+                <article className={`review-card ${isFlagged ? 'is-flagged' : ''}`} key={review.id}>
+                  {isFlagged ? (
+                    <div className="review-badge">
+                      <span className="material-symbols-outlined">report</span>
+                      SIGNALÉ
+                    </div>
+                  ) : null}
+                  <div className="review-card__head">
+                    <div className="review-user">
+                      <div className="review-avatar">👤</div>
+                      <div>
+                        <strong>{review.user?.name || 'Utilisateur'}</strong>
+                        <span>{isFlagged ? 'Achat non vérifié' : 'Client vérifié'} · {review.created_at || 'il y a quelques instants'}</span>
+                      </div>
+                    </div>
+                    <div className={`review-stars ${isFlagged ? 'is-flagged' : ''}`}>
+                      {'★'.repeat(Math.max(0, rating))}
+                      {'☆'.repeat(Math.max(0, 5 - rating))}
                     </div>
                   </div>
-                  <div className={`review-stars ${isFlagged ? 'is-flagged' : ''}`}>
-                    {'★'.repeat(rating)}
-                    {'☆'.repeat(Math.max(0, 5 - rating))}
-                  </div>
-                </div>
 
-                <h3>{isFlagged ? 'ARNAQUE !!! NE PAS ACHETER' : 'Excellent travail de poterie'}</h3>
-                <p>{review.comment}</p>
+                  <h3>{isFlagged ? 'ARNAQUE !!! NE PAS ACHETER' : 'Excellent travail de poterie'}</h3>
+                  <p>{review.comment || 'Aucun commentaire'}</p>
 
-                {isFlagged ? (
-                  <div className="review-quote">
-                    <strong>Motif du signalement :</strong> Promotion d&apos;un concurrent / Langage inapproprié
-                  </div>
-                ) : null}
+                  {isFlagged ? (
+                    <div className="review-quote">
+                      <strong>Motif du signalement :</strong> Note faible / commentaire sensible
+                    </div>
+                  ) : null}
 
-                <div className="review-card__footer">
-                  <div>
-                    <span>PRODUIT:</span> {review.product_name || 'Produit lié'}
+                  <div className="review-card__footer">
+                    <div>
+                      <span>PRODUIT:</span> {review.order?.reference || 'Commande liée'}
+                    </div>
+                    <div className="review-actions">
+                      <button className="button--ghost button--ghost-dark" type="button">
+                        <span className="material-symbols-outlined">close</span>
+                        Rejeter
+                      </button>
+                      <button className="button" type="button" onClick={() => handleDelete(review.id)}>
+                        <span className="material-symbols-outlined">delete</span>
+                        {isFlagged ? 'Supprimer l’avis' : 'Approuver l’avis'}
+                      </button>
+                    </div>
                   </div>
-                  <div className="review-actions">
-                    <button className="button--ghost button--ghost-dark" type="button">
-                      <span className="material-symbols-outlined">close</span>
-                      Rejeter
-                    </button>
-                    <button className="button" type="button">
-                      <span className="material-symbols-outlined">task_alt</span>
-                      {isFlagged ? 'Supprimer l’avis' : 'Approuver l’avis'}
-                    </button>
-                  </div>
-                </div>
-              </article>
-            )
-          })}
+                </article>
+              )
+            })
+          ) : (
+            <div className="review-empty-state">Aucun avis trouvé dans la base de données.</div>
+          )}
         </section>
 
         <aside className="review-side">
@@ -165,8 +180,8 @@ function ReviewModeration() {
             </div>
             <div className="review-side-stats">
               <div>
-                <span>Ce mois</span>
-                <strong>1.2k</strong>
+                <span>Total</span>
+                <strong>{stats.total}</strong>
                 <small>Avis reçus</small>
               </div>
               <div>
@@ -180,16 +195,20 @@ function ReviewModeration() {
           <article className="review-side-panel">
             <h2>Top Artisans du Moment</h2>
             <div className="top-artisans">
-              {topArtisans.map(([name, note]) => (
-                <div className="top-artisan" key={name}>
-                  <div className="top-artisan__thumb" />
-                  <div>
-                    <strong>{name}</strong>
-                    <span>{note}</span>
+              {topUsers.length ? (
+                topUsers.map((user) => (
+                  <div className="top-artisan" key={user.name}>
+                    <div className="top-artisan__thumb" />
+                    <div>
+                      <strong>{user.name}</strong>
+                      <span>{user.score}/5 ({user.count} avis)</span>
+                    </div>
+                    <span className="top-artisan__star">★</span>
                   </div>
-                  <span className="top-artisan__star">★</span>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="review-empty-state">Aucun classement disponible.</div>
+              )}
             </div>
             <button className="button--ghost button--ghost-dark review-side-button" type="button">
               Voir tout le classement

@@ -53,6 +53,9 @@ Route::middleware('auth:sanctum')->group(function (): void {
 
     Route::prefix('admin')->group(function (): void {
         Route::apiResource('categories', \App\Http\Controllers\Api\Admin\CategoryController::class);
+        Route::get('/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'index']);
+        Route::post('/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'store']);
+        Route::patch('/users/{user}/approve', [\App\Http\Controllers\Api\Admin\UserController::class, 'approve']);
         Route::get('/shops/pending', [ShopModerationController::class, 'pending']);
         Route::patch('/shops/{shop}/approve', [ShopModerationController::class, 'approve']);
         Route::patch('/shops/{shop}/suspend', [ShopModerationController::class, 'suspend']);

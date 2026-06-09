@@ -26,12 +26,14 @@ function AdminDashboard() {
   const [error, setError] = useState('')
   const [range, setRange] = useState('day')
   const [chartMenuOpen, setChartMenuOpen] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
 
   useEffect(() => {
     let active = true
 
     async function load() {
       try {
+        setRefreshing(true)
         const [dashboardPayload, shopsPayload, reviewsPayload, categoriesPayload, ordersPayload] = await Promise.all([
           getAdminDashboard(),
           getPendingShops(),
@@ -50,6 +52,8 @@ function AdminDashboard() {
       } catch (err) {
         if (!active) return
         setError(err.message || 'Impossible de charger le dashboard admin.')
+      } finally {
+        if (active) setRefreshing(false)
       }
     }
 
@@ -58,6 +62,63 @@ function AdminDashboard() {
       active = false
     }
   }, [])
+
+  const handleRefreshDashboard = async () => {
+    setError('')
+    setChartMenuOpen(false)
+    setRefreshing(true)
+
+    try {
+      const [dashboardPayload, shopsPayload, reviewsPayload, categoriesPayload, ordersPayload] = await Promise.all([
+        getAdminDashboard(),
+        getPendingShops(),
+        getAdminReviews(),
+        getAdminCategories(),
+        getAdminOrders(),
+      ])
+
+      setDashboard(dashboardPayload)
+      setShops(shopsPayload?.data || shopsPayload || [])
+      setReviews(reviewsPayload?.data || reviewsPayload || [])
+      setCategories(categoriesPayload?.data || categoriesPayload || [])
+      setOrders(ordersPayload?.data || ordersPayload || [])
+    } catch (err) {
+      setError(err.message || 'Impossible de rafraîchir le dashboard admin.')
+    } finally {
+      setRefreshing(false)
+    }
+  }
+
+  const handleExportReport = () => {
+    const rows = [
+      ['Metric', 'Value'],
+      ['Generated at', new Date().toISOString()],
+      ['Total users', dashboard?.total_users ?? 0],
+      ['Total shops', dashboard?.total_shops ?? 0],
+      ['Pending shops', dashboard?.pending_shops ?? 0],
+      ['Total products', dashboard?.total_products ?? 0],
+      ['Total orders', dashboard?.total_orders ?? 0],
+      ['Total revenue', dashboard?.total_revenue ?? 0],
+      ['Alerts', alerts.length],
+    ]
+
+    const csv = rows
+      .map((row) =>
+        row
+          .map((cell) => `"${String(cell).replaceAll('"', '""')}"`)
+          .join(','),
+      )
+      .join('\n')
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `admin-dashboard-report-${new Date().toISOString().slice(0, 10)}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+    setChartMenuOpen(false)
+  }
 
   const rangeDays = range === 'day' ? 1 : range === 'week' ? 7 : 30
 
@@ -101,21 +162,69 @@ function AdminDashboard() {
   )
 
   const salesBars = useMemo(() => {
-    const orderCount = Array.isArray(orders) ? orders.length : 0
-    const shopCount = filteredShops.length
-    const reviewCount = filteredReviews.length
-    const categoryCount = filteredCategories.length
-    const base = Math.max(10, orderCount * 4 + shopCount * 3 + reviewCount * 2 + categoryCount)
-
-    return [
-      { label: 'Mon', value: Math.max(8, Math.round(base * 0.55)), percent: 42, tone: 'neutral' },
-      { label: 'Tue', value: Math.max(10, Math.round(base * 0.7)), percent: 58, tone: 'neutral' },
-      { label: 'Wed', value: Math.max(14, Math.round(base * 0.95)), percent: 86, tone: 'primary' },
-      { label: 'Thu', value: Math.max(10, Math.round(base * 0.72)), percent: 60, tone: 'neutral' },
-      { label: 'Fri', value: Math.max(12, Math.round(base * 0.82)), percent: 72, tone: 'neutral' },
-      { label: 'Sat', value: Math.max(16, Math.round(base * 1.1)), percent: 96, tone: 'secondary' },
+    const metrics = [
+      {
+        label: 'Revenue',
+        value: Number(dashboard?.total_revenue || 0),
+        tone: 'primary',
+      },
+      {
+        label: 'Orders',
+        value: Number(dashboard?.total_orders || orders.length || 0),
+        tone: 'neutral',
+      },
+      {
+        label: 'Shops',
+        value: Number(dashboard?.total_shops || filteredShops.length || 0),
+        tone: 'neutral',
+      },
+      {
+        label: 'Reviews',
+        value: Number(filteredReviews.length || reviews.length || 0),
+        tone: 'secondary',
+      },
+      {
+        label: 'Categories',
+        value: Number(filteredCategories.length || categories.length || 0),
+        tone: 'neutral',
+      },
+      {
+        label: 'Users',
+        value: Number(dashboard?.total_users || 0),
+        tone: 'neutral',
+      },
     ]
-  }, [filteredCategories.length, filteredReviews.length, filteredShops.length, orders])
+
+    const maxValue = Math.max(...metrics.map((metric) => metric.value), 1)
+
+    return metrics.map((metric) => ({
+      ...metric,
+      percent: Math.max(12, Math.round((metric.value / maxValue) * 100)),
+    }))
+  }, [categories.length, dashboard, filteredCategories.length, filteredReviews.length, filteredShops.length, orders.length, reviews.length])
+
+  const trendSummary = useMemo(() => {
+    const trend = Array.isArray(dashboard?.trend) ? dashboard.trend : []
+    if (trend.length < 2) {
+      return { label: '+0.0%', tone: 'neutral' }
+    }
+
+    const firstValue = Number(trend[0]?.revenue || 0)
+    const lastValue = Number(trend[trend.length - 1]?.revenue || 0)
+    const base = firstValue || 1
+    const delta = ((lastValue - firstValue) / base) * 100
+    const rounded = Math.abs(delta).toFixed(1)
+
+    if (delta > 0) {
+      return { label: `+${rounded}%`, tone: 'positive' }
+    }
+
+    if (delta < 0) {
+      return { label: `-${rounded}%`, tone: 'negative' }
+    }
+
+    return { label: '+0.0%', tone: 'neutral' }
+  }, [dashboard])
 
   const recentOrders = useMemo(() => {
     if (orders.length) {
@@ -137,26 +246,55 @@ function AdminDashboard() {
     ].map(([product, customer, status, amount]) => ({ product, customer, status, amount }))
   }, [orders])
 
-  const alerts = [
-    {
-      title: 'Review Required',
-      text: 'New listing "Hand-carved Oak Table" needs quality verification.',
-      tone: 'warn',
-      icon: 'report',
-    },
-    {
-      title: 'Server Healthy',
-      text: 'System synchronization completed successfully at 04:00 AM.',
-      tone: 'info',
-      icon: 'check_circle',
-    },
-    {
-      title: 'Payout Delayed',
-      text: 'Verification needed for transaction #882193-TX.',
-      tone: 'warn',
-      icon: 'notification_important',
-    },
-  ]
+  const alerts = useMemo(() => {
+    const pendingShopsCount = dashboard?.pending_shops ?? 0
+    const recentReviewsCount = filteredReviews.length || reviews.length || 0
+    const pendingOrdersCount = orders.filter((order) => ['pending', 'processing', 'paid'].includes(String(order.status || '').toLowerCase())).length
+
+    const items = [
+      pendingShopsCount
+        ? {
+            title: 'Review Required',
+            text: `${pendingShopsCount} shop${pendingShopsCount > 1 ? 's' : ''} still need approval.`,
+            tone: 'warn',
+            icon: 'report',
+          }
+        : {
+            title: 'Shops Updated',
+            text: 'No pending shop approvals right now.',
+            tone: 'info',
+            icon: 'check_circle',
+          },
+      recentReviewsCount
+        ? {
+            title: 'Recent Activity',
+            text: `${recentReviewsCount} review${recentReviewsCount > 1 ? 's' : ''} loaded for moderation.`,
+            tone: 'info',
+            icon: 'rate_review',
+          }
+        : {
+            title: 'No Reviews',
+            text: 'There are no reviews in the selected range.',
+            tone: 'info',
+            icon: 'highlight_off',
+          },
+      pendingOrdersCount
+        ? {
+            title: 'Orders Waiting',
+            text: `${pendingOrdersCount} order${pendingOrdersCount > 1 ? 's' : ''} need follow-up.`,
+            tone: 'warn',
+            icon: 'notification_important',
+          }
+        : {
+            title: 'Orders Healthy',
+            text: 'No pending orders need immediate action.',
+            tone: 'info',
+            icon: 'check_circle',
+          },
+    ]
+
+    return items
+  }, [dashboard?.pending_shops, filteredReviews.length, orders, reviews.length])
 
   return (
     <div className="admin-dashboard-clean">
@@ -188,7 +326,7 @@ function AdminDashboard() {
               <span className="material-symbols-outlined" aria-hidden="true">
                 {card.icon}
               </span>
-              <span className="admin-dashboard-clean__trend">+12.5%</span>
+              <span className={`admin-dashboard-clean__trend is-${trendSummary.tone}`}>{trendSummary.label}</span>
             </div>
             <p>{card.label}</p>
             <strong>{card.value}</strong>
@@ -203,7 +341,7 @@ function AdminDashboard() {
             <div className="admin-dashboard-clean__chart-actions">
               <button
                 type="button"
-                className="admin-dashboard-clean__icon-button"
+                className={`admin-dashboard-clean__icon-button ${refreshing ? 'is-loading' : ''}`}
                 onClick={() => setChartMenuOpen((current) => !current)}
                 aria-expanded={chartMenuOpen}
                 aria-label="Chart options"
@@ -214,13 +352,22 @@ function AdminDashboard() {
               </button>
               {chartMenuOpen ? (
                 <div className="admin-dashboard-clean__menu">
-                  <button type="button" onClick={() => setChartMenuOpen(false)}>
-                    Refresh data
+                  <button type="button" onClick={handleRefreshDashboard} disabled={refreshing}>
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      {refreshing ? 'progress_activity' : 'refresh'}
+                    </span>
+                    {refreshing ? 'Refreshing...' : 'Refresh data'}
                   </button>
-                  <button type="button" onClick={() => setChartMenuOpen(false)}>
+                  <button type="button" onClick={handleExportReport}>
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      download
+                    </span>
                     Export report
                   </button>
-                  <Link to="/admin/reviews" onClick={() => setChartMenuOpen(false)}>
+                  <Link to="/admin/analytics" onClick={() => setChartMenuOpen(false)}>
+                    <span className="material-symbols-outlined" aria-hidden="true">
+                      monitoring
+                    </span>
                     View analytics
                   </Link>
                 </div>
@@ -234,16 +381,16 @@ function AdminDashboard() {
                 className={`admin-dashboard-clean__bar ${bar.tone === 'primary' ? 'is-primary' : bar.tone === 'secondary' ? 'is-secondary' : ''}`}
                 key={bar.label}
                 style={{ height: `${bar.percent}%` }}
-                title={`${bar.label}: ${bar.value}k`}
+                title={`${bar.label}: ${bar.value}`}
               >
-                <span className="admin-dashboard-clean__bar-tooltip">{bar.value}k</span>
+                <span className="admin-dashboard-clean__bar-tooltip">{bar.value}</span>
               </div>
             ))}
           </div>
 
           <div className="admin-dashboard-clean__days">
-            {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <span key={day}>{day}</span>
+            {salesBars.map((bar) => (
+              <span key={bar.label}>{bar.label}</span>
             ))}
           </div>
         </article>
