@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { addCartItem } from '../../api/cartService'
+import { addCartItem, notifyCartUpdated } from '../../api/cartService'
 import { getProduct } from '../../api/catalogService'
 
 function formatPrice(price) {
@@ -71,7 +71,7 @@ function ProductDetail() {
 
     try {
       await addCartItem(product.id, 1)
-      setCartMessage('Produit ajoute au panier.')
+      notifyCartUpdated(1)
     } catch (addError) {
       setCartMessage(addError.message || 'Connectez-vous comme client pour ajouter au panier.')
     } finally {

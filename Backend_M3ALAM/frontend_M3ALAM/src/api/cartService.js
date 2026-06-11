@@ -1,5 +1,11 @@
 import { apiRequest } from './api'
 
+export function notifyCartUpdated(quantity = 1, options = {}) {
+  window.dispatchEvent(new CustomEvent('cart:updated', {
+    detail: { quantity, ...options },
+  }))
+}
+
 export function getCart() {
   return apiRequest('/cart')
 }

@@ -12,6 +12,8 @@ class CartController extends Controller
 {
     public function show(Request $request): JsonResponse
     {
+        abort_unless($request->user()->isClient(), 403);
+
         return response()->json($this->cartPayload($request));
     }
 

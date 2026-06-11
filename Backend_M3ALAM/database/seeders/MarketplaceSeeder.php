@@ -227,6 +227,19 @@ class MarketplaceSeeder extends Seeder
             $createdProducts->push($product);
         }
 
+        $cart = $client->cart()->firstOrCreate();
+        $cart->items()->delete();
+
+        $createdProducts
+            ->take(3)
+            ->each(function (Product $product, int $index) use ($cart): void {
+                $cart->items()->create([
+                    'product_id' => $product->id,
+                    'quantity' => $index === 2 ? 2 : 1,
+                    'unit_price' => $product->price,
+                ]);
+            });
+
         $order = $client->orders()->firstOrCreate(
             ['reference' => 'ORD-DEMO-0001'],
             [

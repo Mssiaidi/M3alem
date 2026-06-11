@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { addCartItem } from '../../api/cartService'
+import { addCartItem, notifyCartUpdated } from '../../api/cartService'
 import { getCategories, getProductsPage } from '../../api/catalogService'
 
 const fallbackProductImage = 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=900&q=80'
@@ -116,7 +116,7 @@ function Catalogue() {
 
     try {
       await addCartItem(productId, 1)
-      setMessage('Produit ajoute au panier.')
+      notifyCartUpdated(1)
     } catch (error) {
       setMessage(error.message || 'Connectez-vous comme client pour ajouter au panier.')
     } finally {
