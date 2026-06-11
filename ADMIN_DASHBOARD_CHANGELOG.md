@@ -43,3 +43,6 @@ This file summarizes the work done on the admin dashboard and related moderation
 - The dashboard still falls back gracefully when trend data is unavailable.
 - The CSV export is intentionally lightweight so it works without extra backend endpoints.
 - The analytics page currently shows a month snapshot using the existing dashboard API response.
+- Any new admin-side UI or backend behavior change should be recorded here to keep the dashboard work traceable.
+- Current account validation rule: `seller` accounts are pending until admin approval, while `client` and `admin` accounts are active immediately.
+- If `account_status` is missing in the database, run the new migration before seeding or logging in as users.
