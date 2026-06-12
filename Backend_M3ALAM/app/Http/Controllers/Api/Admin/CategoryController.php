@@ -12,7 +12,13 @@ class CategoryController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Category::all());
+        return response()->json(
+            Category::query()
+                ->withCount('products')
+                ->orderByDesc('products_count')
+                ->orderBy('name')
+                ->get()
+        );
     }
 
     public function store(Request $request): JsonResponse

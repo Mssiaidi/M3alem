@@ -23,6 +23,7 @@ import SellerOrders from './pages/seller/SellerOrders'
 import ShopManagement from './pages/seller/ShopManagement'
 import SellerProducts from './pages/seller/SellerProducts'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import AdminAnalytics from './pages/admin/AdminAnalytics'
 import ReviewModeration from './pages/admin/ReviewModeration'
 import ShopModeration from './pages/admin/ShopModeration'
 import CategoryManagement from './pages/admin/CategoryManagement'
@@ -77,6 +78,7 @@ function Shell() {
       <Route path="/seller/products/:id/edit" element={sellerPage(<EditProduct />)} />
       <Route path="/seller/products" element={sellerPage(<SellerProducts />)} />
       <Route path="/admin/dashboard" element={adminPage(<AdminDashboard />)} />
+      <Route path="/admin/analytics" element={adminPage(<AdminAnalytics />)} />
       <Route path="/admin/users" element={adminPage(<UserManagement />)} />
       <Route path="/admin/reviews" element={adminPage(<ReviewModeration />)} />
       <Route path="/admin/shops" element={adminPage(<ShopModeration />)} />

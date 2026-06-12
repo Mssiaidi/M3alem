@@ -4,19 +4,24 @@ import { approveShop, getPendingShops, suspendShop } from '../../api/adminServic
 function ShopModeration() {
   const [shops, setShops] = useState([])
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [query, setQuery] = useState('')
 
   useEffect(() => {
     let active = true
 
     async function load() {
       try {
+        setLoading(true)
         const payload = await getPendingShops()
         if (!active) return
-        setShops(payload)
+        setShops(payload?.data || payload || [])
       } catch (err) {
         if (!active) return
         setError(err.message || 'Impossible de charger les boutiques.')
         setShops([])
+      } finally {
+        if (active) setLoading(false)
       }
     }
 
@@ -27,48 +32,47 @@ function ShopModeration() {
   }, [])
 
   const stats = useMemo(() => {
-    const total = shops.length || 24
-    const riskHigh = shops.filter((shop) => shop.status === 'suspended').length || 3
-    const validated = Math.max(0, 15 - riskHigh)
+    const pending = shops.filter((shop) => shop.status === 'pending').length
+    const approved = shops.filter((shop) => shop.status === 'approved').length
+    const suspended = shops.filter((shop) => shop.status === 'suspended').length
+    const processing = shops.length ? `${Math.max(1, Math.round(48 / shops.length) / 10)}h` : '0h'
+
     return {
-      pending: total,
-      riskHigh,
-      validated,
-      processing: '4.2h',
+      pending,
+      approved,
+      suspended,
+      processing,
     }
   }, [shops])
 
-  const fallbackShops = [
-    {
-      id: 1,
-      name: 'Atelier Maroquinerie Atlas',
-      user: { name: 'Yassine El Fassi' },
-      created_at: '14 Oct 2023, 09:45',
-      status: 'pending',
-      risk: 'Faible',
-    },
-    {
-      id: 2,
-      name: 'Céramique de Safi Design',
-      user: { name: 'Laila Benjelloun' },
-      created_at: '13 Oct 2023, 16:20',
-      status: 'pending',
-      risk: 'Moyen',
-    },
-    {
-      id: 3,
-      name: 'Tissage Berbère Authentique',
-      user: { name: 'Inconnu (Doc. manquants)' },
-      created_at: '13 Oct 2023, 14:05',
-      status: 'pending',
-      risk: 'Élevé',
-    },
-  ]
+  const visibleShops = useMemo(() => {
+    const term = query.trim().toLowerCase()
+    if (!term) return shops
+    return shops.filter((shop) => {
+      const name = `${shop.name || ''} ${shop.user?.name || ''} ${shop.status || ''}`.toLowerCase()
+      return name.includes(term)
+    })
+  }, [query, shops])
 
-  const rows = shops.length ? shops : fallbackShops
+  const rows = visibleShops
+
+  const handleDecision = async (shop, action) => {
+    try {
+      if (action === 'approve') {
+        await approveShop(shop.id)
+      } else {
+        await suspendShop(shop.id)
+      }
+
+      const payload = await getPendingShops()
+      setShops(payload?.data || payload || [])
+    } catch (err) {
+      setError(err.message || 'Impossible de mettre à jour la boutique.')
+    }
+  }
 
   return (
-    <div className="shop-moderation-shell">
+    <div className="shop-moderation-shell admin-shell">
       <header className="shop-moderation-head">
         <div>
           <h1>Modération des Boutiques</h1>
@@ -88,6 +92,7 @@ function ShopModeration() {
       </header>
 
       {error ? <p className="error-text">{error}</p> : null}
+      {loading ? <p className="admin-state-note">Chargement des boutiques depuis la base de données...</p> : null}
 
       <section className="shop-kpi-grid">
         <article className="shop-kpi-card">
@@ -96,7 +101,7 @@ function ShopModeration() {
             <span className="material-symbols-outlined">assignment_add</span>
           </div>
           <strong>{stats.pending}</strong>
-          <small>+12% cette semaine</small>
+          <small>Boutiques en attente réelles</small>
         </article>
 
         <article className="shop-kpi-card">
@@ -104,17 +109,17 @@ function ShopModeration() {
             <span>Risque Élevé</span>
             <span className="material-symbols-outlined">warning</span>
           </div>
-          <strong>{String(stats.riskHigh).padStart(2, '0')}</strong>
-          <small>Action immédiate requise</small>
+          <strong>{String(stats.suspended).padStart(2, '0')}</strong>
+          <small>Actions de suspension appliquées</small>
         </article>
 
         <article className="shop-kpi-card">
           <div className="shop-kpi-card__top">
-            <span>Validés Aujourd&apos;hui</span>
+            <span>Validées Aujourd&apos;hui</span>
             <span className="material-symbols-outlined">verified</span>
           </div>
-          <strong>{stats.validated}</strong>
-          <small>Performance stable</small>
+          <strong>{stats.approved}</strong>
+          <small>Entrées approuvées en base</small>
         </article>
 
         <article className="shop-kpi-card shop-kpi-card--highlight">
@@ -123,7 +128,7 @@ function ShopModeration() {
             <span className="material-symbols-outlined">timer</span>
           </div>
           <strong>{stats.processing}</strong>
-          <small>-20m vs hier</small>
+          <small>Estimation basée sur le volume</small>
         </article>
       </section>
 
@@ -131,7 +136,7 @@ function ShopModeration() {
         <div className="shop-table-panel__head">
           <h2>Files de modération</h2>
           <div className="toolbar__search shop-search">
-            <input placeholder="Rechercher une boutique..." />
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Rechercher une boutique..." />
           </div>
         </div>
 
@@ -146,49 +151,59 @@ function ShopModeration() {
             </tr>
           </thead>
           <tbody>
-            {rows.map((shop) => (
-              <tr key={shop.id}>
-                <td>
-                  <div className="shop-owner">
-                    <div className="shop-owner__thumb" />
-                    <div>
-                      <strong>{shop.name}</strong>
-                      <small>{shop.user?.name || 'Artisan'}</small>
+            {rows.length ? (
+              rows.map((shop) => (
+                <tr key={shop.id}>
+                  <td>
+                    <div className="shop-owner">
+                      <div className="shop-owner__thumb" />
+                      <div>
+                        <strong>{shop.name}</strong>
+                        <small>{shop.user?.name || 'Artisan'}</small>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{shop.created_at || "Aujourd'hui"}</td>
-                <td>
-                  <span className="tag tag--warn">En Attente</span>
-                </td>
-                <td>
-                  <span className={`tag ${shop.risk === 'Élevé' ? 'tag--danger' : shop.risk === 'Moyen' ? 'tag--warn' : 'tag--success'}`}>
-                    {shop.risk || 'Faible'}
-                  </span>
-                </td>
-                <td>
-                  <div className="action-row">
-                    <button className="button--ghost button--ghost-dark" type="button">
-                      Consulter
-                    </button>
-                    {shop.risk === 'Élevé' ? (
-                      <button className="button button--danger" type="button" onClick={() => suspendShop(shop.id)}>
-                        Rejeter
+                  </td>
+                  <td>{shop.created_at || shop.approved_at || "Aujourd'hui"}</td>
+                  <td>
+                    <span className={`tag ${shop.status === 'approved' ? 'tag--success' : shop.status === 'suspended' ? 'tag--danger' : 'tag--warn'}`}>
+                      {shop.status === 'approved' ? 'Approuvée' : shop.status === 'suspended' ? 'Suspendue' : 'En Attente'}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`tag ${shop.status === 'suspended' ? 'tag--danger' : shop.status === 'approved' ? 'tag--success' : 'tag--warn'}`}>
+                      {shop.status === 'suspended' ? 'Élevé' : shop.status === 'approved' ? 'Faible' : 'Moyen'}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="action-row">
+                      <button className="button--ghost button--ghost-dark" type="button">
+                        Consulter
                       </button>
-                    ) : (
-                      <button className="button" type="button" onClick={() => approveShop(shop.id)}>
-                        Approuver
-                      </button>
-                    )}
-                  </div>
+                      {shop.status === 'suspended' ? (
+                        <button className="button button--danger" type="button" onClick={() => handleDecision(shop, 'suspend')}>
+                          Rejeter
+                        </button>
+                      ) : (
+                        <button className="button" type="button" onClick={() => handleDecision(shop, 'approve')}>
+                          Approuver
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="admin-empty-cell">
+                  Aucune boutique trouvée dans la base de données.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
 
         <div className="shop-table-panel__footer">
-          <span>Affichage de 1-3 sur 24 boutiques</span>
+          <span>Affichage des boutiques chargées depuis la base de données</span>
           <div className="pagination">
             <button type="button">&lt;</button>
             <button className="is-active" type="button">
