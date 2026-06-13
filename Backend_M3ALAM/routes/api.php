@@ -51,7 +51,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/dashboard', \App\Http\Controllers\Api\Seller\DashboardController::class);
     });
 
-    Route::prefix('admin')->group(function (): void {
+    Route::prefix('admin')->middleware('admin')->group(function (): void {
         Route::apiResource('categories', \App\Http\Controllers\Api\Admin\CategoryController::class);
         Route::get('/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'index']);
         Route::post('/users', [\App\Http\Controllers\Api\Admin\UserController::class, 'store']);

@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { getAuthToken } from '../../api/api'
+import { getProfile, logoutLocal } from '../../api/authService'
 import DashboardLayout from './DashboardLayout'
 
 const adminLinks = [
@@ -9,9 +13,47 @@ const adminLinks = [
 ]
 
 function AdminLayout({ children }) {
+  const navigate = useNavigate()
+  const [status, setStatus] = useState('loading')
+
+  useEffect(() => {
+    let active = true
+
+    if (!getAuthToken()) {
+      setStatus('guest')
+      navigate('/login', { replace: true })
+      return undefined
+    }
+
+    getProfile()
+      .then((user) => {
+        if (!active) return
+
+        if (user?.role !== 'admin') {
+          setStatus('forbidden')
+          logoutLocal()
+          navigate('/login', { replace: true })
+          return
+        }
+
+        setStatus('allowed')
+      })
+      .catch(() => {
+        logoutLocal()
+        if (active) {
+          setStatus('guest')
+          navigate('/login', { replace: true })
+        }
+      })
+
+    return () => {
+      active = false
+    }
+  }, [navigate])
+
   return (
     <DashboardLayout links={adminLinks} title="Espace admin">
-      {children}
+      {status === 'allowed' ? children : <p className="muted">Verification de votre session...</p>}
     </DashboardLayout>
   )
 }

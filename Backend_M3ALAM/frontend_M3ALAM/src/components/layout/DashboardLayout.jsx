@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { logoutLocal } from '../../api/authService'
 import Footer from './Footer'
 import TeamWorkBar from './TeamWorkBar'
 
@@ -57,7 +58,11 @@ function DashboardLayout({ children, links, title }) {
         <div className="dashboard-layout__body">
           <header className="dashboard-topbar">
             <strong>{title}</strong>
-            <Link to="/login" className="chip">
+            <Link
+              to="/login"
+              className="chip"
+              onClick={logoutLocal}
+            >
               <span className="material-symbols-outlined">logout</span>
               Deconnexion
             </Link>

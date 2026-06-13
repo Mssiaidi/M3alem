@@ -35,9 +35,9 @@ class AuthController extends Controller
             ]);
         }
 
-        if ($user->account_status === 'pending' && $user->role === 'seller') {
+        if ($user->account_status === 'pending' && $user->role !== 'client') {
             throw ValidationException::withMessages([
-                'email' => ['Votre compte vendeur est en attente de validation.'],
+                'email' => ['Votre compte est en attente de validation par un administrateur.'],
             ]);
         }
 
