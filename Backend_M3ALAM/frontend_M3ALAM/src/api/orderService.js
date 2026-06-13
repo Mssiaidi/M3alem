@@ -1,4 +1,4 @@
-import { apiRequest, unwrapData } from './api'
+import { apiRequest } from './api'
 
 export function checkout(payload) {
   return apiRequest('/checkout', {
@@ -7,9 +7,8 @@ export function checkout(payload) {
   })
 }
 
-export async function getOrders() {
-  const payload = await apiRequest('/orders')
-  return unwrapData(payload)
+export async function getOrders(page = 1) {
+  return apiRequest(`/orders?page=${page}`)
 }
 
 export function getOrder(id) {

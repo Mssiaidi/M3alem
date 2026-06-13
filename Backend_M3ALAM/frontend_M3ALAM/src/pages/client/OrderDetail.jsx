@@ -336,14 +336,6 @@ function OrderDetail() {
                   <p className="text-body-md text-on-surface">Livraison standard M3alem</p>
                 </div>
               </div>
-              <div className="mt-md h-32 rounded-lg overflow-hidden bg-surface-container border border-outline-variant relative">
-                <img alt="Carte de livraison" className="w-full h-full object-cover" src="https://picsum.photos/seed/m3alem-map/640/240" />
-                <div className="absolute inset-0 bg-primary-container/10 flex items-center justify-center">
-                  <div className="bg-surface-container-lowest p-2 rounded-full shadow-lg">
-                    <span className="material-symbols-outlined text-primary">location_on</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
 

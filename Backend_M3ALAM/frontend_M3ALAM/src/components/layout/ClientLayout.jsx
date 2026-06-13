@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import Footer from './Footer'
 import MarketplaceHeader from './MarketplaceHeader'
 import TeamWorkBar from './TeamWorkBar'
@@ -9,14 +8,7 @@ function ClientLayout({ children }) {
       <TeamWorkBar />
       <MarketplaceHeader />
 
-      <main className="main">
-        <nav className="section-tabs" aria-label="Navigation client">
-          <Link to="/cart">Panier</Link>
-          <Link to="/checkout">Checkout</Link>
-          <Link to="/orders">Commandes</Link>
-        </nav>
-        {children}
-      </main>
+      <main className="main">{children}</main>
 
       <Footer />
     </div>

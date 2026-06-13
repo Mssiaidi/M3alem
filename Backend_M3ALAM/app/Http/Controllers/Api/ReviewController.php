@@ -36,11 +36,16 @@ class ReviewController extends Controller
             ->firstOrFail();
 
         abort_unless($order->status === 'delivered', 422, 'Vous ne pouvez laisser un avis qu\'après la livraison.');
-        abort_if($order->review()->exists(), 422, 'Vous avez déjà laissé un avis pour cette commande.');
 
-        $review = $request->user()->reviews()->create($validated);
+        $review = $request->user()->reviews()->updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'rating' => $validated['rating'],
+                'comment' => $validated['comment'] ?? null,
+            ]
+        );
 
-        return response()->json($review, 201);
+        return response()->json($review, $review->wasRecentlyCreated ? 201 : 200);
     }
 
     public function destroy(Request $request, Review $review): JsonResponse

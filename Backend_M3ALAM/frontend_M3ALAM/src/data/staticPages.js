@@ -129,7 +129,7 @@
     kicker: 'Artisan Portal',
     lead: 'Suivi vendeur des ventes, produits et note.',
     heroAside: [
-      { label: 'Ventes', value: 'EUR4,250' },
+      { label: 'Ventes', value: '4,250 DH' },
       { label: 'Produits', value: '24' },
       { label: 'Note', value: '4.9' },
     ],
@@ -290,7 +290,7 @@
     lead: 'Suivi inventaire, revenus et actions produit vendeur.',
     heroAside: [
       { label: 'Produits', value: '42' },
-      { label: 'Revenus', value: 'EUR2,840' },
+      { label: 'Revenus', value: '2,840 DH' },
       { label: 'Promotions', value: '05' },
       { label: 'Note', value: '4.9' },
     ],
