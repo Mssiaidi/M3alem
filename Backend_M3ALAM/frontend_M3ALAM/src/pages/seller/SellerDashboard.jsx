@@ -1,87 +1,208 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { getSellerDashboard } from '../../api/sellerService'
 
-const recentOrders = [
-  {
-    icon: 'shopping_bag',
-    name: 'Table en chêne sculptée',
-    meta: 'Commande #9921 • il y a 2 heures',
-    amount: '8,500.00 DH',
-    status: 'En préparation',
-    statusClass: 'seller-dashboard-status--processing',
-  },
-  {
-    icon: 'brush',
-    name: 'Service céramique personnalisé',
-    meta: 'Commande #9918 • il y a 5 heures',
-    amount: '1,200.00 DH',
-    status: 'Expédiée',
-    statusClass: 'seller-dashboard-status--shipped',
-  },
-  {
-    icon: 'diamond',
-    name: 'Bague artisanale en argent',
-    meta: 'Commande #9915 • hier',
-    amount: '3,400.00 DH',
-    status: 'Livrée',
-    statusClass: 'seller-dashboard-status--delivered',
-  },
+const fallbackVerification = {
+  title: 'Verified Master',
+  tier: 'Top 5% Artisan Tier',
+  level: 'LEVEL 4',
+  is_verified: true,
+}
+
+const fallbackCapacity = [
+  { label: 'Produits actifs', used: 0, capacity: 10, percentage: 0 },
+  { label: 'Ateliers secondaires', used: 0, capacity: 10, percentage: 0 },
 ]
 
+const statusConfig = {
+  pending: {
+    label: 'En attente',
+    className: 'seller-dashboard-status--pending',
+  },
+  confirmed: {
+    label: 'Confirmée',
+    className: 'seller-dashboard-status--processing',
+  },
+  processing: {
+    label: 'En préparation',
+    className: 'seller-dashboard-status--processing',
+  },
+  shipped: {
+    label: 'Expédiée',
+    className: 'seller-dashboard-status--shipped',
+  },
+  delivered: {
+    label: 'Livrée',
+    className: 'seller-dashboard-status--delivered',
+  },
+  cancelled: {
+    label: 'Annulée',
+    className: 'seller-dashboard-status--cancelled',
+  },
+}
+
+function formatAmount(value) {
+  return `${Number.parseFloat(value || 0).toLocaleString('fr-FR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })} DH`
+}
+
+function formatDateLabel(date) {
+  if (!date) return 'Récemment'
+
+  const parsedDate = new Date(date)
+  if (Number.isNaN(parsedDate.getTime())) return 'Récemment'
+
+  return parsedDate.toLocaleDateString('fr-FR', {
+    day: '2-digit',
+    month: 'short',
+  })
+}
+
+function getOrderLabel(order) {
+  const items = Array.isArray(order.items) ? order.items : []
+  const firstItem = items[0]
+
+  return firstItem?.product_name || firstItem?.product?.name || order.reference || `Commande #${order.id}`
+}
+
+function getOrderSubtitle(order) {
+  const items = Array.isArray(order.items) ? order.items : []
+  const firstItem = items[0]
+  const reference = order.reference || `ORD-${order.id}`
+  const dateLabel = formatDateLabel(order.created_at)
+
+  return `${firstItem?.product_name || firstItem?.product?.name || 'Commande'} • ${reference} • ${dateLabel}`
+}
+
+function getOrderIcon(order) {
+  if (order.status === 'delivered') return 'task_alt'
+  if (order.status === 'shipped') return 'local_shipping'
+  if (order.status === 'processing') return 'auto_fix'
+  if (order.status === 'confirmed') return 'check_circle'
+
+  return 'shopping_bag'
+}
+
+function getStatusBadge(order) {
+  return statusConfig[order.status] ?? statusConfig.pending
+}
+
 function SellerDashboard() {
+  const navigate = useNavigate()
   const documentInputRef = useRef(null)
+  const [dashboard, setDashboard] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const [documentName, setDocumentName] = useState('')
+
+  useEffect(() => {
+    let active = true
+
+    getSellerDashboard()
+      .then((data) => {
+        if (!active) return
+        setDashboard(data)
+        setError('')
+      })
+      .catch((err) => {
+        if (!active) return
+        setError(err.message || 'Impossible de charger le dashboard vendeur.')
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+
+    return () => {
+      active = false
+    }
+  }, [])
 
   const handleDocumentChange = (event) => {
     const file = event.target.files?.[0]
     setDocumentName(file?.name ?? '')
   }
 
+  const verification = dashboard?.verification ?? fallbackVerification
+  const capacityRows = Array.isArray(dashboard?.workshop_capacity) && dashboard.workshop_capacity.length > 0
+    ? dashboard.workshop_capacity
+    : fallbackCapacity
+  const recentOrders = Array.isArray(dashboard?.recent_orders) ? dashboard.recent_orders : []
+
+  if (loading) {
+    return (
+      <div className="min-h-[420px] flex items-center justify-center">
+        <div className="w-12 h-12 rounded-full border-4 border-surface-container-highest border-t-primary animate-spin" aria-label="Chargement du dashboard vendeur" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-container-max mx-auto px-md md:px-lg py-xl">
+        <div className="bg-error-container text-on-error-container px-lg py-md rounded-xl border border-error mb-md">
+          {error}
+        </div>
+        <button
+          className="flex items-center gap-xs px-md py-sm border border-outline rounded-lg font-label-md text-on-surface hover:bg-surface-container-low transition-all active:scale-95"
+          onClick={() => navigate('/seller/dashboard')}
+          type="button"
+        >
+          <span className="material-symbols-outlined text-[20px]">refresh</span>
+          Réessayer
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div className="seller-dashboard-page">
       <section className="seller-dashboard-kpis">
         <article className="seller-dashboard-card seller-dashboard-kpi">
-          <div>
+          <div className="seller-dashboard-kpi__body">
             <span>Total Revenue</span>
-            <h2>42,500 DH</h2>
+            <h2>{formatAmount(dashboard?.total_sales)}</h2>
           </div>
           <div className="seller-dashboard-trend">
             <span className="material-symbols-outlined">trending_up</span>
-            +12.5% from last month
+            Données du backend
           </div>
         </article>
 
         <article className="seller-dashboard-card seller-dashboard-kpi">
-          <div>
+          <div className="seller-dashboard-kpi__body">
             <span>Active Orders</span>
-            <h2>24</h2>
+            <h2>{dashboard?.pending_orders ?? 0}</h2>
           </div>
           <div>
             <span className="seller-dashboard-urgent">
               <span className="material-symbols-outlined">priority_high</span>
-              3 Urgent
+              En attente
             </span>
           </div>
         </article>
 
         <article className="seller-dashboard-card seller-dashboard-kpi">
-          <div>
-            <span>Store Rating</span>
-            <h2>4.9</h2>
+          <div className="seller-dashboard-kpi__body">
+            <span>Total Products</span>
+            <h2>{dashboard?.total_products ?? 0}</h2>
           </div>
-          <div className="seller-dashboard-stars">
-            <span className="material-symbols-outlined">star</span>
-            <span className="material-symbols-outlined">star</span>
-            <span className="material-symbols-outlined">star</span>
-            <span className="material-symbols-outlined">star</span>
-            <span className="material-symbols-outlined">star_half</span>
+          <div className="seller-dashboard-trend">
+            <span className="material-symbols-outlined">inventory_2</span>
+            Boutique active
           </div>
         </article>
 
-        <article className="seller-dashboard-verified">
-          <span className="material-symbols-outlined">verified</span>
-          <h3>Verified Master</h3>
-          <p>Top 5% Artisan Tier</p>
-          <strong>LEVEL 4</strong>
+        <article
+          className={`seller-dashboard-verified${verification.is_verified ? '' : ' seller-dashboard-verified--pending'}`}
+        >
+          <span className="material-symbols-outlined">
+            {verification.is_verified ? 'verified' : 'hourglass_top'}
+          </span>
+          <h3>{verification.title}</h3>
+          <p>{verification.tier}</p>
+          <strong>{verification.level}</strong>
         </article>
       </section>
 
@@ -89,27 +210,37 @@ function SellerDashboard() {
         <article className="seller-dashboard-orders">
           <header>
             <h3>Recent Orders</h3>
-            <button type="button">View All</button>
+            <button onClick={() => navigate('/seller/orders')} type="button">View All</button>
           </header>
 
           <div className="seller-dashboard-order-list">
-            {recentOrders.map((order) => (
-              <div className="seller-dashboard-order" key={order.meta}>
-                <div className="seller-dashboard-order-main">
-                  <div className="seller-dashboard-order-icon">
-                    <span className="material-symbols-outlined">{order.icon}</span>
+            {recentOrders.length > 0 ? (
+              recentOrders.map((order) => {
+                const statusBadge = getStatusBadge(order)
+
+                return (
+                  <div className="seller-dashboard-order" key={order.id}>
+                    <div className="seller-dashboard-order-main">
+                      <div className="seller-dashboard-order-icon">
+                        <span className="material-symbols-outlined">{getOrderIcon(order)}</span>
+                      </div>
+                      <div>
+                        <p>{getOrderLabel(order)}</p>
+                        <small>{getOrderSubtitle(order)}</small>
+                      </div>
+                    </div>
+                    <div className="seller-dashboard-order-side">
+                      <strong>{formatAmount(order.total_amount)}</strong>
+                      <span className={statusBadge.className}>{statusBadge.label}</span>
+                    </div>
                   </div>
-                  <div>
-                    <p>{order.name}</p>
-                    <small>{order.meta}</small>
-                  </div>
-                </div>
-                <div className="seller-dashboard-order-side">
-                  <strong>{order.amount}</strong>
-                  <span className={order.statusClass}>{order.status}</span>
-                </div>
+                )
+              })
+            ) : (
+              <div className="p-lg text-center text-on-surface-variant">
+                Aucune commande récente pour le moment.
               </div>
-            ))}
+            )}
           </div>
         </article>
 
@@ -118,7 +249,7 @@ function SellerDashboard() {
             <span className="material-symbols-outlined">warning</span>
             <div>
               <h4>Profile Verification Update</h4>
-              <p>Your "Vérifié" status expires in 5 days. Please update your master certification documents.</p>
+              <p>Your “Verified” status can be reviewed. Please update your master certification documents.</p>
               <input
                 accept=".pdf,.png,.jpg,.jpeg"
                 onChange={handleDocumentChange}
@@ -132,24 +263,21 @@ function SellerDashboard() {
 
           <article className="seller-dashboard-capacity">
             <h4>Workshop Capacity</h4>
-            <div className="seller-dashboard-progress-row">
-              <div>
-                <span>Woodworking 101</span>
-                <span>85% Full</span>
+            {capacityRows.map((row) => (
+              <div className="seller-dashboard-progress-row" key={row.label}>
+                <div>
+                  <span>{row.label}</span>
+                  <span>{row.percentage}% Used</span>
+                </div>
+                <div className="seller-dashboard-progress" aria-label={`${row.label} capacity`}>
+                  <span style={{ width: `${row.percentage}%` }} />
+                </div>
+                <div className="seller-dashboard-progress-meta">
+                  <span>{row.used} utilisés</span>
+                  <span>{row.capacity} places</span>
+                </div>
               </div>
-              <div className="seller-dashboard-progress">
-                <span style={{ width: '85%' }} />
-              </div>
-            </div>
-            <div className="seller-dashboard-progress-row">
-              <div>
-                <span>Advanced Pottery</span>
-                <span>40% Full</span>
-              </div>
-              <div className="seller-dashboard-progress">
-                <span style={{ width: '40%' }} />
-              </div>
-            </div>
+            ))}
           </article>
         </aside>
       </section>
