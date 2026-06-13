@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -39,7 +40,6 @@ class SellerApiTest extends TestCase
                 'description' => 'Description',
                 'price' => 150,
                 'stock' => 8,
-                'images' => ['https://example.com/product.jpg'],
             ])
             ->assertCreated()
             ->assertJsonFragment([
@@ -62,5 +62,43 @@ class SellerApiTest extends TestCase
                 'stock' => 8,
             ])
             ->assertForbidden();
+    }
+
+    public function test_seller_can_update_their_product(): void
+    {
+        $seller = User::factory()->seller()->create();
+        $shop = Shop::factory()->create(['user_id' => $seller->id]);
+        $category = Category::factory()->create();
+        $product = Product::factory()->create([
+            'shop_id' => $shop->id,
+            'category_id' => $category->id,
+            'name' => 'Produit Original',
+            'price' => 100,
+            'stock' => 10,
+        ]);
+
+        $this->actingAs($seller, 'sanctum')
+            ->putJson("/api/seller/products/{$product->id}", [
+                'category_id' => $category->id,
+                'name' => 'Produit Modifié',
+                'description' => 'Description mise à jour',
+                'price' => 175,
+                'stock' => 6,
+                'is_active' => false,
+            ])
+            ->assertOk()
+            ->assertJsonFragment([
+                'id' => $product->id,
+                'name' => 'Produit Modifié',
+                'stock' => 6,
+            ]);
+
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+            'name' => 'Produit Modifié',
+            'price' => '175.00',
+            'stock' => 6,
+            'is_active' => 0,
+        ]);
     }
 }

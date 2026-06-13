@@ -26,6 +26,13 @@ class ProductController extends Controller
         );
     }
 
+    public function show(Product $product): JsonResponse
+    {
+        Gate::authorize('update', $product);
+
+        return response()->json($product->load(['category', 'images']));
+    }
+
     public function store(StoreProductRequest $request): JsonResponse
     {
         $shop = $request->user()->shop;

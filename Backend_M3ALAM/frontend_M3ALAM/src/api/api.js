@@ -20,12 +20,12 @@ export function clearAuthToken() {
   localStorage.removeItem(TOKEN_KEY)
 }
 
-function buildHeaders(headers = {}) {
+function buildHeaders(headers = {}, skipContentType = false) {
   const token = getAuthToken()
 
   return {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    ...(skipContentType ? {} : { 'Content-Type': 'application/json' }),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...headers,
   }
@@ -43,10 +43,15 @@ async function parseResponse(response) {
 }
 
 export async function apiRequest(endpoint, options = {}) {
+  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
-    headers: buildHeaders(options.headers),
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    headers: buildHeaders(options.headers, isFormData),
+    body: options.body
+      ? isFormData
+        ? options.body
+        : JSON.stringify(options.body)
+      : undefined,
   })
 
   return parseResponse(response)

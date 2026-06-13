@@ -1,5 +1,4 @@
 import { apiRequest, unwrapData } from './api'
-import { apiRequest as rawApiRequest } from './api'
 
 export function getSellerDashboard() {
   return apiRequest('/seller/dashboard')
@@ -22,8 +21,7 @@ export async function getSellerProducts() {
 }
 
 export async function getSellerProductById(id) {
-  const products = await getSellerProducts()
-  return products.find((product) => product.id === Number(id))
+  return apiRequest(`/seller/products/${id}`)
 }
 
 export function createProduct(payload) {
@@ -63,6 +61,6 @@ export function updateOrderStatus(id, status) {
 }
 
 export async function getCategories() {
-  const payload = await rawApiRequest('/categories')
+  const payload = await apiRequest('/categories')
   return unwrapData(payload)
 }
