@@ -1467,6 +1467,43 @@
   flex-wrap: wrap;
 }
 
+.seller-orders-flyout {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: -1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #c4c5d5;
+  border-radius: 0.85rem;
+  background: #ffffff;
+  box-shadow: 0 14px 30px rgba(11, 28, 48, 0.08);
+  max-width: 26rem;
+}
+
+.seller-orders-flyout strong {
+  color: #0b1c30;
+  font-size: 0.95rem;
+}
+
+.seller-orders-flyout p {
+  margin: 0;
+  color: #444653;
+  font-size: 0.88rem;
+}
+
+.seller-orders-flyout--date button {
+  border: 1px solid #c4c5d5;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  color: #0b1c30;
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.seller-orders-flyout--date button:hover {
+  background: #eff4ff;
+}
+
 .seller-orders-icon-button,
 .seller-orders-primary,
 .seller-orders-secondary,
@@ -1860,11 +1897,11 @@
   font-weight: 600;
 }
 
-.seller-orders-pagination__controls {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-}
+  .seller-orders-pagination__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
 
 .seller-orders-pagination__controls button {
   min-width: 2.5rem;

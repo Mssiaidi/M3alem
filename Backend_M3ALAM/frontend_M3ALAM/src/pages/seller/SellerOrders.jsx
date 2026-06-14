@@ -101,6 +101,9 @@ function SellerOrders() {
   const [showFilters, setShowFilters] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [sortMode, setSortMode] = useState('recent')
+  const [showNotifications, setShowNotifications] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
+  const [showHelp, setShowHelp] = useState(false)
 
   useEffect(() => {
     let active = true
@@ -188,6 +191,28 @@ function SellerOrders() {
     navigate(`/seller/orders/${orderId}`)
   }
 
+  const handleTopbarAction = (action) => {
+    if (action === 'notifications') {
+      setShowNotifications((current) => !current)
+      setShowSettings(false)
+      setShowHelp(false)
+      return
+    }
+
+    if (action === 'settings') {
+      setShowSettings((current) => !current)
+      setShowNotifications(false)
+      setShowHelp(false)
+      return
+    }
+
+    if (action === 'help') {
+      setShowHelp((current) => !current)
+      setShowNotifications(false)
+      setShowSettings(false)
+    }
+  }
+
   return (
     <div className="seller-orders-page">
       <header className="seller-orders-top">
@@ -197,13 +222,13 @@ function SellerOrders() {
         </div>
 
         <div className="seller-orders-top__tools">
-          <button className="seller-orders-icon-button" type="button" aria-label="Notifications">
+          <button className="seller-orders-icon-button" onClick={() => handleTopbarAction('notifications')} type="button" aria-label="Notifications" aria-expanded={showNotifications}>
             <span className="material-symbols-outlined">notifications</span>
           </button>
-          <button className="seller-orders-icon-button" type="button" aria-label="Paramètres">
+          <button className="seller-orders-icon-button" onClick={() => handleTopbarAction('settings')} type="button" aria-label="Paramètres" aria-expanded={showSettings}>
             <span className="material-symbols-outlined">settings</span>
           </button>
-          <button className="seller-orders-icon-button" type="button" aria-label="Aide">
+          <button className="seller-orders-icon-button" onClick={() => handleTopbarAction('help')} type="button" aria-label="Aide" aria-expanded={showHelp}>
             <span className="material-symbols-outlined">help</span>
           </button>
           <button className="seller-orders-primary" type="button" onClick={() => navigate('/seller/products/new')}>
@@ -211,6 +236,27 @@ function SellerOrders() {
           </button>
         </div>
       </header>
+
+      {showNotifications ? (
+        <div className="seller-orders-flyout">
+          <strong>Notifications</strong>
+          <p>Aucune nouvelle notification pour le moment.</p>
+        </div>
+      ) : null}
+
+      {showSettings ? (
+        <div className="seller-orders-flyout">
+          <strong>Paramètres rapides</strong>
+          <p>Les réglages vendeur seront reliés à la suite du projet.</p>
+        </div>
+      ) : null}
+
+      {showHelp ? (
+        <div className="seller-orders-flyout">
+          <strong>Aide</strong>
+          <p>Utilise les filtres, la pagination et les actions pour gérer les commandes.</p>
+        </div>
+      ) : null}
 
       <section className="seller-orders-stats">
         <article className="seller-orders-stat">
@@ -274,14 +320,6 @@ function SellerOrders() {
           </div>
 
           <div className="seller-orders-table-card__actions">
-            <button
-              className="seller-orders-secondary"
-              onClick={() => setSortMode((current) => (current === 'recent' ? 'oldest' : 'recent'))}
-              type="button"
-            >
-              <span className="material-symbols-outlined">calendar_month</span>
-              Date
-            </button>
             <button className="seller-orders-secondary" onClick={() => setShowFilters((current) => !current)} type="button">
               <span className="material-symbols-outlined">filter_list</span>
               Filtres

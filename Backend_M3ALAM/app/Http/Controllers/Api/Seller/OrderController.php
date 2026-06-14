@@ -25,7 +25,7 @@ class OrderController extends Controller
             $query->where('shop_id', $shop->id);
         }])
         ->latest()
-        ->paginate(15);
+        ->paginate(5);
 
         return response()->json($orders);
     }

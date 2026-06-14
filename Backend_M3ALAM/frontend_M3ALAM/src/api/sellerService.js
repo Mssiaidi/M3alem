@@ -44,8 +44,8 @@ export function deleteProduct(id) {
   })
 }
 
-export async function getSellerOrders() {
-  return apiRequest('/seller/orders')
+export async function getSellerOrders(page = 1) {
+  return apiRequest(`/seller/orders?page=${page}&per_page=5`)
 }
 
 export function getSellerOrder(id) {
