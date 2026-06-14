@@ -56,52 +56,6 @@ function toFormProduct(product) {
 }
 
 function ShopManagement() {
-<<<<<<< HEAD
-  return (
-    <div className="workspace-page">
-      <section className="page-hero">
-        <div>
-          <span className="tag">Gestion boutique</span>
-          <h1>Pilotez votre vitrine et vos informations publiques.</h1>
-          <p>
-            Une page prête à recevoir les données de boutique, logo, bannière, statut et
-            paramètres de visibilité.
-          </p>
-        </div>
-
-        <div className="surface-card">
-          <div className="metric-grid">
-            <div className="metric">
-              <span>Statut</span>
-              <strong>Approuvée</strong>
-            </div>
-            <div className="metric">
-              <span>Produits</span>
-              <strong>24</strong>
-            </div>
-            <div className="metric">
-              <span>Ville</span>
-              <strong>Fès</strong>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="static-cards">
-        <article className="static-card">
-          <h3>Profil boutique</h3>
-          <p>Description, image de couverture et logo de la boutique.</p>
-        </article>
-        <article className="static-card">
-          <h3>Configuration</h3>
-          <p>Statut, visibilité et données essentielles liées à l&apos;activité.</p>
-        </article>
-        <article className="static-card">
-          <h3>Actions rapides</h3>
-          <p>Modifier, archiver ou mettre à jour les informations de boutique.</p>
-        </article>
-      </section>
-=======
   const navigate = useNavigate()
   const galleryInputRef = useRef(null)
   const [loading, setLoading] = useState(true)
@@ -276,12 +230,7 @@ function ShopManagement() {
             <form className="shop-management-form" onSubmit={handleSubmit}>
               <div className="shop-management-field">
                 <label htmlFor="product-name">Nom du produit</label>
-                <input
-                  id="product-name"
-                  onChange={handleFieldChange('name')}
-                  type="text"
-                  value={product.name}
-                />
+                <input id="product-name" onChange={handleFieldChange('name')} type="text" value={product.name} />
                 <div className="shop-management-hint">
                   <span className="material-symbols-outlined">lightbulb</span>
                   <p>Utilisez des mots-clés descriptifs comme le matériau ou la technique pour améliorer le référencement.</p>
@@ -414,7 +363,10 @@ function ShopManagement() {
                     Ajouter au panier
                   </button>
                   <button aria-pressed={isFavorite} onClick={handleToggleFavorite} type="button">
-                    <span className="material-symbols-outlined" style={{ fontVariationSettings: isFavorite ? "'FILL' 1" : "'FILL' 0" }}>
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontVariationSettings: isFavorite ? "'FILL' 1" : "'FILL' 0" }}
+                    >
                       {isFavorite ? 'favorite' : 'favorite_border'}
                     </span>
                   </button>
@@ -441,7 +393,6 @@ function ShopManagement() {
           </aside>
         </div>
       </div>
->>>>>>> b921e4564472b58896b21c9b3ff1397ef0546095
     </div>
   )
 }
