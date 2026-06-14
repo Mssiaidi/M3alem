@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html class="light" lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>M3alem Marketplace - Laisser un avis</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-dim": "#cbdbf5",
+            "on-secondary-container": "#694000",
+            "primary-fixed": "#dde1ff",
+            "surface-variant": "#d3e4fe",
+            "surface": "#f8f9ff",
+            "on-secondary": "#ffffff",
+            "error": "#ba1a1a",
+            "primary-container": "#1e40af",
+            "on-tertiary-container": "#ffa583",
+            "on-tertiary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-primary-fixed-variant": "#173bab",
+            "primary": "#00288e",
+            "surface-container-highest": "#d3e4fe",
+            "outline-variant": "#c4c5d5",
+            "on-tertiary-fixed-variant": "#802a00",
+            "on-primary": "#ffffff",
+            "tertiary-fixed": "#ffdbce",
+            "tertiary-container": "#872d00",
+            "on-background": "#0b1c30",
+            "primary-fixed-dim": "#b8c4ff",
+            "inverse-surface": "#213145",
+            "on-secondary-fixed": "#2b1700",
+            "on-primary-container": "#a8b8ff",
+            "surface-bright": "#f8f9ff",
+            "tertiary": "#611e00",
+            "secondary-fixed-dim": "#ffb961",
+            "secondary": "#865300",
+            "outline": "#757684",
+            "inverse-primary": "#b8c4ff",
+            "on-error-container": "#93000a",
+            "secondary-container": "#fea520",
+            "inverse-on-surface": "#eaf1ff",
+            "on-secondary-fixed-variant": "#663e00",
+            "surface-container-high": "#dce9ff",
+            "tertiary-fixed-dim": "#ffb59a",
+            "background": "#f8f9ff",
+            "on-primary-fixed": "#001453",
+            "on-surface-variant": "#444653",
+            "surface-container": "#e5eeff",
+            "on-surface": "#0b1c30",
+            "surface-tint": "#3755c3",
+            "surface-container-low": "#eff4ff",
+            "surface-container-lowest": "#ffffff",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed": "#380d00",
+            "secondary-fixed": "#ffddb9"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "xs": "4px",
+            "container-max": "1280px",
+            "md": "16px",
+            "xl": "32px",
+            "sm": "8px",
+            "gutter": "24px",
+            "base": "4px",
+            "lg": "24px"
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .star {
+      cursor: pointer;
+      font-size: 2rem;
+      transition: color 0.2s;
+    }
+    .star.selected {
+      color: #ffc107;
+      font-variation-settings: 'FILL' 1;
+    }
+    .star:hover {
+      color: #ffb700;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+
+<!-- FORMULAIRE LAISSER UN AVIS -->
+<div id="review-form" class="block">
+  <!-- Top Navigation -->
+  <nav class="bg-surface-container-lowest border-b border-outline-variant fixed top-0 w-full z-50 h-16">
+    <div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto h-full">
+      <span class="text-headline-md font-bold text-primary-container">M3alem Marketplace</span>
+      <div class="flex items-center gap-md">
+        <button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low rounded-full">shopping_cart</button>
+        <button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low rounded-full">notifications</button>
+        <div class="w-8 h-8 rounded-full bg-primary-container"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="pt-16 pb-xl">
+    <div class="max-w-2xl mx-auto px-lg py-xl">
+      
+      <!-- Header -->
+      <div class="mb-xl">
+        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-md">Partagez votre avis</h1>
+        <div class="flex items-center gap-sm text-on-surface-variant text-body-md">
+          <span class="material-symbols-outlined text-[20px]">receipt</span>
+          <span>Commande #ORD-2024-001</span>
+          <span>•</span>
+          <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+          <span>Livrée le 12 Mai, 2024</span>
+        </div>
+      </div>
+
+      <!-- Product Card -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg mb-xl">
+        <div class="flex gap-lg">
+          <div class="w-20 h-20 rounded-lg bg-surface-variant flex-shrink-0 overflow-hidden">
+            <img src="https://via.placeholder.com/80" alt="Product" class="w-full h-full object-cover"/>
+          </div>
+          <div class="flex-1">
+            <div class="text-label-sm text-secondary uppercase tracking-wider font-bold mb-xs">Livraison réussie</div>
+            <h2 class="font-headline-md text-on-surface mb-xs">Vase en Céramique Bleu</h2>
+            <p class="text-body-md text-on-surface-variant">Créé par <span class="text-primary-container font-bold">Atelier Nord</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review Form Card -->
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg">
+        
+        <!-- Overall Satisfaction -->
+        <div class="mb-xl pb-xl border-b border-outline-variant">
+          <h3 class="text-headline-md text-on-surface mb-xl text-center">Satisfaction générale</h3>
+          <div class="flex justify-center gap-lg mb-lg">
+            <span class="star material-symbols-outlined text-[3rem]" data-rating="1">star</span>
+            <span class="star material-symbols-outlined text-[3rem]" data-rating="2">star</span>
+            <span class="star material-symbols-outlined text-[3rem]" data-rating="3">star</span>
+            <span class="star material-symbols-outlined text-[3rem]" data-rating="4">star</span>
+            <span class="star material-symbols-outlined text-[3rem]" data-rating="5">star</span>
+          </div>
+          <p class="text-center text-secondary text-label-md cursor-pointer font-bold">Cliquez pour noter</p>
+        </div>
+
+        <!-- Product Quality Rating -->
+        <div class="mb-lg pb-lg border-b border-outline-variant">
+          <div class="flex items-center justify-between mb-md">
+            <label class="text-body-md text-on-surface font-medium">Qualité du produit</label>
+            <span class="bg-secondary text-on-secondary px-md py-1 rounded-full text-label-sm font-bold uppercase">Requis</span>
+          </div>
+          <div class="flex gap-md">
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="product-1">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="product-2">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="product-3">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="product-4">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="product-5">star</span>
+          </div>
+        </div>
+
+        <!-- Shipping Speed Rating -->
+        <div class="mb-lg pb-lg border-b border-outline-variant">
+          <label class="text-body-md text-on-surface font-medium block mb-md">Vitesse de livraison</label>
+          <div class="flex gap-md">
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="shipping-1">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="shipping-2">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="shipping-3">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="shipping-4">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="shipping-5">star</span>
+          </div>
+        </div>
+
+        <!-- Artisan Communication Rating -->
+        <div class="mb-xl pb-xl border-b border-outline-variant">
+          <label class="text-body-md text-on-surface font-medium block mb-md">Communication de l'artisan</label>
+          <div class="flex gap-md">
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="artisan-1">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="artisan-2">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="artisan-3">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="artisan-4">star</span>
+            <span class="star material-symbols-outlined text-[1.5rem]" data-rating="artisan-5">star</span>
+          </div>
+        </div>
+
+        <!-- Photos Upload -->
+        <div class="mb-xl pb-xl border-b border-outline-variant">
+          <label class="text-body-md text-on-surface font-medium block mb-md">
+            Photos <span class="text-on-surface-variant">(Optionnel)</span>
+          </label>
+          <div class="border-2 border-dashed border-outline-variant rounded-xl p-xl text-center cursor-pointer hover:bg-surface-container-low transition-colors">
+            <div class="flex justify-center mb-md">
+              <span class="material-symbols-outlined text-[3rem] text-on-surface-variant">photo_camera</span>
+            </div>
+            <p class="text-body-md text-on-surface-variant mb-sm">Partagez une photo de votre article chez vous</p>
+            <p class="text-label-sm text-on-surface-variant">PNG ou JPG, jusqu'à 10MB</p>
+          </div>
+        </div>
+
+        <!-- Written Review -->
+        <div class="mb-lg">
+          <label class="text-body-md text-on-surface font-medium block mb-md">Votre avis écrit</label>
+          <textarea 
+            class="w-full px-md py-lg border border-outline-variant rounded-lg text-body-md placeholder-on-surface-variant focus:ring-2 focus:ring-primary-container focus:border-transparent transition-all resize-none" 
+            rows="6" 
+            placeholder="Décrivez votre expérience avec cet artisanat..."></textarea>
+          <div class="text-right text-label-sm text-on-surface-variant mt-sm">0 / 1000 caractères</div>
+          <p class="text-label-sm text-on-surface-variant mt-md">Votre avis sera publié sur le profil de l'artisan.</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-md justify-end pt-lg border-t border-outline-variant">
+          <button class="px-lg py-3 border border-outline-variant rounded-lg font-label-md text-on-surface hover:bg-surface-container-low transition-colors">
+            Annuler
+          </button>
+          <button class="px-lg py-3 bg-primary-container text-on-primary rounded-lg font-label-md hover:shadow-lg transition-all active:scale-95 flex items-center gap-sm">
+            <span>Envoyer mon avis</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-surface-container-highest border-t border-outline-variant mt-xl">
+    <div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
+      <div>
+        <span class="text-headline-md font-bold text-primary-container block mb-xs">M3alem Marketplace</span>
+        <p class="text-body-md text-on-surface-variant opacity-80">© 2024 M3alem Marketplace. Commerce Artisanal Professionnel.</p>
+      </div>
+      <div class="flex gap-lg">
+        <a href="#" class="text-on-surface-variant hover:text-primary-container font-label-sm">À propos</a>
+        <a href="#" class="text-on-surface-variant hover:text-primary-container font-label-sm">Normes de qualité</a>
+        <a href="#" class="text-on-surface-variant hover:text-primary-container font-label-sm">Support</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- PAGE SUCCÈS -->
+<div id="success-page" class="hidden">
+  <!-- Top Navigation -->
+  <nav class="bg-surface-container-lowest border-b border-outline-variant fixed top-0 w-full z-50 h-16">
+    <div class="flex justify-between items-center w-full px-lg max-w-container-max mx-auto h-full">
+      <span class="text-headline-md font-bold text-primary-container">M3alem Marketplace</span>
+      <div class="flex items-center gap-md">
+        <button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low rounded-full">shopping_cart</button>
+        <button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low rounded-full">notifications</button>
+        <div class="w-8 h-8 rounded-full bg-primary-container"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Success Message -->
+  <main class="pt-16 flex items-center justify-center min-h-screen">
+    <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-xl max-w-md w-full mx-lg text-center">
+      
+      <!-- Checkmark Icon -->
+      <div class="flex justify-center mb-xl">
+        <div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary text-[40px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+        </div>
+      </div>
+
+      <!-- Success Title -->
+      <h1 class="text-headline-lg text-on-surface mb-md">Merci pour votre retour !</h1>
+
+      <!-- Success Message -->
+      <p class="text-body-md text-on-surface-variant mb-xl">
+        Votre avis a été publié avec succès ! Votre expérience aide la communauté M3alem à découvrir le meilleur de l'artisanat.
+      </p>
+
+      <!-- Return Button -->
+      <button class="w-full px-lg py-3 bg-primary-container text-on-primary rounded-lg font-label-md hover:shadow-lg transition-all active:scale-95">
+        Retour aux commandes
+      </button>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-surface-container-highest border-t border-outline-variant mt-xl">
+    <div class="max-w-container-max mx-auto px-lg py-xl flex flex-col md:flex-row justify-between items-center gap-lg">
+      <div>
+        <span class="text-headline-md font-bold text-primary-container block mb-xs">M3alem Marketplace</span>
+        <p class="text-body-md text-on-surface-variant opacity-80">© 2024 M3alem Marketplace. Commerce Artisanal Professionnel.</p>
+      </div>
+      <div class="flex gap-lg">
+        <a href="#" class="text-on-surface-variant hover:text-primary-container font-label-sm">À propos</a>
+        <a href="#" class="text-on-surface-variant hover:text-primary-container font-label-sm">Normes de qualité</a>
+        <a href="#" class="text-on-surface-variant hover:text-primary-container font-label-sm">Support</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Star rating interaction
+  document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('click', function() {
+      const rating = this.dataset.rating;
+      document.querySelectorAll('.star').forEach(s => {
+        if (s.dataset.rating <= rating) {
+          s.classList.add('selected');
+        } else {
+          s.classList.remove('selected');
+        }
+      });
+    });
+  });
+
+  // Textarea character counter
+  const textarea = document.querySelector('textarea');
+  if (textarea) {
+    textarea.addEventListener('input', function() {
+      const count = this.value.length;
+      const maxChars = 1000;
+      document.querySelector('.mt-sm').textContent = `${count} / ${maxChars} caractères`;
+    });
+  }
+
+  // Submit button interaction (demo)
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach(button => {
+    if (button.textContent.includes('Envoyer mon avis')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('review-form').classList.add('hidden');
+        document.getElementById('success-page').classList.remove('hidden');
+        window.scrollTo(0, 0);
+      });
+    }
+  });
+
+  // Return button on success page
+  const returnButtons = document.querySelectorAll('button');
+  returnButtons.forEach(button => {
+    if (button.textContent.includes('Retour aux commandes')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('success-page').classList.add('hidden');
+        document.getElementById('review-form').classList.remove('hidden');
+        window.scrollTo(0, 0);
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
