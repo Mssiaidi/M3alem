@@ -20,7 +20,7 @@ function formatAmount(amount) {
   return `${Number.parseFloat(amount || 0).toLocaleString('fr-FR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })} DH`
+  })}\u00A0DH`
 }
 
 function extractOrders(response) {

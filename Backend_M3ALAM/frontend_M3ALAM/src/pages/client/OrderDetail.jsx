@@ -85,7 +85,7 @@ function formatAmount(amount) {
   return `${Number(amount ?? 0).toLocaleString('fr-MA', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })} DH`
+  })}\u00A0DH`
 }
 
 function getProductImage(item) {

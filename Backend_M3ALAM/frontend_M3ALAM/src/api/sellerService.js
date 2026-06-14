@@ -49,7 +49,7 @@ export async function getSellerOrders(page = 1) {
 }
 
 export function getSellerOrder(id) {
-  return apiRequest(`/seller/orders/${id}`)
+  return apiRequest(`/seller/orders/${id}`).then(unwrapData)
 }
 
 export function updateOrderStatus(id, status) {

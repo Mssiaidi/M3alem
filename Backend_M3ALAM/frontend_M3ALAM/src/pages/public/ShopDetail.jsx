@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getShop } from '../../api/catalogService'
 
 function formatPrice(price) {
-  return `${Number(price || 0).toLocaleString('fr-FR')} DH`
+  return `${Number(price || 0).toLocaleString('fr-FR')}\u00A0DH`
 }
 
 function formatRating(value) {

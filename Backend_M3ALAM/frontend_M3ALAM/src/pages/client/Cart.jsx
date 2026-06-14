@@ -6,7 +6,7 @@ import { getProductsPage } from '../../api/catalogService'
 const fallbackProductImage = 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=900&q=80'
 
 function formatPrice(price) {
-  return `${Number(price || 0).toLocaleString('fr-FR')} DH`
+  return `${Number(price || 0).toLocaleString('fr-FR')}\u00A0DH`
 }
 
 function itemImage(item) {

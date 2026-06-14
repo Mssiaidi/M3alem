@@ -25,7 +25,7 @@ function getLinkIcon(label) {
   }
 }
 
-function DashboardLayout({ children, links, title }) {
+function DashboardLayout({ children, links, title, topbarLeft, topbarRight, sidebarFooter }) {
   const location = useLocation()
 
   return (
@@ -53,19 +53,26 @@ function DashboardLayout({ children, links, title }) {
               </Link>
             ))}
           </nav>
+
+          {sidebarFooter ? <div className="dashboard-sidebar__footer">{sidebarFooter}</div> : null}
         </aside>
 
         <div className="dashboard-layout__body">
           <header className="dashboard-topbar">
-            <strong>{title}</strong>
-            <Link
-              to="/login"
-              className="chip"
-              onClick={logoutLocal}
-            >
-              <span className="material-symbols-outlined">logout</span>
-              Deconnexion
-            </Link>
+            <div className="dashboard-topbar__left">
+              {topbarLeft || <strong>{title}</strong>}
+            </div>
+            <div className="dashboard-topbar__right">
+              {topbarRight}
+              <Link
+                to="/login"
+                className="chip"
+                onClick={logoutLocal}
+              >
+                <span className="material-symbols-outlined">logout</span>
+                Deconnexion
+              </Link>
+            </div>
           </header>
 
           <main className="dashboard-main">

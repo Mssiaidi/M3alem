@@ -45,7 +45,7 @@ function formatAmount(value) {
   return `${Number.parseFloat(value || 0).toLocaleString('fr-FR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })} DH`
+  })}\u00A0DH`
 }
 
 function formatDateLabel(date) {
@@ -219,21 +219,16 @@ function SellerDashboard() {
                 const statusBadge = getStatusBadge(order)
 
                 return (
-                  <div className="seller-dashboard-order" key={order.id}>
+                  <button className="seller-dashboard-order" key={order.id} type="button" onClick={() => navigate(`/seller/orders/${order.id}`)}>
                     <div className="seller-dashboard-order-main">
-                      <div className="seller-dashboard-order-icon">
-                        <span className="material-symbols-outlined">{getOrderIcon(order)}</span>
-                      </div>
-                      <div>
-                        <p>{getOrderLabel(order)}</p>
-                        <small>{getOrderSubtitle(order)}</small>
-                      </div>
+                      <p>{getOrderLabel(order)}</p>
                     </div>
                     <div className="seller-dashboard-order-side">
                       <strong>{formatAmount(order.total_amount)}</strong>
+                      <small>{formatDateLabel(order.created_at)}</small>
                       <span className={statusBadge.className}>{statusBadge.label}</span>
                     </div>
-                  </div>
+                  </button>
                 )
               })
             ) : (

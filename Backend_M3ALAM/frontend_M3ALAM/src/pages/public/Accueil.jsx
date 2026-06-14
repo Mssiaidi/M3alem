@@ -19,7 +19,7 @@ function getImage(product) {
 }
 
 function formatPrice(price) {
-  return `${Number(price || 0).toLocaleString('fr-FR')} DH`
+  return `${Number(price || 0).toLocaleString('fr-FR')}\u00A0DH`
 }
 
 function formatRating(product) {

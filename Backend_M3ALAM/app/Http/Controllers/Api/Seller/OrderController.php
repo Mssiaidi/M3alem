@@ -38,9 +38,20 @@ class OrderController extends Controller
 
         abort_unless($order->items()->where('shop_id', $shop->id)->exists(), 403);
 
-        return response()->json($order->load(['items' => function ($query) use ($shop) {
-            $query->where('shop_id', $shop->id);
-        }, 'user:id,name,email']));
+        $loadedOrder = $order->load([
+            'items' => function ($query) use ($shop) {
+                $query->where('shop_id', $shop->id)->with(['product.images', 'shop:id,name']);
+            },
+            'user:id,name,email',
+        ]);
+
+        return response()->json([
+            ...$loadedOrder->toArray(),
+            'shop' => [
+                'id' => $shop->id,
+                'name' => $shop->name,
+            ],
+        ]);
     }
 
     public function updateStatus(Request $request, Order $order): JsonResponse

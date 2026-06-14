@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { getAuthToken } from '../../api/api'
 import { getProfile, logoutLocal } from '../../api/authService'
 import DashboardLayout from './DashboardLayout'
@@ -14,6 +14,8 @@ const sellerLinks = [
 
 function SellerLayout({ children }) {
   const navigate = useNavigate()
+  const location = useLocation()
+  const params = useParams()
   const [status, setStatus] = useState('loading')
 
   useEffect(() => {
@@ -51,8 +53,50 @@ function SellerLayout({ children }) {
     }
   }, [navigate])
 
+  const isOrderDetail = /^\/seller\/orders\/[^/]+$/.test(location.pathname)
+  const topbarLeft = isOrderDetail ? (
+    <div className="seller-layout-order-header">
+      <button type="button" className="seller-layout-order-header__back" onClick={() => navigate('/seller/orders')}>
+        <span className="material-symbols-outlined">arrow_back</span>
+      </button>
+      <div>
+        <strong>Détails de la Commande</strong>
+        <p>Commande #{params.id || 'ORD-001'} • Reçue le 14 juin 2026</p>
+      </div>
+    </div>
+  ) : null
+
+  const topbarRight = isOrderDetail ? (
+    <div className="seller-layout-order-actions">
+      <button type="button" className="seller-layout-order-actions__secondary" onClick={() => window.print()}>
+        <span className="material-symbols-outlined">print</span>
+        Imprimer
+      </button>
+      <button type="button" className="seller-layout-order-actions__primary" onClick={() => navigate(`/seller/orders/${params.id}`)}>
+        <span className="material-symbols-outlined">chat</span>
+        Contacter le client
+      </button>
+    </div>
+  ) : null
+
+  const sidebarFooter = isOrderDetail ? (
+    <div className="seller-layout-sidebar-footer">
+      <div className="seller-layout-sidebar-footer__avatar">MA</div>
+      <div>
+        <strong>M3alem Ahmed</strong>
+        <p>Maître Artisan</p>
+      </div>
+    </div>
+  ) : null
+
   return (
-    <DashboardLayout links={sellerLinks} title="Espace vendeur">
+    <DashboardLayout
+      links={sellerLinks}
+      title="Espace vendeur"
+      topbarLeft={topbarLeft}
+      topbarRight={topbarRight}
+      sidebarFooter={sidebarFooter}
+    >
       {status === 'allowed' ? children : <p className="muted">Verification de votre session...</p>}
     </DashboardLayout>
   )

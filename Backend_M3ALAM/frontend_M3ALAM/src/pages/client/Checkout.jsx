@@ -9,7 +9,7 @@ function formatPrice(price) {
   return `${Number(price || 0).toLocaleString('fr-FR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })} DH`
+  })}\u00A0DH`
 }
 
 function itemImage(item) {

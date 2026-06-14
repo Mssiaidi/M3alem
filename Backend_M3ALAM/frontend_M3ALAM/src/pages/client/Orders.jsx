@@ -81,7 +81,7 @@ function formatAmount(amount) {
   return `${Number.parseFloat(amount || 0).toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })} DH`
+  })}\u00A0DH`
 }
 
 function formatCsvAmount(amount) {
@@ -156,7 +156,7 @@ function buildOrdersCsv(orders) {
       order.reference || `ORD-${order.id}`,
       order.customer_name || '-',
       formatDate(order.created_at),
-      `${formatCsvAmount(order.total_amount)} DH`,
+      `${formatCsvAmount(order.total_amount)}\u00A0DH`,
       badge.label,
       getOrderSubtitle(order),
     ]
