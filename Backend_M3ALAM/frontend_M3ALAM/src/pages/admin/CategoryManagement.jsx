@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { createCategory, deleteCategory, getAdminCategories, updateCategory } from '../../api/adminService'
 
 function CategoryManagement() {
@@ -7,6 +7,9 @@ function CategoryManagement() {
   const [loading, setLoading] = useState(false)
   const [query, setQuery] = useState('')
   const [form, setForm] = useState({ id: null, name: '', description: '', is_active: true })
+  const [formOpen, setFormOpen] = useState(false)
+  const [toast, setToast] = useState('')
+  const formSectionRef = useRef(null)
 
   useEffect(() => {
     let active = true
@@ -70,6 +73,32 @@ function CategoryManagement() {
     setCategories(Array.isArray(payload) ? payload : payload.data || [])
   }
 
+  const openCreateForm = () => {
+    setForm({ id: null, name: '', description: '', is_active: true })
+    setFormOpen(true)
+    window.requestAnimationFrame(() => {
+      formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
+  const openEditForm = (category) => {
+    setForm({
+      id: category.id,
+      name: category.name,
+      description: category.description || '',
+      is_active: category.is_active !== false,
+    })
+    setFormOpen(true)
+    window.requestAnimationFrame(() => {
+      formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
+  const resetForm = () => {
+    setForm({ id: null, name: '', description: '', is_active: true })
+    setToast('')
+  }
+
   async function handleSubmit(event) {
     event.preventDefault()
     setError('')
@@ -87,7 +116,9 @@ function CategoryManagement() {
         await createCategory(payload)
       }
 
+      setToast(form.id ? 'Catégorie mise à jour avec succès.' : 'Catégorie créée avec succès.')
       setForm({ id: null, name: '', description: '', is_active: true })
+      setFormOpen(false)
       await refreshCategories()
     } catch (err) {
       setError(err.message || 'Impossible d’enregistrer la catégorie.')
@@ -110,12 +141,13 @@ function CategoryManagement() {
           <h1>Gestion des Catégories</h1>
           <p>Organisez votre inventaire d&apos;artisanat professionnel depuis la base de données.</p>
         </div>
-        <button className="button" type="button" onClick={() => setForm({ id: null, name: '', description: '', is_active: true })}>
-          <span className="material-symbols-outlined">add</span>
+        <button className="button category-management-head__action" type="button" onClick={openCreateForm}>
+          <span className="material-symbols-outlined">add_circle</span>
           Nouvelle Catégorie
         </button>
       </header>
 
+      {toast ? <div className="app-toast category-toast">{toast}</div> : null}
       {error ? <p className="error-text">{error}</p> : null}
       {loading ? <p className="admin-state-note">Chargement des catégories depuis la base de données...</p> : null}
 
@@ -173,14 +205,7 @@ function CategoryManagement() {
                       <button
                         className="icon-button category-action"
                         type="button"
-                        onClick={() =>
-                          setForm({
-                            id: category.id,
-                            name: category.name,
-                            description: category.description || '',
-                            is_active: category.is_active !== false,
-                          })
-                        }
+                        onClick={() => openEditForm(category)}
                       >
                         <span className="material-symbols-outlined">edit</span>
                       </button>
@@ -207,15 +232,33 @@ function CategoryManagement() {
 
         <aside className="category-side-column">
           <article className="category-performance">
-            <div className="category-section-head">
-              <span className="material-symbols-outlined">trending_up</span>
-              <h3>Performance par Catégorie</h3>
+            <div className="category-performance__head">
+              <div>
+                <span className="category-performance__eyebrow">Performance par Catégorie</span>
+                <h3>Répartition des produits</h3>
+                <p>Une vue lisible des catégories les plus utilisées dans la boutique.</p>
+              </div>
+              <div className="category-performance__badge">
+                <span className="material-symbols-outlined">trending_up</span>
+                Top catégories
+              </div>
+            </div>
+
+            <div className="category-performance__hero">
+              <div>
+                <span>Catégorie leader</span>
+                <strong>{stats.topCategory?.name || 'N/A'}</strong>
+              </div>
+              <div>
+                <span>Produits total</span>
+                <strong>{stats.totalProducts}</strong>
+              </div>
             </div>
 
             <div className="category-bars">
               {categoryPerformance.length ? (
-                categoryPerformance.map((category) => (
-                  <div className="category-bar-row" key={category.id}>
+                categoryPerformance.map((category, index) => (
+                  <div className="category-bar-row" key={category.id} style={{ animationDelay: `${index * 60}ms` }}>
                     <div className="category-bar-row__top">
                       <strong>{category.name}</strong>
                       <span>{category.products_count ?? 0} produits</span>
@@ -243,8 +286,66 @@ function CategoryManagement() {
             </div>
           </article>
 
-          <article className="category-form-panel">
-            <h3>{form.id ? 'Modifier la catégorie' : 'Créer une catégorie'}</h3>
+          <article className="category-form-panel" ref={formSectionRef}>
+            <div className="category-form-panel__head">
+              <div>
+                <span className="category-form-panel__eyebrow">{form.id ? 'Mode édition' : 'Mode création'}</span>
+                <h3>{form.id ? 'Modifier la catégorie' : 'Créer une catégorie'}</h3>
+                <p>Ouvre le formulaire en modal pour travailler sans perdre le contexte.</p>
+              </div>
+              <div className="category-form-panel__chip">
+                <span className="material-symbols-outlined">category</span>
+                {form.id ? 'Edition' : 'Nouveau'}
+              </div>
+            </div>
+
+            <div className="category-form-panel__actions">
+              <button className="button category-form-panel__toggle" type="button" onClick={() => setFormOpen(true)}>
+                <span className="material-symbols-outlined">open_in_new</span>
+                Ouvrir le formulaire
+              </button>
+              <button className="button category-form-panel__reset" type="button" onClick={resetForm}>
+                <span className="material-symbols-outlined">restart_alt</span>
+                Réinitialiser
+              </button>
+            </div>
+
+            <div className="category-form-panel__collapsed">
+              <h4>{form.id ? 'Prêt à modifier la catégorie sélectionnée.' : 'Clique sur “Nouvelle Catégorie” pour commencer.'}</h4>
+              <p>Le formulaire s&apos;ouvre maintenant dans une fenêtre dédiée, plus lisible.</p>
+            </div>
+            <div className="category-form__stats">
+              <div>
+                <span>Catégories</span>
+                <strong>{stats.total}</strong>
+              </div>
+              <div>
+                <span>Top catégorie</span>
+                <strong>{stats.topCategory?.name || 'N/A'}</strong>
+              </div>
+              <div>
+                <span>Produits</span>
+                <strong>{stats.totalProducts}</strong>
+              </div>
+            </div>
+          </article>
+        </aside>
+      </section>
+
+      {formOpen ? (
+        <div className="modal-backdrop category-modal-backdrop" role="presentation" onClick={() => setFormOpen(false)}>
+          <div className="modal-card modal-card--wide category-modal-card" role="dialog" aria-modal="true" aria-labelledby="category-form-title" onClick={(event) => event.stopPropagation()}>
+            <div className="modal-card__head">
+              <div>
+                <span className="category-form-panel__eyebrow">{form.id ? 'Mode édition' : 'Mode création'}</span>
+                <h2 id="category-form-title">{form.id ? 'Modifier la catégorie' : 'Créer une catégorie'}</h2>
+                <p>Ajoutez ou ajustez une section pour organiser l’inventaire.</p>
+              </div>
+              <button className="icon-button" type="button" onClick={() => setFormOpen(false)}>
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
             <form className="category-form" onSubmit={handleSubmit}>
               <div className="form-field">
                 <label>Nom</label>
@@ -274,32 +375,17 @@ function CategoryManagement() {
                 <button className="button" type="submit">
                   {form.id ? 'Enregistrer' : 'Créer'}
                 </button>
-                <button
-                  className="button--ghost button--ghost-dark"
-                  type="button"
-                  onClick={() => setForm({ id: null, name: '', description: '', is_active: true })}
-                >
+                <button className="button category-form-modal__reset" type="button" onClick={resetForm}>
+                  Réinitialiser
+                </button>
+                <button className="button category-form-modal__cancel" type="button" onClick={() => setFormOpen(false)}>
                   Annuler
                 </button>
               </div>
             </form>
-            <div className="category-form__stats">
-              <div>
-                <span>Catégories</span>
-                <strong>{stats.total}</strong>
-              </div>
-              <div>
-                <span>Top catégorie</span>
-                <strong>{stats.topCategory?.name || 'N/A'}</strong>
-              </div>
-              <div>
-                <span>Produits</span>
-                <strong>{stats.totalProducts}</strong>
-              </div>
-            </div>
-          </article>
-        </aside>
-      </section>
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }

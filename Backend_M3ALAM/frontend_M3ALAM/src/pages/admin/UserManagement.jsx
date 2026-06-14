@@ -61,6 +61,16 @@ function UserManagement() {
     })
   }, [query, roleFilter, statusFilter, users])
 
+  const filterSummary = useMemo(
+    () => ({
+      total: visibleUsers.length,
+      hasRole: roleFilter !== 'all',
+      hasStatus: statusFilter !== 'all',
+      hasQuery: query.trim() !== '',
+    }),
+    [query, roleFilter, statusFilter, visibleUsers.length],
+  )
+
   const roleLabel = (role) => {
     if (role === 'admin') return 'Administrateur'
     if (role === 'seller') return 'Vendeur'
@@ -75,6 +85,12 @@ function UserManagement() {
 
   const statusLabel = (status) => (status === 'pending' ? 'En attente' : 'Actif')
   const statusClass = (status) => (status === 'pending' ? 'tag--warn' : 'tag--success')
+
+  const resetFilters = () => {
+    setQuery('')
+    setRoleFilter('all')
+    setStatusFilter('all')
+  }
 
   const handleCreate = async (event) => {
     event.preventDefault()
@@ -168,10 +184,55 @@ function UserManagement() {
               </div>
             </div>
 
-            <button className="button--ghost button--ghost-dark user-refresh" type="button" onClick={loadUsers}>
-              <span className="material-symbols-outlined">refresh</span>
-              Rafraîchir
-            </button>
+            <div className="user-filter-tools">
+              <div className="user-filter-chips" aria-label="Méthodes de filtrage rapide">
+                <button
+                  className={!filterSummary.hasRole && !filterSummary.hasStatus && !filterSummary.hasQuery ? 'is-active' : ''}
+                  type="button"
+                  onClick={resetFilters}
+                >
+                  Tous
+                </button>
+                <button
+                  className={statusFilter === 'pending' ? 'is-active' : ''}
+                  type="button"
+                  onClick={() => {
+                    setStatusFilter('pending')
+                    setRoleFilter('all')
+                  }}
+                >
+                  En attente
+                </button>
+                <button
+                  className={roleFilter === 'seller' ? 'is-active' : ''}
+                  type="button"
+                  onClick={() => {
+                    setRoleFilter('seller')
+                    setStatusFilter('all')
+                  }}
+                >
+                  Vendeurs
+                </button>
+                <button
+                  className={roleFilter === 'admin' ? 'is-active' : ''}
+                  type="button"
+                  onClick={() => {
+                    setRoleFilter('admin')
+                    setStatusFilter('all')
+                  }}
+                >
+                  Admins
+                </button>
+              </div>
+
+              <div className="user-filter-meta">
+                <span>{filterSummary.total} résultat{filterSummary.total > 1 ? 's' : ''}</span>
+                <button className="button user-refresh" type="button" onClick={loadUsers}>
+                  <span className="material-symbols-outlined">refresh</span>
+                  Rafraîchir
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -199,7 +260,8 @@ function UserManagement() {
                 </div>
 
                 <div className="user-card__actions">
-                  <button className="button--ghost button--ghost-dark" type="button" onClick={() => setSelectedUser(user)}>
+                  <button className="button user-card__view-button" type="button" onClick={() => setSelectedUser(user)}>
+                    <span className="material-symbols-outlined">visibility</span>
                     Voir
                   </button>
                   {user.account_status === 'pending' ? (
@@ -207,7 +269,8 @@ function UserManagement() {
                       Valider
                     </button>
                   ) : (
-                    <button className="button" type="button" onClick={() => setSelectedUser(user)}>
+                    <button className="button user-card__manage-button" type="button" onClick={() => setSelectedUser(user)}>
+                      <span className="material-symbols-outlined">settings</span>
                       Gérer
                     </button>
                   )}
@@ -266,7 +329,7 @@ function UserManagement() {
               </div>
 
               <div className="modal-card__actions">
-                <button className="button--ghost button--ghost-dark" type="button" onClick={() => setCreateOpen(false)}>
+                <button className="button user-modal__cancel" type="button" onClick={() => setCreateOpen(false)}>
                   Annuler
                 </button>
                 <button className="button" type="submit" disabled={saving}>
@@ -308,7 +371,7 @@ function UserManagement() {
               </div>
 
               <div className="modal-card__actions">
-                <button className="button--ghost button--ghost-dark" type="button" onClick={() => setSelectedUser(null)}>
+                <button className="button user-modal__close" type="button" onClick={() => setSelectedUser(null)}>
                   Fermer
                 </button>
                 {selectedUser.account_status === 'pending' ? (

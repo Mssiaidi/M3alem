@@ -328,12 +328,12 @@ function EditProduct() {
             <article className="new-product-panel new-product-panel--sticky">
               <h2>Actions</h2>
               <div className="new-product-actions">
-                <button className="button--ghost button--ghost-dark new-product-actions__cancel" type="button" onClick={() => navigate('/seller/products')}>
+                <button className="button new-product-actions__cancel" type="button" onClick={() => navigate('/seller/products')}>
                   <span className="material-symbols-outlined">close</span>
                   Annuler
                 </button>
                 <button
-                  className="button--ghost button--ghost-dark new-product-actions__draft"
+                  className="button new-product-actions__draft"
                   type="button"
                   onClick={() => setForm({ ...form, is_active: !form.is_active })}
                 >

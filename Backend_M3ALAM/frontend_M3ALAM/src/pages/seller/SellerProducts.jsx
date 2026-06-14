@@ -139,7 +139,7 @@ function SellerProducts() {
 
           <div className="seller-products-actions">
             <button
-              className="button--ghost button--ghost-dark seller-products-filter__button"
+              className="button seller-products-filter__button"
               type="button"
               onClick={() => setFiltersOpen((current) => !current)}
             >
