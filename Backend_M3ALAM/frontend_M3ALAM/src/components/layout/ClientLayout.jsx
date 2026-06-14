@@ -58,11 +58,6 @@ function ClientLayout({ children }) {
       <main className="main">
         {status === 'allowed' ? (
           <>
-            <nav className="section-tabs" aria-label="Navigation client">
-              <Link to="/cart">Panier</Link>
-              <Link to="/checkout">Checkout</Link>
-              <Link to="/orders">Commandes</Link>
-            </nav>
             {children}
           </>
         ) : (
