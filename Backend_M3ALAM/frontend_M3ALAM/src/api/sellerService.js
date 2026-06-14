@@ -46,8 +46,7 @@ export function deleteProduct(id) {
 }
 
 export async function getSellerOrders() {
-  const payload = await apiRequest('/seller/orders')
-  return unwrapData(payload)
+  return apiRequest('/seller/orders')
 }
 
 export function getSellerOrder(id) {
