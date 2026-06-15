@@ -8,6 +8,7 @@ import Accueil from './pages/public/Accueil'
 import Catalogue from './pages/public/Catalogue'
 import ProductDetail from './pages/public/ProductDetail'
 import ShopDetail from './pages/public/ShopDetail'
+import ShopContact from './pages/public/ShopContact'
 import Login from './pages/public/Login'
 import Register from './pages/public/Register'
 import Cart from './pages/client/Cart'
@@ -15,15 +16,18 @@ import Checkout from './pages/client/Checkout'
 import LeaveReview from './pages/client/LeaveReview'
 import OrderDetail from './pages/client/OrderDetail'
 import Orders from './pages/client/Orders'
+import ClientMessages from './pages/client/ClientMessages'
 import SellerDashboard from './pages/seller/SellerDashboard'
 import EditProduct from './pages/seller/EditProduct'
 import NewProduct from './pages/seller/NewProduct'
 import SellerOrderDetail from './pages/seller/SellerOrderDetail'
 import SellerOrders from './pages/seller/SellerOrders'
+import SellerMessages from './pages/seller/SellerMessages'
 import ShopManagement from './pages/seller/ShopManagement'
 import SellerProducts from './pages/seller/SellerProducts'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminAnalytics from './pages/admin/AdminAnalytics'
+import AdminMessages from './pages/admin/AdminMessages'
 import ReviewModeration from './pages/admin/ReviewModeration'
 import ShopModeration from './pages/admin/ShopModeration'
 import CategoryManagement from './pages/admin/CategoryManagement'
@@ -59,6 +63,7 @@ function Shell() {
       <Route path="/catalogue" element={publicPage(<Catalogue />)} />
       <Route path="/products/:slug" element={publicPage(<ProductDetail />)} />
       <Route path="/shops/:slug" element={publicPage(<ShopDetail />)} />
+      <Route path="/shops/:slug/contact" element={publicPage(<ShopContact />)} />
       <Route path="/login" element={authPage(<Login />)} />
       <Route path="/register" element={authPage(<Register />)} />
       <Route path="/cart" element={clientPage(<Cart />)} />
@@ -68,10 +73,12 @@ function Shell() {
       <Route path="/orders/:id/review" element={clientPage(<LeaveReview />)} />
       <Route path="/orders/:id" element={clientPage(<OrderDetail />)} />
       <Route path="/orders" element={clientPage(<Orders />)} />
+      <Route path="/messages" element={clientPage(<ClientMessages />)} />
       <Route path="/seller/dashboard" element={sellerPage(<SellerDashboard />)} />
       <Route path="/seller/shop" element={sellerPage(<ShopManagement />)} />
       <Route path="/seller/orders/:id" element={sellerPage(<SellerOrderDetail />)} />
       <Route path="/seller/orders" element={sellerPage(<SellerOrders />)} />
+      <Route path="/seller/messages" element={sellerPage(<SellerMessages />)} />
 
       {/* Personne 3: produits vendeur + admin */}
       <Route path="/seller/products/new" element={sellerPage(<NewProduct />)} />
@@ -80,6 +87,7 @@ function Shell() {
       <Route path="/admin/dashboard" element={adminPage(<AdminDashboard />)} />
       <Route path="/admin/analytics" element={adminPage(<AdminAnalytics />)} />
       <Route path="/admin/users" element={adminPage(<UserManagement />)} />
+      <Route path="/admin/messages" element={adminPage(<AdminMessages />)} />
       <Route path="/admin/reviews" element={adminPage(<ReviewModeration />)} />
       <Route path="/admin/shops" element={adminPage(<ShopModeration />)} />
       <Route path="/admin/categories" element={adminPage(<CategoryManagement />)} />

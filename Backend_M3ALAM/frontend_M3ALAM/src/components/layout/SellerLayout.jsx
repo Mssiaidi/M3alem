@@ -10,6 +10,7 @@ const sellerLinks = [
   { label: 'Produits', path: '/seller/products' },
   { label: 'Nouveau produit', path: '/seller/products/new' },
   { label: 'Commandes', path: '/seller/orders' },
+  { label: 'Messages', path: '/seller/messages' },
 ]
 
 function SellerLayout({ children }) {
@@ -72,9 +73,29 @@ function SellerLayout({ children }) {
         <span className="material-symbols-outlined">print</span>
         Imprimer
       </button>
-      <button type="button" className="seller-layout-order-actions__primary" onClick={() => navigate(`/seller/orders/${params.id}`)}>
+      <button
+        type="button"
+        className="seller-layout-order-actions__primary"
+        onClick={() => navigate(`/seller/orders/${params.id}#contact-client`)}
+      >
         <span className="material-symbols-outlined">chat</span>
         Contacter le client
+      </button>
+      <button
+        type="button"
+        className="seller-layout-order-actions__secondary"
+        onClick={() => navigate(`/seller/orders/${params.id}#contact-admin`)}
+      >
+        <span className="material-symbols-outlined">admin_panel_settings</span>
+        Contacter l&apos;admin
+      </button>
+      <button
+        type="button"
+        className="seller-layout-order-actions__secondary"
+        onClick={() => navigate('/seller/messages')}
+      >
+        <span className="material-symbols-outlined">forum</span>
+        Voir messages
       </button>
     </div>
   ) : null

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -18,8 +19,14 @@ class UserController extends Controller
         $status = $request->string('status')->toString();
         $search = $request->string('search')->toString();
 
+        $shopColumns = ['id', 'user_id', 'name', 'status', 'verification_full_name', 'verification_photo_path', 'verification_cin_path', 'verification_artisan_card_path', 'verification_documents'];
+
+        if (Schema::hasColumn('shops', 'verification_status')) {
+            $shopColumns[] = 'verification_status';
+        }
+
         $users = User::query()
-            ->with(['shop:id,user_id,name,status,verification_status,verification_full_name,verification_photo_path,verification_cin_path,verification_artisan_card_path,verification_documents'])
+            ->with(['shop:' . implode(',', $shopColumns)])
             ->withCount(['orders', 'reviews', 'shop'])
             ->when(in_array($role, ['client', 'seller', 'admin'], true), fn ($query) => $query->where('role', $role))
             ->when(in_array($status, ['active', 'pending'], true), fn ($query) => $query->where('account_status', $status))

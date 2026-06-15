@@ -9,6 +9,7 @@ const adminLinks = [
   { label: 'Utilisateurs', path: '/admin/users' },
   { label: 'Boutiques', path: '/admin/shops' },
   { label: 'Categories', path: '/admin/categories' },
+  { label: 'Messages', path: '/admin/messages' },
   { label: 'Avis', path: '/admin/reviews' },
 ]
 

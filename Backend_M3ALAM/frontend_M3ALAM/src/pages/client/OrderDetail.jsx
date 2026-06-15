@@ -227,6 +227,10 @@ function OrderDetail() {
             </span>
           </div>
           <div className="flex gap-md">
+            <button className="flex items-center gap-xs px-md py-sm border border-outline rounded-lg font-label-md text-on-surface hover:bg-surface-container-low transition-all active:scale-95" type="button" onClick={() => navigate('/messages')}>
+              <span className="material-symbols-outlined text-[20px]">chat</span>
+              Messages
+            </button>
             <button className="flex items-center gap-xs px-md py-sm border border-outline rounded-lg font-label-md text-on-surface hover:bg-surface-container-low transition-all active:scale-95" type="button" onClick={() => navigate('/orders')}>
               <span className="material-symbols-outlined text-[20px]">arrow_back</span>
               Retour

@@ -66,6 +66,18 @@ export function updateOrderStatus(id, status) {
   })
 }
 
+export function contactSellerOrder(id, payload) {
+  return apiRequest(`/seller/orders/${id}/contact`, {
+    method: 'POST',
+    body: payload,
+  })
+}
+
+export async function getSellerMessages() {
+  const payload = await apiRequest('/seller/messages')
+  return unwrapData(payload)
+}
+
 export async function getCategories() {
   const payload = await apiRequest('/categories')
   return unwrapData(payload)
