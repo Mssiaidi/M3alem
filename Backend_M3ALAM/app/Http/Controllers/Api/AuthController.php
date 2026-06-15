@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Notifications\SellerRegisteredNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,13 @@ class AuthController extends Controller
         $data = $request->validated();
         $data['account_status'] = $data['role'] === 'seller' ? 'pending' : 'active';
         $user = User::create($data);
+
+        if ($user->isSeller()) {
+            User::query()
+                ->where('role', 'admin')
+                ->get()
+                ->each(fn (User $admin) => $admin->notify(new SellerRegisteredNotification($user)));
+        }
 
         return response()->json([
             'user' => $user,

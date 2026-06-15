@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreShopRequest;
+use App\Models\User;
+use App\Notifications\ShopPendingNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -29,6 +31,11 @@ class ShopController extends Controller
             'slug' => Str::slug($request->string('name')).'-'.$user->id,
             'status' => 'pending',
         ]);
+
+        User::query()
+            ->where('role', 'admin')
+            ->get()
+            ->each(fn (User $admin) => $admin->notify(new ShopPendingNotification($shop)));
 
         return response()->json($shop, 201);
     }

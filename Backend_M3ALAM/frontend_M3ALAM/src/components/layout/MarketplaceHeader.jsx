@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { getAuthToken } from '../../api/api'
 import { getProfile, logout, logoutLocal } from '../../api/authService'
 import { getCart } from '../../api/cartService'
+import { getNotifications, markAllNotificationsRead, markNotificationRead } from '../../api/notificationService'
 
 function initials(name = '') {
   return name
@@ -36,6 +37,47 @@ function countCartItems(cart) {
   return (cart?.items || []).reduce((total, item) => total + Number(item.quantity || 0), 0)
 }
 
+function notificationText(notification) {
+  const data = notification?.data || {}
+
+  if (data.message) return data.message
+  if (data.sender_name) return `${data.sender_name} vous a envoye un message.`
+  return 'Nouvelle notification M3alem Marketplace.'
+}
+
+function notificationLink(notification, user) {
+  const data = notification?.data || {}
+
+  if (data.order_id) {
+    if (user?.role === 'seller') return `/seller/orders/${data.order_id}`
+    if (user?.role === 'admin') return '/admin/orders'
+    return `/orders/${data.order_id}`
+  }
+
+  if (data.shop_id) {
+    if (user?.role === 'admin') return '/admin/shops'
+    if (user?.role === 'seller') return '/seller/messages'
+  }
+
+  if (user?.role === 'seller') return '/seller/messages'
+  if (user?.role === 'admin') return '/admin/messages'
+  return '/orders'
+}
+
+function formatNotificationDate(date) {
+  if (!date) return ''
+
+  const parsed = new Date(date)
+  if (Number.isNaN(parsed.getTime())) return ''
+
+  return parsed.toLocaleDateString('fr-FR', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 function menuLinks(user) {
   if (user?.role === 'admin') {
     return [
@@ -64,9 +106,14 @@ function MarketplaceHeader() {
   const location = useLocation()
   const navigate = useNavigate()
   const menuRef = useRef(null)
+  const notificationRef = useRef(null)
   const [user, setUser] = useState(null)
   const [loadingUser, setLoadingUser] = useState(Boolean(getAuthToken()))
   const [menuOpen, setMenuOpen] = useState(false)
+  const [notificationOpen, setNotificationOpen] = useState(false)
+  const [notifications, setNotifications] = useState([])
+  const [unreadCount, setUnreadCount] = useState(0)
+  const [notificationLoading, setNotificationLoading] = useState(false)
   const [cartCount, setCartCount] = useState(0)
   const [cartPulse, setCartPulse] = useState(false)
   const [cartIncrement, setCartIncrement] = useState(null)
@@ -100,6 +147,7 @@ function MarketplaceHeader() {
 
   useEffect(() => {
     setMenuOpen(false)
+    setNotificationOpen(false)
   }, [location.pathname])
 
   useEffect(() => {
@@ -114,6 +162,53 @@ function MarketplaceHeader() {
     document.addEventListener('mousedown', closeOnOutsideClick)
     return () => document.removeEventListener('mousedown', closeOnOutsideClick)
   }, [menuOpen])
+
+  useEffect(() => {
+    if (!notificationOpen) return undefined
+
+    const closeOnOutsideClick = (event) => {
+      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+        setNotificationOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', closeOnOutsideClick)
+    return () => document.removeEventListener('mousedown', closeOnOutsideClick)
+  }, [notificationOpen])
+
+  useEffect(() => {
+    if (!user) {
+      setNotifications([])
+      setUnreadCount(0)
+      return undefined
+    }
+
+    let active = true
+
+    const refreshNotifications = () => {
+      setNotificationLoading(true)
+      getNotifications()
+        .then((payload) => {
+          if (!active) return
+          setNotifications(payload.data || [])
+          setUnreadCount(payload.unread_count || 0)
+        })
+        .catch(() => {
+          if (!active) return
+          setNotifications([])
+          setUnreadCount(0)
+        })
+        .finally(() => {
+          if (active) setNotificationLoading(false)
+        })
+    }
+
+    refreshNotifications()
+
+    return () => {
+      active = false
+    }
+  }, [user, location.pathname])
 
   useEffect(() => {
     if (user?.role !== 'client') {
@@ -171,6 +266,34 @@ function MarketplaceHeader() {
     }
   }
 
+  const handleNotificationClick = async (notification) => {
+    if (!notification.read_at) {
+      try {
+        await markNotificationRead(notification.id)
+        setUnreadCount((current) => Math.max(0, current - 1))
+        setNotifications((current) => current.map((item) => (
+          item.id === notification.id ? { ...item, read_at: new Date().toISOString() } : item
+        )))
+      } catch {
+        // Keep navigation available even if marking read fails.
+      }
+    }
+
+    navigate(notificationLink(notification, user))
+  }
+
+  const handleMarkAllRead = async () => {
+    try {
+      await markAllNotificationsRead()
+      setUnreadCount(0)
+      setNotifications((current) => current.map((item) => (
+        item.read_at ? item : { ...item, read_at: new Date().toISOString() }
+      )))
+    } catch {
+      // A failed read-state update should not block the user menu.
+    }
+  }
+
   return (
     <header className="topbar">
       <div className="topbar__inner">
@@ -183,6 +306,63 @@ function MarketplaceHeader() {
             <span className="chip">Chargement...</span>
           ) : user ? (
             <>
+              <div className="notification-menu" ref={notificationRef}>
+                <button
+                  aria-expanded={notificationOpen}
+                  aria-haspopup="menu"
+                  aria-label="Notifications"
+                  className={unreadCount > 0 ? 'topbar-notification-link has-unread' : 'topbar-notification-link'}
+                  onClick={() => setNotificationOpen((open) => !open)}
+                  type="button"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7" />
+                    <path d="M10 20a2 2 0 0 0 4 0" />
+                  </svg>
+                  {unreadCount > 0 && <span className="topbar-notification-count">{unreadCount}</span>}
+                </button>
+
+                {notificationOpen && (
+                  <div className="notification-menu__panel" role="menu">
+                    <div className="notification-menu__head">
+                      <div>
+                        <strong>Notifications</strong>
+                        <span>{unreadCount} non lue{unreadCount > 1 ? 's' : ''}</span>
+                      </div>
+                      {unreadCount > 0 && (
+                        <button onClick={handleMarkAllRead} type="button">
+                          Tout lire
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="notification-menu__list">
+                      {notificationLoading ? (
+                        <p>Chargement...</p>
+                      ) : notifications.length > 0 ? (
+                        notifications.map((notification) => (
+                          <button
+                            className={notification.read_at ? '' : 'is-unread'}
+                            key={notification.id}
+                            onClick={() => handleNotificationClick(notification)}
+                            role="menuitem"
+                            type="button"
+                          >
+                            <span className="notification-menu__dot" />
+                            <span>
+                              <strong>{notificationText(notification)}</strong>
+                              <small>{formatNotificationDate(notification.created_at)}</small>
+                            </span>
+                          </button>
+                        ))
+                      ) : (
+                        <p>Aucune notification pour le moment.</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
               {user.role === 'client' && (
                 <Link
                   aria-label="Voir le panier"

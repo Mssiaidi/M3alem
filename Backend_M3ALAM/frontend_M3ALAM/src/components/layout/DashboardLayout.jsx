@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
-import { logoutLocal } from '../../api/authService'
 import Footer from './Footer'
+import MarketplaceHeader from './MarketplaceHeader'
 
 function getLinkIcon(label) {
   switch (label) {
@@ -26,18 +26,33 @@ function getLinkIcon(label) {
   }
 }
 
-function DashboardLayout({ children, links, title, topbarLeft, topbarRight, sidebarFooter }) {
+function DashboardLayout({
+  children,
+  links,
+  title,
+  topbarLeft,
+  topbarRight,
+  sidebarFooter,
+  hideSidebarHeader = false,
+  hideLinkIcons = false,
+  hideTopbar = false,
+}) {
   const location = useLocation()
 
   return (
     <div className="app-shell">
+      <MarketplaceHeader />
 
       <div className="dashboard-layout">
-        <aside className="dashboard-sidebar">
-          <Link to="/" className="brand">
-            M3alem Marketplace
-          </Link>
-          <h2>{title}</h2>
+        <aside className={hideLinkIcons ? 'dashboard-sidebar dashboard-sidebar--plain' : 'dashboard-sidebar'}>
+          {!hideSidebarHeader && (
+            <>
+              <Link to="/" className="brand">
+                M3alem Marketplace
+              </Link>
+              <h2>{title}</h2>
+            </>
+          )}
 
           <nav className="dashboard-sidebar__nav">
             {links.map((link) => (
@@ -46,9 +61,11 @@ function DashboardLayout({ children, links, title, topbarLeft, topbarRight, side
                 key={link.path}
                 to={link.path}
               >
-                <span className="material-symbols-outlined dashboard-sidebar__icon">
-                  {getLinkIcon(link.label)}
-                </span>
+                {!hideLinkIcons && (
+                  <span className="material-symbols-outlined dashboard-sidebar__icon">
+                    {getLinkIcon(link.label)}
+                  </span>
+                )}
                 {link.label}
               </Link>
             ))}
@@ -58,22 +75,16 @@ function DashboardLayout({ children, links, title, topbarLeft, topbarRight, side
         </aside>
 
         <div className="dashboard-layout__body">
-          <header className="dashboard-topbar">
-            <div className="dashboard-topbar__left">
-              {topbarLeft || <strong>{title}</strong>}
-            </div>
-            <div className="dashboard-topbar__right">
-              {topbarRight}
-              <Link
-                to="/login"
-                className="chip"
-                onClick={logoutLocal}
-              >
-                <span className="material-symbols-outlined">logout</span>
-                Deconnexion
-              </Link>
-            </div>
-          </header>
+          {!hideTopbar && (
+            <header className="dashboard-topbar">
+              <div className="dashboard-topbar__left">
+                {topbarLeft || <strong>{title}</strong>}
+              </div>
+              <div className="dashboard-topbar__right">
+                {topbarRight}
+              </div>
+            </header>
+          )}
 
           <main className="dashboard-main">
             {children}

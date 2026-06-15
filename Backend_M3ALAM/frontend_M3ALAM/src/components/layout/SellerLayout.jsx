@@ -70,7 +70,6 @@ function SellerLayout({ children }) {
   const topbarRight = isOrderDetail ? (
     <div className="seller-layout-order-actions">
       <button type="button" className="seller-layout-order-actions__secondary" onClick={() => window.print()}>
-        <span className="material-symbols-outlined">print</span>
         Imprimer
       </button>
       <button
@@ -78,7 +77,6 @@ function SellerLayout({ children }) {
         className="seller-layout-order-actions__primary"
         onClick={() => navigate(`/seller/orders/${params.id}#contact-client`)}
       >
-        <span className="material-symbols-outlined">chat</span>
         Contacter le client
       </button>
       <button
@@ -86,7 +84,6 @@ function SellerLayout({ children }) {
         className="seller-layout-order-actions__secondary"
         onClick={() => navigate(`/seller/orders/${params.id}#contact-admin`)}
       >
-        <span className="material-symbols-outlined">admin_panel_settings</span>
         Contacter l&apos;admin
       </button>
       <button
@@ -94,19 +91,8 @@ function SellerLayout({ children }) {
         className="seller-layout-order-actions__secondary"
         onClick={() => navigate('/seller/messages')}
       >
-        <span className="material-symbols-outlined">forum</span>
         Voir messages
       </button>
-    </div>
-  ) : null
-
-  const sidebarFooter = isOrderDetail ? (
-    <div className="seller-layout-sidebar-footer">
-      <div className="seller-layout-sidebar-footer__avatar">MA</div>
-      <div>
-        <strong>M3alem Ahmed</strong>
-        <p>Maître Artisan</p>
-      </div>
     </div>
   ) : null
 
@@ -116,7 +102,8 @@ function SellerLayout({ children }) {
       title="Espace vendeur"
       topbarLeft={topbarLeft}
       topbarRight={topbarRight}
-      sidebarFooter={sidebarFooter}
+      hideSidebarHeader
+      hideTopbar={!isOrderDetail}
     >
       {status === 'allowed' ? children : <p className="muted">Verification de votre session...</p>}
     </DashboardLayout>

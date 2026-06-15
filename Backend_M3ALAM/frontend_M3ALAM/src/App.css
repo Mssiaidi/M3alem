@@ -215,6 +215,184 @@
   box-shadow: 0 14px 34px rgba(30, 64, 175, 0.16);
 }
 
+.notification-menu {
+  position: relative;
+}
+
+.topbar-notification-link {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d3e4fe;
+  border-radius: 999px;
+  background: #fff;
+  color: #1e40af;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(30, 64, 175, 0.08);
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.topbar-notification-link svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
+}
+
+.topbar-notification-link:hover,
+.topbar-notification-link[aria-expanded='true'],
+.topbar-notification-link.has-unread {
+  transform: translateY(-1px);
+  border-color: #1e40af;
+  background: #1e40af;
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(30, 64, 175, 0.16);
+}
+
+.topbar-notification-count {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #fea520;
+  color: #694000;
+  padding: 0 0.28rem;
+  font-size: 0.68rem;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.notification-menu__panel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  width: min(24rem, calc(100vw - 2rem));
+  max-height: 30rem;
+  border: 1px solid #d3e4fe;
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(11, 28, 48, 0.18);
+  overflow: hidden;
+  z-index: 80;
+}
+
+.notification-menu__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #e5edff;
+  background: linear-gradient(135deg, #eff4ff, #fff);
+  padding: 0.95rem 1rem;
+}
+
+.notification-menu__head strong,
+.notification-menu__head span {
+  display: block;
+}
+
+.notification-menu__head strong {
+  color: #0b1c30;
+}
+
+.notification-menu__head span {
+  margin-top: 0.15rem;
+  color: #444653;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.notification-menu__head button {
+  border: 0;
+  border-radius: 999px;
+  background: #1e40af;
+  color: #fff;
+  padding: 0.45rem 0.7rem;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.notification-menu__list {
+  max-height: 24rem;
+  overflow: auto;
+  padding: 0.45rem;
+}
+
+.notification-menu__list > p {
+  margin: 0;
+  color: #444653;
+  padding: 1rem;
+  text-align: center;
+}
+
+.notification-menu__list button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: #253247;
+  padding: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.notification-menu__list button:hover,
+.notification-menu__list button.is-unread {
+  background: #eff4ff;
+}
+
+.notification-menu__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: #c4c5d5;
+}
+
+.notification-menu__list button.is-unread .notification-menu__dot {
+  background: #fea520;
+}
+
+.notification-menu__list strong,
+.notification-menu__list small {
+  display: block;
+  line-height: 1.35;
+}
+
+.notification-menu__list strong {
+  color: #0b1c30;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.notification-menu__list small {
+  margin-top: 0.25rem;
+  color: #757684;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
 .topbar-cart-link.is-pulsing {
   animation: cart-bounce 680ms ease;
 }
@@ -4273,11 +4451,25 @@
 }
 
 .dashboard-sidebar__nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   border-radius: 0.8rem;
   color: #444653;
   padding: 0.75rem 0.85rem;
   text-decoration: none;
   font-weight: 800;
+}
+
+.dashboard-sidebar--plain .dashboard-sidebar__nav a {
+  justify-content: center;
+  min-height: 2.75rem;
+  text-align: center;
+}
+
+.dashboard-sidebar__icon {
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 .dashboard-sidebar__nav a.is-active,

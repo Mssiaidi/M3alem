@@ -53,7 +53,7 @@ function AdminLayout({ children }) {
   }, [navigate])
 
   return (
-    <DashboardLayout links={adminLinks} title="Espace admin">
+    <DashboardLayout links={adminLinks} title="Espace admin" hideSidebarHeader hideTopbar>
       {status === 'allowed' ? children : <p className="muted">Verification de votre session...</p>}
     </DashboardLayout>
   )
