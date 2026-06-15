@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getOrders } from '../../api/orderService'
 
 function formatDate(isoDate) {
@@ -165,45 +165,6 @@ function buildOrdersCsv(orders) {
   return [headers, ...rows].map((row) => row.map(escapeCsvValue).join(',')).join('\n')
 }
 
-function ArtisanSidebar() {
-  return (
-    <aside className="orders-sidebar">
-      <div className="orders-sidebar__header">
-        <h2>Artisan Portal</h2>
-        <p>Manage your craft</p>
-      </div>
-      <nav className="orders-sidebar__nav">
-        <Link className="orders-sidebar__link" to="/seller/dashboard">
-          <span className="material-symbols-outlined">dashboard</span>
-          <span>Dashboard</span>
-        </Link>
-        <Link className="orders-sidebar__link" to="/seller/products">
-          <span className="material-symbols-outlined">shopping_bag</span>
-          <span>My Products</span>
-        </Link>
-        <Link className="orders-sidebar__link orders-sidebar__link--active" to="/orders">
-          <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>receipt_long</span>
-          <span>Orders</span>
-        </Link>
-        <Link className="orders-sidebar__link" to="/seller/shop">
-          <span className="material-symbols-outlined">palette</span>
-          <span>Workshops</span>
-        </Link>
-        <Link className="orders-sidebar__link" to="/seller/dashboard">
-          <span className="material-symbols-outlined">bar_chart</span>
-          <span>Analytics</span>
-        </Link>
-      </nav>
-      <div className="orders-sidebar__action">
-        <Link className="orders-sidebar__add" to="/seller/products/new">
-          <span className="material-symbols-outlined">add</span>
-          List New Item
-        </Link>
-      </div>
-    </aside>
-  )
-}
-
 function Orders() {
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
@@ -284,10 +245,8 @@ function Orders() {
   }
 
   return (
-    <div className="orders-dashboard-shell">
-      <ArtisanSidebar />
-
-      <div className="orders-dashboard-main">
+    <div className="orders-dashboard-shell orders-dashboard-shell--full">
+      <div className="orders-dashboard-main orders-dashboard-main--full">
         {loading ? (
           <div className="min-h-[420px] flex flex-col items-center justify-center gap-md text-on-surface-variant">
             <div className="w-12 h-12 rounded-full border-4 border-surface-container-highest border-t-primary animate-spin" aria-label="Chargement des commandes" />

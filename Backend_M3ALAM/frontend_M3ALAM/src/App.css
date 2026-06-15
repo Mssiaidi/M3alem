@@ -460,6 +460,11 @@
   margin: 0 auto;
 }
 
+.orders-dashboard-shell--full {
+  grid-template-columns: 1fr;
+  width: min(1360px, calc(100% - 2rem));
+}
+
 .orders-sidebar {
   position: sticky;
   top: 5.5rem;
@@ -577,13 +582,17 @@
   padding: 24px;
 }
 
+.orders-dashboard-main--full {
+  width: 100%;
+}
+
 .leave-review-page {
   padding-bottom: 32px;
   background: #f8f9ff;
 }
 
 .leave-review-container {
-  width: min(672px, calc(100% - 48px));
+  width: min(980px, calc(100% - 48px));
   margin: 0 auto;
   padding: 32px 0;
 }
@@ -2212,6 +2221,11 @@
 .seller-order-detail-content {
   min-width: 0;
   padding: 1.5rem 1.75rem 2rem;
+}
+
+.seller-order-detail-page {
+  width: min(1360px, calc(100% - 2rem));
+  margin: 0 auto;
 }
 
 .seller-order-detail-grid {
