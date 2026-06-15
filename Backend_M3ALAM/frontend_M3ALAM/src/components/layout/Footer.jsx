@@ -6,7 +6,7 @@ function Footer() {
       <div className="footer__inner">
         <div className="footer__top">
           <div className="footer__brand">
-            <h4>M3alem Marketplace</h4>
+            <Link className="footer__logo" to="/">M3alem Marketplace</Link>
             <p>
               La plateforme de reference pour l'artisanat marocain authentique
               et moderne.
@@ -14,28 +14,24 @@ function Footer() {
           </div>
 
           <div className="footer__links">
-            <div>
+            <nav aria-label="Place de marche">
               <h5>Place de marche</h5>
               <Link to="/catalogue">Catalogue</Link>
-              <br />
-              <Link to="/shops/demo-shop">Boutiques</Link>
-              <br />
+              <Link to="/catalogue">Categories</Link>
               <Link to="/register">Devenir vendeur</Link>
-            </div>
+            </nav>
 
-            <div>
-              <h5>Support</h5>
-              <Link to="/orders">Commandes</Link>
-              <br />
+            <nav aria-label="Espace client">
+              <h5>Espace client</h5>
               <Link to="/cart">Panier</Link>
-              <br />
+              <Link to="/orders">Mes commandes</Link>
               <Link to="/login">Connexion</Link>
-            </div>
+            </nav>
           </div>
         </div>
 
         <div className="footer__bottom">
-          <p>(c) 2024 M3alem Marketplace. Professional Artisan Commerce.</p>
+          <p>© 2026 M3alem Marketplace. Tous droits reserves.</p>
         </div>
       </div>
     </footer>
