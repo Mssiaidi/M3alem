@@ -1,4 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'
+const FALLBACK_API_BASE_URL = import.meta.env.VITE_FALLBACK_API_URL || 'http://127.0.0.1:8000/api'
 const TOKEN_KEY = 'm3alem_token'
 
 export function getAuthToken() {
@@ -44,7 +45,10 @@ async function parseResponse(response) {
 
 export async function apiRequest(endpoint, options = {}) {
   const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  const requestUrl = `${API_BASE_URL}${endpoint}`
+  const fallbackUrl = `${FALLBACK_API_BASE_URL}${endpoint}`
+
+  const requestInit = {
     ...options,
     headers: buildHeaders(options.headers, isFormData),
     body: options.body
@@ -52,9 +56,19 @@ export async function apiRequest(endpoint, options = {}) {
         ? options.body
         : JSON.stringify(options.body)
       : undefined,
-  })
+  }
 
-  return parseResponse(response)
+  try {
+    const response = await fetch(requestUrl, requestInit)
+    return parseResponse(response)
+  } catch (error) {
+    if (API_BASE_URL !== '/api') {
+      throw error
+    }
+
+    const fallbackResponse = await fetch(fallbackUrl, requestInit)
+    return parseResponse(fallbackResponse)
+  }
 }
 
 export function unwrapData(payload) {

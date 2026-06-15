@@ -1326,48 +1326,144 @@
   align-items: flex-start;
   gap: 16px;
   border-color: #865300;
-  background: #ffddb9;
-  color: #2b1700;
-  padding: 24px;
+  background: #ffffff;
+  color: #102a63;
+  padding: 18px;
 }
 
 .seller-dashboard-alert > .material-symbols-outlined {
-  color: #865300;
+  color: #c79200;
   font-variation-settings: 'FILL' 1;
 }
 
 .seller-dashboard-alert h4 {
   margin: 0 0 4px;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 22px;
   font-weight: 700;
 }
 
-.seller-dashboard-alert p {
-  margin: 0 0 16px;
-  font-size: 16px;
-  line-height: 24px;
+.seller-dashboard-verification-card {
+  border: 1px solid #d7dbea;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(16, 42, 99, 0.08);
+}
+
+.seller-dashboard-verification-card__content {
+  width: 100%;
+}
+
+.seller-dashboard-verification-card__field {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.seller-dashboard-verification-card__field span,
+.seller-dashboard-verification-card__section-title,
+.seller-dashboard-verification-card__note,
+.seller-dashboard-verification-card__file {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.seller-dashboard-verification-card__field input {
+  width: 100%;
+  height: 38px;
+  border: 1px solid #d7dbea;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #102a63;
+  background: #fff;
+}
+
+.seller-dashboard-verification-card__section-title {
+  margin-top: 14px;
+  font-weight: 700;
+  color: #102a63;
+}
+
+.seller-dashboard-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 36px;
+  margin-top: 8px;
+  padding: 0 10px 0 12px;
+  border: 1px solid #d7dbea;
+  border-radius: 8px;
+  background: #fff;
+  color: #102a63;
+  cursor: pointer;
+}
+
+.seller-dashboard-upload-row input {
+  display: none;
+}
+
+.seller-dashboard-upload-row__leading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.seller-dashboard-upload-row__leading .material-symbols-outlined,
+.seller-dashboard-upload-row__trailing {
+  font-size: 18px;
+  color: #1c4bb5;
+}
+
+.seller-dashboard-verification-card__submit {
+  width: 100%;
+  margin-top: 14px;
+  border: 0;
+  border-radius: 10px;
+  background: #113c9c;
+  color: #fff;
+  min-height: 52px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 10px 18px rgba(17, 60, 156, 0.22);
+}
+
+.seller-dashboard-verification-card__note {
+  margin: 10px 0 0;
+  text-align: center;
+  color: #6a7188;
+}
+
+.seller-dashboard-verification-card__level {
+  display: block;
+  margin-top: 6px;
+  text-align: center;
+  color: #102a63;
+}
+
+.seller-dashboard-verification-card__file {
+  display: block;
+  margin-top: 4px;
+  color: #5b657f;
+}
+
+.seller-dashboard-verification-card .seller-dashboard-alert > .material-symbols-outlined {
+  margin-top: 2px;
+}
+
+.seller-dashboard-verification-card .seller-dashboard-verification-card__content > h4 {
+  margin-bottom: 10px;
 }
 
 .seller-dashboard-alert input[type='file'] {
   display: none;
 }
 
-.seller-dashboard-alert button {
-  border: 0;
-  border-radius: 0.5rem;
-  background: #865300;
-  color: #ffffff;
-  padding: 8px 16px;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 160ms ease, transform 160ms ease;
-}
-
 .seller-dashboard-alert button:hover {
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
 .seller-dashboard-alert button:active {

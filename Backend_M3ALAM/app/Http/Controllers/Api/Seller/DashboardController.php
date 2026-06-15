@@ -113,12 +113,19 @@ class DashboardController extends Controller
             'total_products' => $totalProducts,
             'recent_orders' => $recentOrders,
             'verification' => [
-                'title' => $shop->isApproved() ? 'Verified Master' : 'Verification Pending',
-                'tier' => $shop->isApproved()
-                    ? ($rankPercent <= 5 ? 'Top 5% Artisan Tier' : 'Top '.$rankPercent.'% Artisan Tier')
-                    : 'Awaiting approval',
+                'status' => $shop->verificationState(),
+                'title' => match ($shop->verificationState()) {
+                    'verified' => 'Statut vérifié',
+                    'in_progress' => 'Statut en cours',
+                    default => 'Statut non vérifié',
+                },
+                'tier' => match ($shop->verificationState()) {
+                    'verified' => ($rankPercent <= 5 ? 'Top 5% Artisan Tier' : 'Top '.$rankPercent.'% Artisan Tier'),
+                    'in_progress' => 'Documents en cours de vérification',
+                    default => 'Aucun document envoyé',
+                },
                 'level' => 'LEVEL '.$level,
-                'is_verified' => $shop->isApproved(),
+                'is_verified' => $shop->verificationState() === 'verified',
                 'rank' => $rank,
                 'seller_count' => $sellerCount,
             ],

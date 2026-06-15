@@ -89,7 +89,13 @@ function formatAmount(amount) {
 }
 
 function getProductImage(item) {
-  return item.product?.images?.[0]?.path ?? 'https://picsum.photos/seed/m3alem-order/320/320'
+  return (
+    item?.product?.images?.[0]?.path ??
+    item?.product?.image ??
+    item?.image ??
+    item?.image_url ??
+    'https://picsum.photos/seed/m3alem-order/320/320'
+  )
 }
 
 function normalizeOrder(order) {

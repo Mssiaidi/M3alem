@@ -16,6 +16,11 @@ class Review extends Model
         'order_id',
         'rating',
         'comment',
+        'photos',
+    ];
+
+    protected $casts = [
+        'photos' => 'array',
     ];
 
     public function user(): BelongsTo

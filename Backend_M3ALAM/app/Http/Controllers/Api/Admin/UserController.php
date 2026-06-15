@@ -19,6 +19,7 @@ class UserController extends Controller
         $search = $request->string('search')->toString();
 
         $users = User::query()
+            ->with(['shop:id,user_id,name,status,verification_status,verification_full_name,verification_photo_path,verification_cin_path,verification_artisan_card_path,verification_documents'])
             ->withCount(['orders', 'reviews', 'shop'])
             ->when(in_array($role, ['client', 'seller', 'admin'], true), fn ($query) => $query->where('role', $role))
             ->when(in_array($status, ['active', 'pending'], true), fn ($query) => $query->where('account_status', $status))

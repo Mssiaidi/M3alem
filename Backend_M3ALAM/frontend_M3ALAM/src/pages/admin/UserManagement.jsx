@@ -77,6 +77,13 @@ function UserManagement() {
     return 'Client'
   }
 
+  const verificationLabel = (status) => {
+    if (status === 'verified') return 'Vérifié'
+    if (status === 'pending_review') return 'En cours'
+    if (status === 'rejected') return 'Rejeté'
+    return 'Non vérifié'
+  }
+
   const roleClass = (role) => {
     if (role === 'admin') return 'tag--danger'
     if (role === 'seller') return 'tag--warn'
@@ -259,6 +266,13 @@ function UserManagement() {
                   <span>{user.shop_count ?? 0} boutique{Number(user.shop_count || 0) > 1 ? 's' : ''}</span>
                 </div>
 
+                {user.role === 'seller' ? (
+                  <div className="user-card__meta">
+                    <span>Vérification: {verificationLabel(user.shop?.verification_status)}</span>
+                    <span>{user.shop?.verification_full_name || user.name}</span>
+                  </div>
+                ) : null}
+
                 <div className="user-card__actions">
                   <button className="button user-card__view-button" type="button" onClick={() => setSelectedUser(user)}>
                     <span className="material-symbols-outlined">visibility</span>
@@ -369,6 +383,16 @@ function UserManagement() {
                 <span>{selectedUser.reviews_count ?? 0} avis</span>
                 <span>{selectedUser.shop_count ?? 0} boutique{Number(selectedUser.shop_count || 0) > 1 ? 's' : ''}</span>
               </div>
+
+              {selectedUser.role === 'seller' && selectedUser.shop ? (
+                <div className="user-detail__documents">
+                  <p><strong>Statut vérification:</strong> {verificationLabel(selectedUser.shop.verification_status)}</p>
+                  <p><strong>Nom complet:</strong> {selectedUser.shop.verification_full_name || selectedUser.name}</p>
+                  <p><strong>Photo:</strong> {selectedUser.shop.verification_photo_path || 'Non envoyée'}</p>
+                  <p><strong>CIN:</strong> {selectedUser.shop.verification_cin_path || 'Non envoyée'}</p>
+                  <p><strong>Carte Artisan:</strong> {selectedUser.shop.verification_artisan_card_path || 'Non envoyée'}</p>
+                </div>
+              ) : null}
 
               <div className="modal-card__actions">
                 <button className="button user-modal__close" type="button" onClick={() => setSelectedUser(null)}>

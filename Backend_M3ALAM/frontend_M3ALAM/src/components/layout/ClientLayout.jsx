@@ -4,7 +4,6 @@ import { getAuthToken } from '../../api/api'
 import { getProfile, logoutLocal } from '../../api/authService'
 import Footer from './Footer'
 import MarketplaceHeader from './MarketplaceHeader'
-import TeamWorkBar from './TeamWorkBar'
 
 function dashboardForRole(role) {
   if (role === 'admin') return '/admin/dashboard'
@@ -52,7 +51,6 @@ function ClientLayout({ children }) {
 
   return (
     <div className="app-shell">
-      <TeamWorkBar />
       <MarketplaceHeader />
 
       <main className="main">

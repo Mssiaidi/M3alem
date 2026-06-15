@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Review;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ReviewController extends Controller
 {
@@ -29,6 +30,8 @@ class ReviewController extends Controller
             'order_id' => ['required', 'exists:orders,id'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'comment' => ['nullable', 'string', 'max:1000'],
+            'photos' => ['nullable', 'array', 'max:4'],
+            'photos.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:10240'],
         ]);
 
         $order = Order::where('id', $validated['order_id'])
@@ -37,11 +40,17 @@ class ReviewController extends Controller
 
         abort_unless($order->status === 'delivered', 422, 'Vous ne pouvez laisser un avis qu\'après la livraison.');
 
+        $photoPaths = [];
+        foreach ($request->file('photos', []) as $photo) {
+            $photoPaths[] = Storage::disk('public')->putFile('review-photos', $photo);
+        }
+
         $review = $request->user()->reviews()->updateOrCreate(
             ['order_id' => $order->id],
             [
                 'rating' => $validated['rating'],
                 'comment' => $validated['comment'] ?? null,
+                'photos' => $photoPaths,
             ]
         );
 

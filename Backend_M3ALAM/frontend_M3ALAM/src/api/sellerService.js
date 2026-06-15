@@ -4,6 +4,13 @@ export function getSellerDashboard() {
   return apiRequest('/seller/dashboard')
 }
 
+export function submitSellerVerificationDocuments(payload) {
+  return apiRequest('/seller/shop/verification-documents', {
+    method: 'POST',
+    body: payload,
+  })
+}
+
 export function getSellerShop() {
   return apiRequest('/seller/shop')
 }

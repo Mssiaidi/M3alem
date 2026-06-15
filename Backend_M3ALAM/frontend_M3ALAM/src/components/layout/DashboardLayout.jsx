@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { logoutLocal } from '../../api/authService'
 import Footer from './Footer'
-import TeamWorkBar from './TeamWorkBar'
 
 function getLinkIcon(label) {
   switch (label) {
@@ -30,7 +29,6 @@ function DashboardLayout({ children, links, title, topbarLeft, topbarRight, side
 
   return (
     <div className="app-shell">
-      <TeamWorkBar />
 
       <div className="dashboard-layout">
         <aside className="dashboard-sidebar">

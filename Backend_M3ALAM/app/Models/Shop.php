@@ -22,6 +22,12 @@ class Shop extends Model
         'city',
         'status',
         'approved_at',
+        'verification_status',
+        'verification_documents',
+        'verification_full_name',
+        'verification_photo_path',
+        'verification_cin_path',
+        'verification_artisan_card_path',
     ];
 
     protected $appends = [
@@ -34,6 +40,7 @@ class Shop extends Model
     {
         return [
             'approved_at' => 'datetime',
+            'verification_documents' => 'array',
         ];
     }
 
@@ -50,6 +57,19 @@ class Shop extends Model
     public function isApproved(): bool
     {
         return $this->status === 'approved';
+    }
+
+    public function verificationState(): string
+    {
+        if ($this->verification_status === 'verified') {
+            return 'verified';
+        }
+
+        if ($this->verification_status === 'pending_review') {
+            return 'in_progress';
+        }
+
+        return 'unverified';
     }
 
     public function getCoverImageAttribute(): string

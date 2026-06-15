@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::prefix('seller')->group(function (): void {
         Route::get('/shop', [SellerShopController::class, 'show']);
         Route::post('/shop', [SellerShopController::class, 'store']);
+        Route::post('/shop/verification-documents', [SellerShopController::class, 'submitVerificationDocuments']);
         Route::get('/products', [SellerProductController::class, 'index']);
         Route::get('/products/{product}', [SellerProductController::class, 'show']);
         Route::post('/products', [SellerProductController::class, 'store']);

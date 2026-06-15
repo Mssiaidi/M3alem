@@ -23,24 +23,29 @@ class MarketplaceSeeder extends Seeder
 
         $client = User::updateOrCreate(
             ['email' => 'client@m3alem.test'],
-            ['name' => 'Client M3alem', 'role' => 'client', 'password' => Hash::make('password')]
+            ['name' => 'Client M3alem', 'role' => 'client', 'account_status' => 'active', 'password' => Hash::make('password')]
         );
 
         $seller = User::updateOrCreate(
             ['email' => 'seller@m3alem.test'],
-            ['name' => 'Vendeur M3alem', 'role' => 'seller', 'password' => Hash::make('password')]
+            ['name' => 'Vendeur M3alem', 'role' => 'seller', 'account_status' => 'active', 'password' => Hash::make('password')]
         );
 
         $reviewClients = collect([
-            ['name' => 'Client Casablanca', 'email' => 'client.casablanca@m3alem.test'],
-            ['name' => 'Client Rabat', 'email' => 'client.rabat@m3alem.test'],
-            ['name' => 'Client Fes', 'email' => 'client.fes@m3alem.test'],
-            ['name' => 'Client Marrakech', 'email' => 'client.marrakech@m3alem.test'],
-            ['name' => 'Client Tanger', 'email' => 'client.tanger@m3alem.test'],
-            ['name' => 'Client Agadir', 'email' => 'client.agadir@m3alem.test'],
+            ['name' => 'Client Casablanca', 'email' => 'client.casablanca@m3alem.test', 'city' => 'Casablanca', 'status' => 'active'],
+            ['name' => 'Client Rabat', 'email' => 'client.rabat@m3alem.test', 'city' => 'Rabat', 'status' => 'active'],
+            ['name' => 'Client Fes', 'email' => 'client.fes@m3alem.test', 'city' => 'Fes', 'status' => 'pending'],
+            ['name' => 'Client Marrakech', 'email' => 'client.marrakech@m3alem.test', 'city' => 'Marrakech', 'status' => 'active'],
+            ['name' => 'Client Tanger', 'email' => 'client.tanger@m3alem.test', 'city' => 'Tanger', 'status' => 'pending'],
+            ['name' => 'Client Agadir', 'email' => 'client.agadir@m3alem.test', 'city' => 'Agadir', 'status' => 'active'],
         ])->map(fn (array $reviewClient) => User::updateOrCreate(
             ['email' => $reviewClient['email']],
-            ['name' => $reviewClient['name'], 'role' => 'client', 'password' => Hash::make('password')]
+            [
+                'name' => $reviewClient['name'],
+                'role' => 'client',
+                'account_status' => $reviewClient['status'],
+                'password' => Hash::make('password'),
+            ]
         ));
 
         $categories = collect([
@@ -264,6 +269,72 @@ class MarketplaceSeeder extends Seeder
                 'unit_price' => $product->price,
                 'total_price' => $product->price,
             ]);
+        }
+
+        $demoOrders = [
+            [
+                'client' => $reviewClients[1],
+                'reference' => 'ORD-RABAT-0001',
+                'status' => 'pending',
+                'city' => 'Rabat',
+                'address' => 'Hay Riad, Rabat',
+                'product' => 'babouches-artisanales-safi',
+            ],
+            [
+                'client' => $reviewClients[0],
+                'reference' => 'ORD-CASA-0002',
+                'status' => 'confirmed',
+                'city' => 'Casablanca',
+                'address' => 'Maarif, Casablanca',
+                'product' => 'tapis-atlas-tisse-main',
+            ],
+            [
+                'client' => $reviewClients[3],
+                'reference' => 'ORD-MAR-0003',
+                'status' => 'processing',
+                'city' => 'Marrakech',
+                'address' => 'Gueliz, Marrakech',
+                'product' => 'vase-ondule-azur',
+            ],
+            [
+                'client' => $reviewClients[5],
+                'reference' => 'ORD-AGA-0004',
+                'status' => 'shipped',
+                'city' => 'Agadir',
+                'address' => 'Talborjt, Agadir',
+                'product' => 'coupe-en-laiton-martele',
+            ],
+        ];
+
+        foreach ($demoOrders as $demoOrder) {
+            $product = Product::query()->where('slug', $demoOrder['product'])->first();
+            if (! $product) {
+                continue;
+            }
+
+            $createdOrder = $demoOrder['client']->orders()->updateOrCreate(
+                ['reference' => $demoOrder['reference']],
+                [
+                    'status' => $demoOrder['status'],
+                    'total_amount' => $product->price,
+                    'customer_name' => $demoOrder['client']->name,
+                    'customer_phone' => '0600000000',
+                    'shipping_city' => $demoOrder['city'],
+                    'shipping_address' => $demoOrder['address'],
+                    'notes' => 'Commande de démonstration additionnelle.',
+                ]
+            );
+
+            $createdOrder->items()->updateOrCreate(
+                ['product_id' => $product->id],
+                [
+                    'shop_id' => $product->shop_id,
+                    'product_name' => $product->name,
+                    'quantity' => 1,
+                    'unit_price' => $product->price,
+                    'total_price' => $product->price,
+                ]
+            );
         }
 
         $ratings = [

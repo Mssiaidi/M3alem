@@ -35,7 +35,14 @@ function getNextStatus(status) {
 }
 
 function getProductImage(item) {
-  return item?.product?.images?.[0]?.path || item?.product_image || 'https://via.placeholder.com/60'
+  return (
+    item?.product?.images?.[0]?.path ||
+    item?.product?.image ||
+    item?.product_image ||
+    item?.image ||
+    item?.image_url ||
+    'https://via.placeholder.com/60'
+  )
 }
 
 function buildFallbackOrder(id) {
@@ -101,9 +108,10 @@ function SellerOrderDetail() {
     [items],
   )
   const currentStepIndex = getOrderStatusIndex(status)
+  const isLockedStatus = status === 'delivered' || status === 'cancelled'
 
   const handleSaveStatus = async () => {
-    if (!order) return
+    if (!order || isLockedStatus) return
     setSaving(true)
     try {
       const nextStatus = getNextStatus(status)
@@ -205,12 +213,18 @@ function SellerOrderDetail() {
                   </div>
                   <div className="seller-order-detail-next__body">
                     <span>Prochaine étape</span>
-                    <strong>Passer à l'expédition</strong>
-                    <select value={status} onChange={(event) => setStatus(event.target.value)} className="seller-order-detail-select">
+                    <strong>{isLockedStatus ? 'Statut verrouillé' : "Passer à l'expédition"}</strong>
+                    <select
+                      value={status}
+                      onChange={(event) => setStatus(event.target.value)}
+                      className="seller-order-detail-select"
+                      disabled={isLockedStatus}
+                    >
                       <option value="confirmed">Confirmée</option>
                       <option value="processing">En préparation</option>
                       <option value="shipped">Expédiée</option>
                       <option value="delivered">Livrée</option>
+                      <option value="cancelled">Annulée</option>
                     </select>
                   </div>
                 </div>
@@ -324,9 +338,9 @@ function SellerOrderDetail() {
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
                 />
-                <button className="seller-order-detail-primary seller-order-detail-primary--block" type="button" onClick={handleSaveStatus} disabled={saving}>
+                <button className="seller-order-detail-primary seller-order-detail-primary--block" type="button" onClick={handleSaveStatus} disabled={saving || isLockedStatus}>
                   <span className="material-symbols-outlined">add</span>
-                  {saving ? 'Enregistrement...' : 'Enregistrer la note'}
+                  {isLockedStatus ? 'Statut bloqué' : saving ? 'Enregistrement...' : 'Enregistrer la note'}
                 </button>
               </section>
 
