@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
+use App\Notifications\OrderContactNotification;
 use App\Notifications\OrderStatusChangedNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -104,5 +106,31 @@ class OrderController extends Controller
         $order->user->notify(new OrderStatusChangedNotification($order));
 
         return response()->json($order);
+    }
+
+    public function contact(Request $request, Order $order): JsonResponse
+    {
+        abort_unless($request->user()->isSeller(), 403);
+        $shop = $request->user()->shop;
+        abort_unless($shop, 422, 'Boutique non trouvée.');
+        abort_unless($order->items()->where('shop_id', $shop->id)->exists(), 403);
+
+        $validated = $request->validate([
+            'target' => ['required', 'string', Rule::in(['client', 'admin'])],
+            'message' => ['required', 'string', 'max:1000'],
+        ]);
+
+        if ($validated['target'] === 'client') {
+            $order->user?->notify(new OrderContactNotification($order, 'seller', $validated['message']));
+            return response()->json(['message' => 'Message envoyé au client.']);
+        }
+
+        $admins = User::query()->where('role', 'admin')->get();
+
+        foreach ($admins as $admin) {
+            $admin->notify(new OrderContactNotification($order, 'seller', $validated['message']));
+        }
+
+        return response()->json(['message' => 'Message envoyé à l’admin.']);
     }
 }

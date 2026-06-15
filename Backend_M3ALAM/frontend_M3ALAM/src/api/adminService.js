@@ -51,6 +51,10 @@ export async function getPendingShops() {
   return unwrapData(payload)
 }
 
+export async function getAdminShop(id) {
+  return apiRequest(`/admin/shops/${id}`)
+}
+
 export async function getAdminReviews() {
   const payload = await apiRequest('/admin/reviews')
   return unwrapData(payload)
@@ -65,6 +69,25 @@ export function deleteAdminReview(id) {
 export async function getAdminOrders() {
   const payload = await apiRequest('/admin/orders')
   return unwrapData(payload)
+}
+
+export async function getAdminMessages() {
+  const payload = await apiRequest('/admin/messages')
+  return unwrapData(payload)
+}
+
+export function markAdminMessageRead(threadKey) {
+  return apiRequest('/admin/messages/read', {
+    method: 'PATCH',
+    body: { thread_key: threadKey },
+  })
+}
+
+export function replyAdminMessage(payload) {
+  return apiRequest('/admin/messages/reply', {
+    method: 'POST',
+    body: payload,
+  })
 }
 
 export function approveShop(id) {

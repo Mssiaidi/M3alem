@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { getSellerOrder, updateOrderStatus } from '../../api/sellerService'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
+import { contactSellerOrder, getSellerOrder, updateOrderStatus } from '../../api/sellerService'
 
 const statusSteps = [
   { key: 'confirmed', label: 'Confirmée', icon: 'check' },
@@ -76,8 +76,16 @@ function SellerOrderDetail() {
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [note, setNote] = useState('')
+  const [contactMessage, setContactMessage] = useState('')
+  const [adminMessage, setAdminMessage] = useState('')
+  const [contactStatus, setContactStatus] = useState('')
   const [status, setStatus] = useState('confirmed')
   const [saving, setSaving] = useState(false)
+  const location = useLocation()
+  const clientContactRef = useRef(null)
+  const adminContactRef = useRef(null)
+  const clientTextareaRef = useRef(null)
+  const adminTextareaRef = useRef(null)
 
   useEffect(() => {
     let active = true
@@ -102,6 +110,21 @@ function SellerOrderDetail() {
     }
   }, [id])
 
+  useEffect(() => {
+    if (location.hash === '#contact-client') {
+      window.requestAnimationFrame(() => {
+        clientContactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        clientTextareaRef.current?.focus()
+      })
+    }
+    if (location.hash === '#contact-admin') {
+      window.requestAnimationFrame(() => {
+        adminContactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        adminTextareaRef.current?.focus()
+      })
+    }
+  }, [location.hash])
+
   const items = Array.isArray(order?.items) ? order.items : []
   const subtotal = useMemo(
     () => items.reduce((sum, item) => sum + Number.parseFloat(item.total_price || item.unit_price * item.quantity || 0), 0),
@@ -118,6 +141,25 @@ function SellerOrderDetail() {
       const response = await updateOrderStatus(order.id, nextStatus)
       setOrder((current) => ({ ...current, status: response.status }))
       setStatus(response.status)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleContact = async (target) => {
+    const message = target === 'client' ? contactMessage.trim() : adminMessage.trim()
+    if (!message || !order) return
+
+    setSaving(true)
+    setContactStatus('')
+
+    try {
+      const response = await contactSellerOrder(order.id, { target, message })
+      setContactStatus(response?.message || (target === 'client' ? 'Message envoyé au client.' : 'Message envoyé à l’admin.'))
+      if (target === 'client') setContactMessage('')
+      if (target === 'admin') setAdminMessage('')
+    } catch (error) {
+      setContactStatus(error.message || 'Impossible d’envoyer le message.')
     } finally {
       setSaving(false)
     }
@@ -343,6 +385,65 @@ function SellerOrderDetail() {
                   {isLockedStatus ? 'Statut bloqué' : saving ? 'Enregistrement...' : 'Enregistrer la note'}
                 </button>
               </section>
+
+              <section className="seller-order-detail-card seller-order-detail-card--contact" id="contact-client" ref={clientContactRef}>
+                <div className="seller-order-detail-card__head">
+                  <span className="material-symbols-outlined">chat</span>
+                  <h2>Contacter le client</h2>
+                </div>
+                <p className="seller-order-detail-contact__hint">
+                  Envoie un message rapide au client pour confirmer la commande, demander une précision ou donner une mise à jour.
+                </p>
+                <textarea
+                  className="seller-order-detail-textarea"
+                  rows="4"
+                  placeholder="Rédige ton message au client..."
+                  value={contactMessage}
+                  ref={clientTextareaRef}
+                  onChange={(event) => setContactMessage(event.target.value)}
+                />
+                <div className="seller-order-detail-contact__actions">
+                  <button className="seller-order-detail-secondary" type="button" disabled={saving} onClick={() => handleContact('client')}>
+                    <span className="material-symbols-outlined">mail</span>
+                    Envoyer au client
+                  </button>
+                  <a className="seller-order-detail-secondary" href={`tel:${customerPhone.replace(/\s+/g, '')}`}>
+                    <span className="material-symbols-outlined">call</span>
+                    Appeler
+                  </a>
+                </div>
+              </section>
+
+              <section className="seller-order-detail-card seller-order-detail-card--contact seller-order-detail-card--admin" id="contact-admin" ref={adminContactRef}>
+                <div className="seller-order-detail-card__head">
+                  <span className="material-symbols-outlined">admin_panel_settings</span>
+                  <h2>Échanger avec l&apos;admin</h2>
+                </div>
+                <p className="seller-order-detail-contact__hint">
+                  Utilise cet espace pour signaler un problème, demander une validation ou remonter un cas particulier.
+                </p>
+                <textarea
+                  className="seller-order-detail-textarea"
+                  rows="4"
+                  placeholder="Message pour l'admin..."
+                  value={adminMessage}
+                  ref={adminTextareaRef}
+                  onFocus={() => setContactStatus('')}
+                  onChange={(event) => setAdminMessage(event.target.value)}
+                />
+                <div className="seller-order-detail-contact__actions">
+                  <button className="seller-order-detail-secondary" type="button" disabled={saving} onClick={() => handleContact('admin')}>
+                    <span className="material-symbols-outlined">send</span>
+                    Envoyer à l&apos;admin
+                  </button>
+                  <button className="seller-order-detail-secondary" type="button" onClick={() => setAdminMessage('')}>
+                    <span className="material-symbols-outlined">restart_alt</span>
+                    Réinitialiser
+                  </button>
+                </div>
+              </section>
+
+              {contactStatus ? <div className="seller-order-detail-contact__status">{contactStatus}</div> : null}
 
             </div>
           </div>

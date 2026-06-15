@@ -33,3 +33,10 @@ export function getProduct(slug) {
 export function getShop(slug) {
   return apiRequest(`/shops/${slug}`)
 }
+
+export function contactShop(shopId, payload) {
+  return apiRequest(`/shops/${shopId}/contact`, {
+    method: 'POST',
+    body: payload,
+  })
+}

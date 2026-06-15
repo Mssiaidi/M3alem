@@ -52,7 +52,6 @@ function ShopDetail() {
   const categories = useMemo(() => shop?.categories || [], [shop])
   const products = shop?.products || []
   const reviews = shop?.reviews || []
-
   if (loading) return <p className="muted">Chargement de la boutique...</p>
   if (error) return <p className="panel panel--error">{error}</p>
   if (!shop) return null
@@ -101,7 +100,9 @@ function ShopDetail() {
             </div>
 
             <div className="shop-identity__actions">
-              <Link className="button--ghost button--ghost--dark" to="/login">Contacter</Link>
+              <Link className="button--ghost button--ghost--dark" to={`/shops/${slug}/contact`}>
+                Contacter
+              </Link>
               <Link className="button" to="/catalogue">Voir catalogue</Link>
             </div>
           </div>

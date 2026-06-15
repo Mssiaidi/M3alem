@@ -48,4 +48,13 @@ class ShopModerationController extends Controller
 
         return response()->json($shop->load('user:id,name,email,role'));
     }
+
+    public function show(Request $request, Shop $shop): JsonResponse
+    {
+        abort_unless($request->user()->isAdmin(), 403);
+
+        return response()->json(
+            $shop->load('user:id,name,email,role')
+        );
+    }
 }

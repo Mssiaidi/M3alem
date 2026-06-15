@@ -13,6 +13,8 @@ function getLinkIcon(label) {
       return 'inventory_2'
     case 'Commandes':
       return 'receipt_long'
+    case 'Messages':
+      return 'chat'
     case 'Utilisateurs':
       return 'group'
     case 'Categories':
