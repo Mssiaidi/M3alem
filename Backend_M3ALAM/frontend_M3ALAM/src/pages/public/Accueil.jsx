@@ -69,16 +69,17 @@ function Accueil() {
       <section className="home-hero">
         <div className="home-hero__inner">
           <div className="home-hero__content">
-            <h1>L'excellence de l'artisanat marocain a votre portee.</h1>
-            <p>
-              Decouvrez une selection rigoureuse d'objets uniques faconnes par
-              les meilleurs M3alems. Qualite, tradition et modernite reunies.
-            </p>
-            <div className="home-hero__actions">
-              <Link className="button" to="/catalogue">Explorer les produits</Link>
-              <Link className="button--ghost" to="/register">Devenir Exposant</Link>
-            </div>
+          <h1>Le savoir-faire marocain, réuni dans une marketplace de confiance.</h1>
+          <p>
+            Explorez des créations artisanales authentiques, sélectionnées auprès de
+            M3alems passionnés. Des produits uniques, faits avec soin, livrés dans une
+            expérience simple et sécurisée.
+          </p>
+          <div className="home-hero__actions">
+            <Link className="button" to="/catalogue">Découvrir le catalogue</Link>
+            <Link className="button--ghost" to="/register">Rejoindre comme artisan</Link>
           </div>
+        </div>
 
           <div className="home-hero__visual">
             <img src={heroImage} alt="Artisan marocain sculptant du bois" />
@@ -154,18 +155,18 @@ function Accueil() {
         <div>
           <h2>Rencontrez nos M3alems</h2>
           <p>
-            Derriere chaque produit se cache une histoire, un savoir-faire
-            transmis de generation en generation. Decouvrez les visages de
-            l'artisanat marocain.
+            Derrière chaque produit se cache une histoire, un savoir-faire 
+            transmis de génération en génération. 
+            Découvrez les visages de l’artisanat marocain.
           </p>
           <div className="spotlight__stats">
             <div className="stat">
               <span className="stat__badge stat__badge--primary">50+</span>
-              <strong>Artisans certifies</strong>
+              <strong>Artisans certifiés</strong> 
             </div>
             <div className="stat">
               <span className="stat__badge stat__badge--secondary">12</span>
-              <strong>Villes representees</strong>
+              <strong>Villes représentées</strong>
             </div>
           </div>
         </div>
