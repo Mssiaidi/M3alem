@@ -22,7 +22,7 @@ class OrderController extends Controller
             $query->where('shop_id', $shop->id);
         })
         ->with(['items' => function ($query) use ($shop) {
-            $query->where('shop_id', $shop->id);
+            $query->where('shop_id', $shop->id)->with(['product.images', 'shop:id,name']);
         }])
         ->latest()
         ->paginate(5);

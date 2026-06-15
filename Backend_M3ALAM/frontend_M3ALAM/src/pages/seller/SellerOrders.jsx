@@ -44,10 +44,16 @@ function extractPagination(response, orders) {
 function getOrderProduct(order) {
   const items = Array.isArray(order.items) ? order.items : []
   const firstItem = items[0]
+  const image = firstItem?.product?.images?.[0]?.path
+    || firstItem?.product?.image
+    || firstItem?.image
+    || firstItem?.image_url
+    || items.find((item) => item?.product?.images?.[0]?.path)?.product?.images?.[0]?.path
+    || 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=200'
 
   return {
     name: firstItem?.product_name || firstItem?.product?.name || 'Produit',
-    image: firstItem?.product?.images?.[0]?.path || 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=200',
+    image,
   }
 }
 
